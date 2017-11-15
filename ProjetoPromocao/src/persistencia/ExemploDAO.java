@@ -30,7 +30,8 @@ public class ExemploDAO implements CRUD{
         PreparedStatement prd = cnn.prepareStatement(sql);
 
         //Seta os valores para o procedimento
-        prd.setString(1, objExemplo.getDescricao());
+        prd.setString(1, objExemplo.getNome());
+        prd.setString(2, objExemplo.getDescricao());
 
 
         //Executa o comando no banco de dados
@@ -112,7 +113,7 @@ public class ExemploDAO implements CRUD{
         while (rs.next()) {
             objeto = new Exemplo();
             objeto.setCodigo(rs.getInt("exem_id"));
-            objeto.setDescricao(rs.getString("exem_nome"));
+            objeto.setNome(rs.getString("exem_nome"));
             objeto.setDescricao(rs.getString("exem_descricao"));
             listaExemplo.add(objeto);
         }

@@ -5,6 +5,7 @@
  */
 package apresentacao;
 
+import apresentacao.Consulta.TelaConsultaExemplo;
 import java.awt.Color;
 import static javax.management.Query.lt;
 import static javax.swing.GroupLayout.Alignment.CENTER;
@@ -19,6 +20,7 @@ import javax.swing.plaf.DesktopPaneUI;
  */
 public class TelaPrincipal extends javax.swing.JFrame {
     boolean aberta;
+    TelaConsultaExemplo tce = new TelaConsultaExemplo();
     
     /**
      * Creates new form TelaPrincipal
@@ -206,10 +208,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabelSairMouseClicked
 
     private void jButtonExemploActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExemploActionPerformed
-//        tp.setLocation(182, 36);
-//        this.add(tp);
-//        tp.show();
-        //tce.dispose();
+        tce.setLocation(182, 36);
+        this.add(tce);
+        tce.show();
         jLabelBemVindo.setText("");
     }//GEN-LAST:event_jButtonExemploActionPerformed
 
