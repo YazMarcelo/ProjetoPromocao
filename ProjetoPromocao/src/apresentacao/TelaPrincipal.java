@@ -6,13 +6,7 @@
 package apresentacao;
 
 import apresentacao.Consulta.TelaConsultaExemplo;
-import java.awt.Color;
-import static javax.management.Query.lt;
-import static javax.swing.GroupLayout.Alignment.CENTER;
-import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.plaf.DesktopPaneUI;
+import apresentacao.Consulta.TelaConsultaTipo;
 
 /**
  *
@@ -21,7 +15,7 @@ import javax.swing.plaf.DesktopPaneUI;
 public class TelaPrincipal extends javax.swing.JFrame {
     boolean aberta;
     TelaConsultaExemplo tce = new TelaConsultaExemplo();
-    
+    TelaConsultaTipo tct = new TelaConsultaTipo();
     /**
      * Creates new form TelaPrincipal
      */
@@ -60,6 +54,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jButtonExemplo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jButtonExemplo1 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabelSair = new javax.swing.JLabel();
         jLabelBemVindo = new javax.swing.JLabel();
@@ -113,6 +108,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("MENU");
 
+        jButtonExemplo1.setBackground(new java.awt.Color(51, 51, 51));
+        jButtonExemplo1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonExemplo1.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonExemplo1.setText("Tipo");
+        jButtonExemplo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExemplo1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -123,7 +128,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jButtonExemplo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jButtonExemplo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonExemplo1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -135,6 +142,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonExemplo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonExemplo1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -211,8 +220,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tce.setLocation(182, 36);
         this.add(tce);
         tce.show();
+        tct.dispose();
         jLabelBemVindo.setText("");
     }//GEN-LAST:event_jButtonExemploActionPerformed
+
+    private void jButtonExemplo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExemplo1ActionPerformed
+        tct.setLocation(182, 36);
+        this.add(tct);
+        tct.show();
+        tce.dispose();
+        jLabelBemVindo.setText("");
+    }//GEN-LAST:event_jButtonExemplo1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -255,6 +273,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButtonExemplo;
+    private javax.swing.JButton jButtonExemplo1;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelBemVindo;
