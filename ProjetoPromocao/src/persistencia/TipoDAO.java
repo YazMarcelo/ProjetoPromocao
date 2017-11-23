@@ -10,19 +10,19 @@ import java.util.ArrayList;
  *
  * @author Marcelo
  */
-public class TipoDAO implements CRUD{
-@Override
+public class TipoDAO implements CRUD {
+
+    @Override
     public void incluir(Object objeto) throws Exception {
-        Tipo obj = (Tipo)(objeto);
-        
+        Tipo obj = (Tipo) (objeto);
+
         String sql = "insert into tipo (tipo_descricao) VALUES (?);";
 
         Connection cnn = util.Conexao.getConexao();
 
         PreparedStatement prd = cnn.prepareStatement(sql);
 
-prd.setString(1, obj.getDescricao());
-
+        prd.setString(1, obj.getDescricao());
 
         prd.execute();
 
@@ -40,6 +40,7 @@ prd.setString(1, obj.getDescricao());
         rs.close();
         cnn.close();
     }
+
     @Override
     public void excluir(String id) throws Exception {
         String sql = "UPDATE public.tipo set excluido = true WHERE tipo_id = ?;";
@@ -55,33 +56,35 @@ prd.setString(1, obj.getDescricao());
         prd.close();
         cnn.close();
     }
+
     @Override
     public void alterar(Object objeto) throws Exception {
-        
-        Tipo obj = (Tipo)(objeto);
-        
+
+        Tipo obj = (Tipo) (objeto);
+
         String sql = "update public.tipo set "
-+"tipo_descricao = ?"
-+" where tipo_id = ?;";
+                + "tipo_descricao = ?"
+                + " where tipo_id = ?;";
 
         Connection cnn = util.Conexao.getConexao();
 
         PreparedStatement prd = cnn.prepareStatement(sql);
 
-prd.setString(1, obj.getDescricao());
-prd.setInt(4, obj.getId());
+        prd.setString(1, obj.getDescricao());
+        prd.setInt(2, obj.getId());
 
         prd.execute();
 
         prd.close();
-        cnn.close(); 
+        cnn.close();
     }
-@Override
+
+    @Override
     public ArrayList<Object> listar() throws Exception {
-        
+
         ArrayList<Object> listaObjs = new ArrayList<>();
 
-        String sql = "select * from public.tipo order by tipo_id";
+        String sql = "select * from public.tipo where excluido = false order by tipo_id ";
 
         Connection cnn = util.Conexao.getConexao();
         Statement stm = cnn.createStatement();
@@ -91,7 +94,8 @@ prd.setInt(4, obj.getId());
 
         while (rs.next()) {
             objeto = new Tipo();
-objeto.setDescricao(rs.getString("tipo_descricao"));
+            objeto.setId(rs.getInt("tipo_id"));
+            objeto.setDescricao(rs.getString("tipo_descricao"));
             listaObjs.add(objeto);
         }
 
@@ -100,9 +104,10 @@ objeto.setDescricao(rs.getString("tipo_descricao"));
 
         return listaObjs;
     }
-@Override
+
+    @Override
     public Object consultar(String id) throws Exception {
-        String sql = "select * from public.tipo where tipo_id = ?;";
+        String sql = "select * from public.tipo where tipo_id = ? and excluido = false;";
 
         Connection cnn = util.Conexao.getConexao();
 
@@ -116,7 +121,8 @@ objeto.setDescricao(rs.getString("tipo_descricao"));
         Tipo objeto = new Tipo();
 
         if (rs.next()) {
-objeto.setDescricao(rs.getString("tipo_descricao"));
+            objeto.setId(rs.getInt("tipo_id"));
+            objeto.setDescricao(rs.getString("tipo_descricao"));
         }
 
         prd.execute();

@@ -110,11 +110,11 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
 
             },
             new String [] {
-                "Código", "Nome", "Descrição"
+                "Código", "Descrição"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -126,9 +126,7 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
             jTableTipo.getColumnModel().getColumn(0).setResizable(false);
             jTableTipo.getColumnModel().getColumn(0).setPreferredWidth(15);
             jTableTipo.getColumnModel().getColumn(1).setResizable(false);
-            jTableTipo.getColumnModel().getColumn(1).setPreferredWidth(150);
-            jTableTipo.getColumnModel().getColumn(2).setResizable(false);
-            jTableTipo.getColumnModel().getColumn(2).setPreferredWidth(430);
+            jTableTipo.getColumnModel().getColumn(1).setPreferredWidth(430);
         }
 
         jButton2.setBackground(new java.awt.Color(0, 136, 204));
