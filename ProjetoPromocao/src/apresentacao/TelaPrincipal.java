@@ -7,6 +7,7 @@ package apresentacao;
 
 import apresentacao.Consulta.TelaConsultaExemplo;
 import apresentacao.Consulta.TelaConsultaTipo;
+import apresentacao.Consulta.TelaConsultaTipo2;
 
 /**
  *
@@ -16,6 +17,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     boolean aberta;
     TelaConsultaExemplo tce = new TelaConsultaExemplo();
     TelaConsultaTipo tct = new TelaConsultaTipo();
+    TelaConsultaTipo2 tct2 = new TelaConsultaTipo2();
     /**
      * Creates new form TelaPrincipal
      */
@@ -55,6 +57,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jButtonExemplo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButtonExemplo1 = new javax.swing.JButton();
+        jButtonExemplo2 = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabelSair = new javax.swing.JLabel();
         jLabelBemVindo = new javax.swing.JLabel();
@@ -118,6 +121,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jButtonExemplo2.setBackground(new java.awt.Color(51, 51, 51));
+        jButtonExemplo2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonExemplo2.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonExemplo2.setText("Tipo2");
+        jButtonExemplo2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonExemplo2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -130,7 +143,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButtonExemplo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonExemplo1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jButtonExemplo1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonExemplo2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -144,6 +158,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jButtonExemplo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonExemplo1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonExemplo2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -191,11 +207,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                         .addGap(0, 1358, Short.MAX_VALUE)
                         .addComponent(filler1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(176, 176, 176))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(401, 401, 401)
                         .addComponent(jLabelBemVindo)
-                        .addContainerGap(789, Short.MAX_VALUE))
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addContainerGap())))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -231,6 +247,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
         tce.dispose();
         jLabelBemVindo.setText("");
     }//GEN-LAST:event_jButtonExemplo1ActionPerformed
+
+    private void jButtonExemplo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExemplo2ActionPerformed
+        tct2.setLocation(182, 36);
+        this.add(tct2);
+        tct2.show();
+        tce.dispose();
+        jLabelBemVindo.setText("");
+    }//GEN-LAST:event_jButtonExemplo2ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -274,6 +298,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButtonExemplo;
     private javax.swing.JButton jButtonExemplo1;
+    private javax.swing.JButton jButtonExemplo2;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelBemVindo;

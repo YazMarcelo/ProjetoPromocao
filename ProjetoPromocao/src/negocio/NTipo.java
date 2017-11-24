@@ -33,7 +33,7 @@ public class NTipo {
         return (Tipo) dao.consultar(codigo);
     }
 
-    public ArrayList<Object> listar() throws SQLException, Exception {
+    public ArrayList<Tipo> listar() throws SQLException, Exception {
         return dao.listar();
     }
 }

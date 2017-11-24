@@ -1,26 +1,24 @@
 package entidade;
 
-
 public class Tipo {
 
-private int id;
-private String descricao;
+    private int id;
+    private String descricao;
 
-public int getId() {
-return id;
-}
+    public Integer getId() {
+        return id;
+    }
 
-public void setId(int id) {
-this.id = id;
-}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-public String getDescricao() {
-return descricao;
-}
+    public String getDescricao() {
+        return descricao;
+    }
 
-public void setDescricao(String descricao) {
-this.descricao = descricao;
-}
-
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 
 }

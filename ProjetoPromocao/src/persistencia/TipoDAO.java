@@ -80,9 +80,9 @@ public class TipoDAO implements CRUD {
     }
 
     @Override
-    public ArrayList<Object> listar() throws Exception {
+    public ArrayList<Tipo> listar() throws Exception {
 
-        ArrayList<Object> listaObjs = new ArrayList<>();
+        ArrayList<Tipo> listaObjs = new ArrayList<>();
 
         String sql = "select * from public.tipo where excluido = false order by tipo_id ";
 

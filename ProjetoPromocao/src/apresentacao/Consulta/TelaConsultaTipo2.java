@@ -25,7 +25,7 @@ import util.Mensagem;
  *
  * @author aluno
  */
-public class TelaConsultaTipo extends javax.swing.JInternalFrame{
+public class TelaConsultaTipo2 extends javax.swing.JInternalFrame{
 
     DefaultTableModel model = null;
     TableRowSorter trs;
@@ -36,7 +36,7 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
     /**
      * Creates new form TelaConsultaTipo
      */
-    public TelaConsultaTipo() {
+    public TelaConsultaTipo2() {
         initComponents();
         atualizar();
     }
@@ -72,12 +72,12 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Consulta de Exemplo");
+        jLabel1.setText("Consulta de Tipo");
 
         jButton1.setBackground(new java.awt.Color(0, 136, 204));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("+ Novo Exemplo");
+        jButton1.setText("+ Novo Tipo");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -93,7 +93,7 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(925, Short.MAX_VALUE))
+                .addContainerGap(969, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,7 +110,7 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
 
             },
             new String [] {
-                "Código", "Descrição"
+                "Código", "Nome"
             }
         ) {
             boolean[] canEdit = new boolean [] {
@@ -126,7 +126,9 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
             jTableTipo.getColumnModel().getColumn(0).setResizable(false);
             jTableTipo.getColumnModel().getColumn(0).setPreferredWidth(15);
             jTableTipo.getColumnModel().getColumn(1).setResizable(false);
-            jTableTipo.getColumnModel().getColumn(1).setPreferredWidth(430);
+            jTableTipo.getColumnModel().getColumn(1).setPreferredWidth(150);
+            jTableTipo.getColumnModel().getColumn(2).setResizable(false);
+            jTableTipo.getColumnModel().getColumn(2).setPreferredWidth(430);
         }
 
         jButton2.setBackground(new java.awt.Color(0, 136, 204));
@@ -268,7 +270,7 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
 
                     msg.msg05();
                 } catch (Exception ex) {
-                    Logger.getLogger(TelaConsultaTipo.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TelaConsultaTipo2.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } else {
@@ -280,11 +282,11 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
         if (jTableTipo.getSelectedRow() >= 0) {
             try {
                 tce = new CadastroTipo();
-                tce.atualizarAposSalvar(this);
+                //tce.atualizarAposSalvar(this);
                 tce.alteracao("Alterar Tipo", (String) jTableTipo.getValueAt(jTableTipo.getSelectedRow(), 0));
                 tce.setVisible(true);
             } catch (Exception ex) {
-                Logger.getLogger(TelaConsultaTipo.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TelaConsultaTipo2.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             msg.msg12();
@@ -348,9 +350,9 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
 
             model.setNumRows(0);
             for (int pos = 0; pos < listaDeEspecialidades.size(); pos++) {
-                String[] saida = new String[2];
+                String[] saida = new String[3];
                 Tipo aux = (Tipo) listaDeEspecialidades.get(pos);
-                saida[0] = String.valueOf(aux.getId());
+                saida[0] = aux.getId().toString();
                 saida[1] = aux.getDescricao();
                 model.addRow(saida);
             }

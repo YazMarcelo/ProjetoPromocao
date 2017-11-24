@@ -16,5 +16,5 @@ public interface CRUD {
     void excluir(String id)throws Exception;
     void alterar(Object objeto)throws Exception;
     public Object consultar(String id)throws Exception;
-    public ArrayList<Object> listar()throws Exception;
+    public ArrayList<?> listar()throws Exception;
 }

@@ -6,19 +6,11 @@
 package apresentacao.Cadastro;
 
 import apresentacao.Consulta.TelaConsultaTipo;
+import apresentacao.Consulta.TelaConsultaTipo2;
 import entidade.Tipo;
-import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javafx.embed.swing.JFXPanel;
-import javafx.scene.layout.Pane;
-import javax.swing.JFrame;
-import javax.swing.JInternalFrame;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 import negocio.NTipo;
-import persistencia.TipoDAO;
-import util.Mensagem;
 
 /**
  *
