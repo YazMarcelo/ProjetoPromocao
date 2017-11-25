@@ -9,15 +9,15 @@ import java.util.ArrayList;
  *
  * @author Marcelo
  */
-public class NTipo {
+public class NFormaPagamento {
 
-    TipoDAO dao;
+    FormaPagamentoDAO dao;
 
-    public NTipo() {
-        dao = new TipoDAO();
+    public NFormaPagamento() {
+        dao = new FormaPagamentoDAO();
     }
 
-    public void salvar(Tipo obj) throws SQLException, Exception {
+    public void salvar(FormaPagamento obj) throws SQLException, Exception {
         if (obj.getId() == 0) {
             dao.incluir(obj);
         } else {
@@ -29,11 +29,11 @@ public class NTipo {
         dao.excluir(codigo);
     }
 
-    public Tipo consultar(int codigo) throws SQLException, Exception {
-        return (Tipo) dao.consultar(codigo);
+    public FormaPagamento consultar(int codigo) throws SQLException, Exception {
+        return (FormaPagamento) dao.consultar(codigo);
     }
 
-    public ArrayList<Tipo> listar() throws SQLException, Exception {
+    public ArrayList<FormaPagamento> listar() throws SQLException, Exception {
         return dao.listar();
     }
 }
