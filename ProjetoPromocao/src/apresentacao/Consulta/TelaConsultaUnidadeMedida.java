@@ -297,7 +297,6 @@ public class TelaConsultaUnidadeMedida extends javax.swing.JInternalFrame {
         jTextFieldPesquisar.addKeyListener(new KeyAdapter() {
             @Override
             public void keyReleased(KeyEvent e) {
-
                 trs.setRowFilter(RowFilter.regexFilter("(?i)" + jTextFieldPesquisar.getText(), esc));
             }
         });

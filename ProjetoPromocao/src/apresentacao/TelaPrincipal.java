@@ -3,13 +3,15 @@ package apresentacao;
 import apresentacao.Consulta.TelaConsultaExemplo;
 import apresentacao.Consulta.TelaConsultaFormaPagamento;
 import apresentacao.Consulta.TelaConsultaTipo;
+import apresentacao.Consulta.TelaConsultaUnidadeMedida;
 import javax.swing.JInternalFrame;
 
 public class TelaPrincipal extends javax.swing.JFrame {
     TelaConsultaExemplo tce = new TelaConsultaExemplo();
     TelaConsultaTipo tct = new TelaConsultaTipo();
     TelaConsultaFormaPagamento tcfp = new TelaConsultaFormaPagamento();
-    JInternalFrame telas[] = {tce, tct, tcfp};
+    TelaConsultaUnidadeMedida tcum = new TelaConsultaUnidadeMedida();
+    JInternalFrame telas[] = {tce, tct, tcfp, tcum};
 
     public TelaPrincipal() {
         initComponents();
@@ -53,8 +55,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         jButtonExemplo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jButtonExemplo1 = new javax.swing.JButton();
-        jButtonExemplo2 = new javax.swing.JButton();
+        jButtonTipo = new javax.swing.JButton();
+        jButtonFormaPagamento = new javax.swing.JButton();
+        jButtonUnidadeMedida = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabelSair = new javax.swing.JLabel();
         jLabelBemVindo = new javax.swing.JLabel();
@@ -108,23 +111,33 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
         jLabel1.setText("MENU");
 
-        jButtonExemplo1.setBackground(new java.awt.Color(51, 51, 51));
-        jButtonExemplo1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButtonExemplo1.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonExemplo1.setText("Tipo");
-        jButtonExemplo1.addActionListener(new java.awt.event.ActionListener() {
+        jButtonTipo.setBackground(new java.awt.Color(51, 51, 51));
+        jButtonTipo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonTipo.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonTipo.setText("Tipo");
+        jButtonTipo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonExemplo1ActionPerformed(evt);
+                jButtonTipoActionPerformed(evt);
             }
         });
 
-        jButtonExemplo2.setBackground(new java.awt.Color(51, 51, 51));
-        jButtonExemplo2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButtonExemplo2.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonExemplo2.setText("Forma de Pagamento");
-        jButtonExemplo2.addActionListener(new java.awt.event.ActionListener() {
+        jButtonFormaPagamento.setBackground(new java.awt.Color(51, 51, 51));
+        jButtonFormaPagamento.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonFormaPagamento.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonFormaPagamento.setText("Forma de Pagamento");
+        jButtonFormaPagamento.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonExemplo2ActionPerformed(evt);
+                jButtonFormaPagamentoActionPerformed(evt);
+            }
+        });
+
+        jButtonUnidadeMedida.setBackground(new java.awt.Color(51, 51, 51));
+        jButtonUnidadeMedida.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonUnidadeMedida.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonUnidadeMedida.setText("Unidade de Medida");
+        jButtonUnidadeMedida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonUnidadeMedidaActionPerformed(evt);
             }
         });
 
@@ -138,10 +151,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jButtonExemplo, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonExemplo1, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButtonExemplo2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jButtonExemplo, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                    .addComponent(jButtonTipo, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                    .addComponent(jButtonFormaPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jButtonUnidadeMedida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -154,9 +168,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButtonExemplo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonExemplo1, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonExemplo2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jButtonFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jButtonUnidadeMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -233,13 +249,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
         abrirTela(tce);
     }//GEN-LAST:event_jButtonExemploActionPerformed
 
-    private void jButtonExemplo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExemplo1ActionPerformed
+    private void jButtonTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTipoActionPerformed
         abrirTela(tct);
-    }//GEN-LAST:event_jButtonExemplo1ActionPerformed
+    }//GEN-LAST:event_jButtonTipoActionPerformed
 
-    private void jButtonExemplo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExemplo2ActionPerformed
+    private void jButtonFormaPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFormaPagamentoActionPerformed
         abrirTela(tcfp);
-    }//GEN-LAST:event_jButtonExemplo2ActionPerformed
+    }//GEN-LAST:event_jButtonFormaPagamentoActionPerformed
+
+    private void jButtonUnidadeMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUnidadeMedidaActionPerformed
+        abrirTela(tcum);
+    }//GEN-LAST:event_jButtonUnidadeMedidaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -282,8 +302,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButtonExemplo;
-    private javax.swing.JButton jButtonExemplo1;
-    private javax.swing.JButton jButtonExemplo2;
+    private javax.swing.JButton jButtonFormaPagamento;
+    private javax.swing.JButton jButtonTipo;
+    private javax.swing.JButton jButtonUnidadeMedida;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabelBemVindo;

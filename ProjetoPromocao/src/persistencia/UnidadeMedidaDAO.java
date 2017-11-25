@@ -17,9 +17,10 @@ public class UnidadeMedidaDAO implements CRUD {
         try {
             cnn.setAutoCommit(false);
             UnidadeMedida objUnidadeMedida = (UnidadeMedida) (objeto);
-            String sql = "INSERT INTO UNIDADE_MEDIDA(UNME_DESCRICAO, UNME_SIGLA) VALUES (?);";
+            String sql = "INSERT INTO UNIDADE_MEDIDA(UNME_DESCRICAO, UNME_SIGLA) VALUES (?, ?);";
             PreparedStatement prd = cnn.prepareStatement(sql);
             prd.setString(1, objUnidadeMedida.getDescricao());
+            prd.setString(2, objUnidadeMedida.getSigla());
             prd.execute();
             prd.close();
             String sql2 = "SELECT CURRVAL('UNIDADE_MEDIDA_UNME_ID_SEQ') AS UNME_ID;";
