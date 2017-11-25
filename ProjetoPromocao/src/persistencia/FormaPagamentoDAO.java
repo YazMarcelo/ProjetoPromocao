@@ -42,10 +42,10 @@ public class FormaPagamentoDAO implements CRUD {
     public void excluir(int id) throws Exception {
         try {
             cnn.setAutoCommit(false);
-            String sql = "DELELE FROM FORMA_PAGAMENTO WHERE FOPA_ID = ?;";
+            String sql = "UPDATE FORMA_PAGAMENTO SET EXCLUIDO = TRUE WHERE FOPA_ID = ?;";
             PreparedStatement prd = cnn.prepareStatement(sql);
             prd.setInt(1, id);
-            prd.execute();
+            prd.executeUpdate();
             prd.close();
             cnn.commit();
         } catch (NumberFormatException | SQLException e) {
