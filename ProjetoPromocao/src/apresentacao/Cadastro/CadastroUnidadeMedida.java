@@ -38,7 +38,7 @@ public class CadastroUnidadeMedida extends javax.swing.JFrame {
         jPanelSuperior.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabelAcao.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabelAcao.setText("Nova Sigla");
+        jLabelAcao.setText("Nova Unidade de Medida");
 
         javax.swing.GroupLayout jPanelSuperiorLayout = new javax.swing.GroupLayout(jPanelSuperior);
         jPanelSuperior.setLayout(jPanelSuperiorLayout);
@@ -47,7 +47,7 @@ public class CadastroUnidadeMedida extends javax.swing.JFrame {
             .addGroup(jPanelSuperiorLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabelAcao)
-                .addContainerGap(261, Short.MAX_VALUE))
+                .addContainerGap(106, Short.MAX_VALUE))
         );
         jPanelSuperiorLayout.setVerticalGroup(
             jPanelSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

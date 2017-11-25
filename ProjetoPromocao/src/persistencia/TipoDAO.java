@@ -1,7 +1,6 @@
 package persistencia;
 
 import entidade.*;
-import negocio.*;
 import interfaces.CRUD;
 import java.sql.*;
 import java.util.ArrayList;
