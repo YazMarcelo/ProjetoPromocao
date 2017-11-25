@@ -25,7 +25,7 @@ import util.Mensagem;
  *
  * @author aluno
  */
-public class TelaConsultaExemplo extends javax.swing.JInternalFrame{
+public class TelaConsultaExemplo extends javax.swing.JInternalFrame {
 
     DefaultTableModel model = null;
     TableRowSorter trs;
@@ -369,6 +369,5 @@ public class TelaConsultaExemplo extends javax.swing.JInternalFrame{
             }
         });
     }
-    
 
 }
