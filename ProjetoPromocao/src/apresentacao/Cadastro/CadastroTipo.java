@@ -6,7 +6,6 @@
 package apresentacao.Cadastro;
 
 import apresentacao.Consulta.TelaConsultaTipo;
-import apresentacao.Consulta.TelaConsultaTipo2;
 import entidade.Tipo;
 import java.util.logging.Level;
 import java.util.logging.Logger;
