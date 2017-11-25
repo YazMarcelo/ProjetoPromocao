@@ -1,16 +1,16 @@
 package apresentacao.Cadastro;
 
-import apresentacao.Consulta.TelaConsultaTipo;
-import entidade.Tipo;
+import apresentacao.Consulta.TelaConsultaFormaPagamento;
+import entidade.FormaPagamento;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import negocio.NTipo;
+import negocio.NFormaPagamento;
 
 public class CadastroFormaPagamento extends javax.swing.JFrame {
 
     int idAlteracao = 0;
     String descricao;
-    TelaConsultaTipo aux;
+    TelaConsultaFormaPagamento aux;
 
     public CadastroFormaPagamento() {
         initComponents();
@@ -124,8 +124,8 @@ public class CadastroFormaPagamento extends javax.swing.JFrame {
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         try {
 
-            Tipo esp = new Tipo();
-            NTipo neg = new NTipo();
+            FormaPagamento esp = new FormaPagamento();
+            NFormaPagamento neg = new NFormaPagamento();
 
             esp.setId(idAlteracao);
             esp.setDescricao(jTextFieldDescricao.getText());
@@ -156,13 +156,13 @@ public class CadastroFormaPagamento extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private javafx.scene.layout.Pane pane;
 
-    public void atualizarAposSalvar(TelaConsultaTipo aux) {
+    public void atualizarAposSalvar(TelaConsultaFormaPagamento aux) {
         this.aux = aux;
     }
 
     public void alteracao(String acao, int id) throws Exception {
-        NTipo neg = new NTipo();
-        Tipo objeto = (Tipo) neg.consultar(id);
+        NFormaPagamento neg = new NFormaPagamento();
+        FormaPagamento objeto = (FormaPagamento) neg.consultar(id);
 
         jLabelAcao.setText(acao);
         this.idAlteracao = objeto.getId();

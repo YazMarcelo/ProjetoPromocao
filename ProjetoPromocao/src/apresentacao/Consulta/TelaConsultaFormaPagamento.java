@@ -5,8 +5,8 @@
  */
 package apresentacao.Consulta;
 
-import apresentacao.Cadastro.CadastroTipo;
-import entidade.Tipo;
+import apresentacao.Cadastro.CadastroFormaPagamento;
+import entidade.FormaPagamento;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -18,25 +18,25 @@ import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import negocio.NTipo;
+import negocio.NFormaPagamento;
 import util.Mensagem;
 
 /**
  *
  * @author aluno
  */
-public class TelaConsultaTipo extends javax.swing.JInternalFrame{
+public class TelaConsultaFormaPagamento extends javax.swing.JInternalFrame{
 
     DefaultTableModel model = null;
     TableRowSorter trs;
     int esc;
-    CadastroTipo tce;
+    CadastroFormaPagamento tce;
     Mensagem msg = new Mensagem();
 
     /**
-     * Creates new form TelaConsultaTipo
+     * Creates new form TelaConsultaFormaPagamento
      */
-    public TelaConsultaTipo() {
+    public TelaConsultaFormaPagamento() {
         initComponents();
         atualizar();
     }
@@ -55,7 +55,7 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableTipo = new javax.swing.JTable();
+        jTableFormaPagamento = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -72,12 +72,12 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Consulta de Tipo");
+        jLabel1.setText("Consulta de Forma de Pagamento");
 
         jButton1.setBackground(new java.awt.Color(0, 136, 204));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("+ Novo Tipo");
+        jButton1.setText("+ Nova Forma de Pagamento");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -93,7 +93,7 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(969, Short.MAX_VALUE))
+                .addContainerGap(785, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -105,7 +105,7 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
                 .addContainerGap())
         );
 
-        jTableTipo.setModel(new javax.swing.table.DefaultTableModel(
+        jTableFormaPagamento.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -121,12 +121,12 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTableTipo);
-        if (jTableTipo.getColumnModel().getColumnCount() > 0) {
-            jTableTipo.getColumnModel().getColumn(0).setResizable(false);
-            jTableTipo.getColumnModel().getColumn(0).setPreferredWidth(15);
-            jTableTipo.getColumnModel().getColumn(1).setResizable(false);
-            jTableTipo.getColumnModel().getColumn(1).setPreferredWidth(430);
+        jScrollPane1.setViewportView(jTableFormaPagamento);
+        if (jTableFormaPagamento.getColumnModel().getColumnCount() > 0) {
+            jTableFormaPagamento.getColumnModel().getColumn(0).setResizable(false);
+            jTableFormaPagamento.getColumnModel().getColumn(0).setPreferredWidth(15);
+            jTableFormaPagamento.getColumnModel().getColumn(1).setResizable(false);
+            jTableFormaPagamento.getColumnModel().getColumn(1).setPreferredWidth(430);
         }
 
         jButton2.setBackground(new java.awt.Color(0, 136, 204));
@@ -242,7 +242,7 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        tce = new CadastroTipo();
+        tce = new CadastroFormaPagamento();
         tce.setVisible(true);
         atualizaAposFechar();
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -253,22 +253,22 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        if (jTableTipo.getSelectedRow() >= 0) {
+        if (jTableFormaPagamento.getSelectedRow() >= 0) {
             int resposta = msg.msg03();
             if (resposta == JOptionPane.YES_OPTION) {
                 try {
 
-                    int id = Integer.valueOf(jTableTipo.getValueAt(jTableTipo.getSelectedRow(), 0).toString());
+                    int id = Integer.valueOf(jTableFormaPagamento.getValueAt(jTableFormaPagamento.getSelectedRow(), 0).toString());
 
-                    NTipo neg = new NTipo();
+                    NFormaPagamento neg = new NFormaPagamento();
                     neg.excluir(id);
 
-                    model.removeRow(jTableTipo.getSelectedRow());
-                    jTableTipo.setModel(model);
+                    model.removeRow(jTableFormaPagamento.getSelectedRow());
+                    jTableFormaPagamento.setModel(model);
 
                     msg.msg05();
                 } catch (Exception ex) {
-                    Logger.getLogger(TelaConsultaTipo.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TelaConsultaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } else {
@@ -277,14 +277,14 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (jTableTipo.getSelectedRow() >= 0) {
+        if (jTableFormaPagamento.getSelectedRow() >= 0) {
             try {
-                tce = new CadastroTipo();
+                tce = new CadastroFormaPagamento();
                 tce.atualizarAposSalvar(this);
-                tce.alteracao("Alterar Tipo", Integer.valueOf(jTableTipo.getValueAt(jTableTipo.getSelectedRow(), 0).toString()));
+                tce.alteracao("Alterar Forma de Pagamento", Integer.valueOf(jTableFormaPagamento.getValueAt(jTableFormaPagamento.getSelectedRow(), 0).toString()));
                 tce.setVisible(true);
             } catch (Exception ex) {
-                Logger.getLogger(TelaConsultaTipo.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TelaConsultaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             msg.msg12();
@@ -320,7 +320,7 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
             }
         });
         trs = new TableRowSorter(model);
-        jTableTipo.setRowSorter(trs);
+        jTableFormaPagamento.setRowSorter(trs);
     }//GEN-LAST:event_jTextFieldPesquisar1KeyTyped
 
 
@@ -335,21 +335,21 @@ public class TelaConsultaTipo extends javax.swing.JInternalFrame{
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableTipo;
+    private javax.swing.JTable jTableFormaPagamento;
     private javax.swing.JTextField jTextFieldPesquisar1;
     // End of variables declaration//GEN-END:variables
 
     public void atualizar() {
         try {
-            ArrayList<Tipo> listaDeEspecialidades;
-            NTipo neg = new NTipo();
+            ArrayList<FormaPagamento> listaDeEspecialidades;
+            NFormaPagamento neg = new NFormaPagamento();
             listaDeEspecialidades = neg.listar();
-            model = (DefaultTableModel) jTableTipo.getModel();
+            model = (DefaultTableModel) jTableFormaPagamento.getModel();
 
             model.setNumRows(0);
             for (int pos = 0; pos < listaDeEspecialidades.size(); pos++) {
                 String[] saida = new String[2];
-                Tipo aux = (Tipo) listaDeEspecialidades.get(pos);
+                FormaPagamento aux = (FormaPagamento) listaDeEspecialidades.get(pos);
                 saida[0] = String.valueOf(aux.getId());
                 saida[1] = aux.getDescricao();
                 model.addRow(saida);

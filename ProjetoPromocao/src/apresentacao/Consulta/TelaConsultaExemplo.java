@@ -260,7 +260,7 @@ public class TelaConsultaExemplo extends javax.swing.JInternalFrame{
             if (resposta == JOptionPane.YES_OPTION) {
                 try {
 
-                    int id = (int) jTableExemplo.getValueAt(jTableExemplo.getSelectedRow(), 0);
+                    int id = Integer.valueOf(jTableExemplo.getValueAt(jTableExemplo.getSelectedRow(), 0).toString());
 
                     NExemplo neg = new NExemplo();
                     neg.excluir(id);
@@ -283,7 +283,7 @@ public class TelaConsultaExemplo extends javax.swing.JInternalFrame{
             try {
                 tce = new CadastroExemplo();
                 tce.atualizarAposSalvar(this);
-                tce.alteracao("Alterar Exemplo", (int) jTableExemplo.getValueAt(jTableExemplo.getSelectedRow(), 0));
+                tce.alteracao("Alterar Exemplo", Integer.valueOf(jTableExemplo.getValueAt(jTableExemplo.getSelectedRow(), 0).toString()));
                 tce.setVisible(true);
             } catch (Exception ex) {
                 Logger.getLogger(TelaConsultaExemplo.class.getName()).log(Level.SEVERE, null, ex);

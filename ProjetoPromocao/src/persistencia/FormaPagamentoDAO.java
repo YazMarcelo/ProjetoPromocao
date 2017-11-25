@@ -18,7 +18,7 @@ public class FormaPagamentoDAO implements CRUD {
         try {
             cnn.setAutoCommit(false);
             FormaPagamento objFormaPagamento = (FormaPagamento) (objeto);
-            String sql = "INSERT INTO FORMA_PAGAMENTO(DESCRICAO) VALUES (?);";
+            String sql = "INSERT INTO FORMA_PAGAMENTO(FOPA_DESCRICAO) VALUES (?);";
             PreparedStatement prd = cnn.prepareStatement(sql);
             prd.setString(1, objFormaPagamento.getDescricao());
             prd.execute();
