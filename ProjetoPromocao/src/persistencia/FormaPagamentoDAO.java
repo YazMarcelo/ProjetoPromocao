@@ -64,7 +64,7 @@ public class FormaPagamentoDAO implements CRUD {
             PreparedStatement prd = cnn.prepareStatement(sql);
             prd.setString(1, objFormaPagamento.getDescricao());
             prd.setInt(2, objFormaPagamento.getId());
-            prd.execute();
+            prd.executeUpdate();
             prd.close();
             cnn.commit();
         } catch (SQLException e) {
