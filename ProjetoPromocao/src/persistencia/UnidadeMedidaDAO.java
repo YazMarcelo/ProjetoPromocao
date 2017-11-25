@@ -1,6 +1,6 @@
 package persistencia;
 
-import entidade.FormaPagamento;
+import entidade.UnidadeMedida;
 import interfaces.CRUD;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -8,7 +8,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class FormaPagamentoDAO implements CRUD {
+public class UnidadeMedidaDAO implements CRUD {
 
     private final Connection cnn = util.Conexao.getConexao();
 
@@ -16,16 +16,16 @@ public class FormaPagamentoDAO implements CRUD {
     public void incluir(Object objeto) throws Exception {
         try {
             cnn.setAutoCommit(false);
-            FormaPagamento objFormaPagamento = (FormaPagamento) (objeto);
-            String sql = "INSERT INTO FORMA_PAGAMENTO(FOPA_DESCRICAO) VALUES (?);";
+            UnidadeMedida objUnidadeMedida = (UnidadeMedida) (objeto);
+            String sql = "INSERT INTO UNIDADE_MEDIDA(UNME_DESCRICAO, UNME_SIGLA) VALUES (?);";
             PreparedStatement prd = cnn.prepareStatement(sql);
-            prd.setString(1, objFormaPagamento.getDescricao());
+            prd.setString(1, objUnidadeMedida.getDescricao());
             prd.execute();
             prd.close();
-            String sql2 = "SELECT CURRVAL('FORMA_PAGAMENTO_FOPA_ID_SEQ') AS FOPA_ID;";
+            String sql2 = "SELECT CURRVAL('UNIDADE_MEDIDA_UNME_ID_SEQ') AS UNME_ID;";
             ResultSet rs = cnn.createStatement().executeQuery(sql2);
             if (rs.next()) {
-                objFormaPagamento.setId(rs.getInt("FOPA_ID"));
+                objUnidadeMedida.setId(rs.getInt("UNME_ID"));
             }
             rs.close();
             cnn.commit();
@@ -41,7 +41,7 @@ public class FormaPagamentoDAO implements CRUD {
     public void excluir(int id) throws Exception {
         try {
             cnn.setAutoCommit(false);
-            String sql = "UPDATE FORMA_PAGAMENTO SET EXCLUIDO = TRUE WHERE FOPA_ID = ?;";
+            String sql = "UPDATE UNIDADE_MEDIDA SET EXCLUIDO = TRUE WHERE UNME_ID = ?;";
             PreparedStatement prd = cnn.prepareStatement(sql);
             prd.setInt(1, id);
             prd.executeUpdate();
@@ -59,11 +59,12 @@ public class FormaPagamentoDAO implements CRUD {
     public void alterar(Object objeto) throws Exception {
         try {
             cnn.setAutoCommit(false);
-            FormaPagamento objFormaPagamento = (FormaPagamento) (objeto);
-            String sql = "UPDATE FORMA_PAGAMENTO SET FOPA_DESCRICAO = ? WHERE FOPA_ID = ?;";
+            UnidadeMedida objUnidadeMedida = (UnidadeMedida) (objeto);
+            String sql = "UPDATE UNIDADE_MEDIDA SET UNME_DESCRICAO = ?, UNME_SIGLA = ? WHERE UNME_ID = ?;";
             PreparedStatement prd = cnn.prepareStatement(sql);
-            prd.setString(1, objFormaPagamento.getDescricao());
-            prd.setInt(2, objFormaPagamento.getId());
+            prd.setString(1, objUnidadeMedida.getDescricao());
+            prd.setString(2, objUnidadeMedida.getSigla());
+            prd.setInt(3, objUnidadeMedida.getId());
             prd.executeUpdate();
             prd.close();
             cnn.commit();
@@ -76,38 +77,40 @@ public class FormaPagamentoDAO implements CRUD {
     }
 
     @Override
-    public ArrayList<FormaPagamento> listar() throws Exception {
-        ArrayList<FormaPagamento> listaFormaPagamento = new ArrayList<>();
+    public ArrayList<UnidadeMedida> listar() throws Exception {
+        ArrayList<UnidadeMedida> listaUnidadeMedida = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM FORMA_PAGAMENTO ORDER BY FOPA_ID;";
+            String sql = "SELECT * FROM UNIDADE_MEDIDA ORDER BY UNME_ID;";
             ResultSet rs = cnn.createStatement().executeQuery(sql);
             while (rs.next()) {
                 if (!rs.getBoolean("EXCLUIDO")) {
-                    FormaPagamento objeto = new FormaPagamento();
-                    objeto.setId(rs.getInt("FOPA_ID"));
-                    objeto.setDescricao(rs.getString("FOPA_DESCRICAO"));
-                    listaFormaPagamento.add(objeto);
+                    UnidadeMedida objeto = new UnidadeMedida();
+                    objeto.setId(rs.getInt("UNME_ID"));
+                    objeto.setDescricao(rs.getString("UNME_DESCRICAO"));
+                    objeto.setSigla(rs.getString("UNME_SIGLA"));
+                    listaUnidadeMedida.add(objeto);
                 }
             }
             rs.close();
         } catch (SQLException e) {
             throw e;
         }
-        return listaFormaPagamento;
+        return listaUnidadeMedida;
     }
 
     @Override
     public Object consultar(int id) throws Exception {
-        FormaPagamento objeto = null;
+        UnidadeMedida objeto = null;
         try {
-            String sql = "SELECT * FROM FORMA_PAGAMENTO WHERE FOPA_ID = ?;";
+            String sql = "SELECT * FROM UNIDADE_MEDIDA WHERE UNME_ID = ?;";
             PreparedStatement prd = cnn.prepareStatement(sql);
             prd.setInt(1, id);
             ResultSet rs = prd.executeQuery();
             if (rs.next()) {
-                objeto = new FormaPagamento();
-                objeto.setId(rs.getInt("FOPA_ID"));
-                objeto.setDescricao(rs.getString("FOPA_DESCRICAO"));
+                objeto = new UnidadeMedida();
+                objeto.setId(rs.getInt("UNME_ID"));
+                objeto.setDescricao(rs.getString("UNME_DESCRICAO"));
+                objeto.setSigla(rs.getString("UNME_SIGLA"));
             }
             rs.close();
             prd.close();

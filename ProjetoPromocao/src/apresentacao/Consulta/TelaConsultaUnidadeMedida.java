@@ -1,7 +1,7 @@
 package apresentacao.Consulta;
 
-import apresentacao.Cadastro.CadastroFormaPagamento;
-import entidade.FormaPagamento;
+import apresentacao.Cadastro.CadastroUnidadeMedida;
+import entidade.UnidadeMedida;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -13,22 +13,21 @@ import javax.swing.JOptionPane;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import negocio.NFormaPagamento;
+import negocio.NUnidadeMedida;
 import util.Mensagem;
 
-public class TelaConsultaFormaPagamento extends javax.swing.JInternalFrame {
+public class TelaConsultaUnidadeMedida extends javax.swing.JInternalFrame {
 
     DefaultTableModel model = null;
     TableRowSorter trs;
     int esc;
-    CadastroFormaPagamento tcfp;
+    CadastroUnidadeMedida tcum;
     Mensagem msg = new Mensagem();
 
-    public TelaConsultaFormaPagamento() {
+    public TelaConsultaUnidadeMedida() {
         initComponents();
         atualizar();
     }
-
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -38,7 +37,7 @@ public class TelaConsultaFormaPagamento extends javax.swing.JInternalFrame {
         jLabel1 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableFormaPagamento = new javax.swing.JTable();
+        jTableUnidadeMedida = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -55,12 +54,12 @@ public class TelaConsultaFormaPagamento extends javax.swing.JInternalFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Consulta de Forma de Pagamento");
+        jLabel1.setText("Consulta de Unidade de Medida");
 
         jButton1.setBackground(new java.awt.Color(0, 136, 204));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("+ Nova Forma de Pagamento");
+        jButton1.setText("+ Nova Unidade de Medida");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -76,7 +75,7 @@ public class TelaConsultaFormaPagamento extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(785, Short.MAX_VALUE))
+                .addContainerGap(810, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -88,28 +87,28 @@ public class TelaConsultaFormaPagamento extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jTableFormaPagamento.setModel(new javax.swing.table.DefaultTableModel(
+        jTableUnidadeMedida.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Código", "Descrição"
+                "Código", "Descrição", "Sigla"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTableFormaPagamento);
-        if (jTableFormaPagamento.getColumnModel().getColumnCount() > 0) {
-            jTableFormaPagamento.getColumnModel().getColumn(0).setResizable(false);
-            jTableFormaPagamento.getColumnModel().getColumn(0).setPreferredWidth(15);
-            jTableFormaPagamento.getColumnModel().getColumn(1).setResizable(false);
-            jTableFormaPagamento.getColumnModel().getColumn(1).setPreferredWidth(430);
+        jScrollPane1.setViewportView(jTableUnidadeMedida);
+        if (jTableUnidadeMedida.getColumnModel().getColumnCount() > 0) {
+            jTableUnidadeMedida.getColumnModel().getColumn(0).setResizable(false);
+            jTableUnidadeMedida.getColumnModel().getColumn(0).setPreferredWidth(15);
+            jTableUnidadeMedida.getColumnModel().getColumn(1).setResizable(false);
+            jTableUnidadeMedida.getColumnModel().getColumn(1).setPreferredWidth(430);
         }
 
         jButton2.setBackground(new java.awt.Color(0, 136, 204));
@@ -225,8 +224,8 @@ public class TelaConsultaFormaPagamento extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        tcfp = new CadastroFormaPagamento();
-        tcfp.setVisible(true);
+        tcum = new CadastroUnidadeMedida();
+        tcum.setVisible(true);
         atualizaAposFechar();
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -236,22 +235,22 @@ public class TelaConsultaFormaPagamento extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        if (jTableFormaPagamento.getSelectedRow() >= 0) {
+        if (jTableUnidadeMedida.getSelectedRow() >= 0) {
             int resposta = msg.msg03();
             if (resposta == JOptionPane.YES_OPTION) {
                 try {
 
-                    int id = Integer.valueOf(jTableFormaPagamento.getValueAt(jTableFormaPagamento.getSelectedRow(), 0).toString());
+                    int id = Integer.valueOf(jTableUnidadeMedida.getValueAt(jTableUnidadeMedida.getSelectedRow(), 0).toString());
 
-                    NFormaPagamento neg = new NFormaPagamento();
+                    NUnidadeMedida neg = new NUnidadeMedida();
                     neg.excluir(id);
 
-                    model.removeRow(jTableFormaPagamento.getSelectedRow());
-                    jTableFormaPagamento.setModel(model);
+                    model.removeRow(jTableUnidadeMedida.getSelectedRow());
+                    jTableUnidadeMedida.setModel(model);
 
                     msg.msg05();
                 } catch (Exception ex) {
-                    Logger.getLogger(TelaConsultaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TelaConsultaUnidadeMedida.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } else {
@@ -260,14 +259,14 @@ public class TelaConsultaFormaPagamento extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        if (jTableFormaPagamento.getSelectedRow() >= 0) {
+        if (jTableUnidadeMedida.getSelectedRow() >= 0) {
             try {
-                tcfp = new CadastroFormaPagamento();
-                tcfp.atualizarAposSalvar(this);
-                tcfp.alteracao("Alterar Forma de Pagamento", Integer.valueOf(jTableFormaPagamento.getValueAt(jTableFormaPagamento.getSelectedRow(), 0).toString()));
-                tcfp.setVisible(true);
+                tcum = new CadastroUnidadeMedida();
+                tcum.atualizarAposSalvar(this);
+                tcum.alteracao("Alterar Unidade de Medida", Integer.valueOf(jTableUnidadeMedida.getValueAt(jTableUnidadeMedida.getSelectedRow(), 0).toString()));
+                tcum.setVisible(true);
             } catch (Exception ex) {
-                Logger.getLogger(TelaConsultaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TelaConsultaUnidadeMedida.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             msg.msg12();
@@ -303,7 +302,7 @@ public class TelaConsultaFormaPagamento extends javax.swing.JInternalFrame {
             }
         });
         trs = new TableRowSorter(model);
-        jTableFormaPagamento.setRowSorter(trs);
+        jTableUnidadeMedida.setRowSorter(trs);
     }//GEN-LAST:event_jTextFieldPesquisarKeyTyped
 
 
@@ -318,21 +317,21 @@ public class TelaConsultaFormaPagamento extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableFormaPagamento;
+    private javax.swing.JTable jTableUnidadeMedida;
     private javax.swing.JTextField jTextFieldPesquisar;
     // End of variables declaration//GEN-END:variables
 
     public void atualizar() {
         try {
-            ArrayList<FormaPagamento> listaDeEspecialidades;
-            NFormaPagamento neg = new NFormaPagamento();
+            ArrayList<UnidadeMedida> listaDeEspecialidades;
+            NUnidadeMedida neg = new NUnidadeMedida();
             listaDeEspecialidades = neg.listar();
-            model = (DefaultTableModel) jTableFormaPagamento.getModel();
+            model = (DefaultTableModel) jTableUnidadeMedida.getModel();
 
             model.setNumRows(0);
             for (int pos = 0; pos < listaDeEspecialidades.size(); pos++) {
                 String[] saida = new String[2];
-                FormaPagamento aux = (FormaPagamento) listaDeEspecialidades.get(pos);
+                UnidadeMedida aux = (UnidadeMedida) listaDeEspecialidades.get(pos);
                 saida[0] = String.valueOf(aux.getId());
                 saida[1] = aux.getDescricao();
                 model.addRow(saida);
@@ -343,7 +342,7 @@ public class TelaConsultaFormaPagamento extends javax.swing.JInternalFrame {
     }
 
     public void atualizaAposFechar() {
-        tcfp.addWindowListener(new WindowAdapter() {
+        tcum.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
                 atualizar();
             }
