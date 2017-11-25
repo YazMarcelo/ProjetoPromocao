@@ -54,7 +54,7 @@ public class ExemploDAO implements CRUD{
     }
 
     @Override
-    public void excluir(String id) throws Exception {
+    public void excluir(int id) throws Exception {
         //Cria a instrução SQL para a inserção no banco
         String sql = "delete from exemplo where exem_id = ?;";
 
@@ -64,7 +64,7 @@ public class ExemploDAO implements CRUD{
         //e string sql
         PreparedStatement prd = cnn.prepareStatement(sql);
 
-        prd.setInt(1, Integer.parseInt(id));
+        prd.setInt(1, id);
 
         prd.execute();
 
@@ -125,7 +125,7 @@ public class ExemploDAO implements CRUD{
     }
 
     @Override
-    public Object consultar(String id) throws Exception {
+    public Object consultar(int id) throws Exception {
         String sql = "select * from exemplo where exem_id = ?;";
 
         Connection cnn = util.Conexao.getConexao();
@@ -135,7 +135,7 @@ public class ExemploDAO implements CRUD{
         PreparedStatement prd = cnn.prepareStatement(sql);
 
         //Seta os valores para o procedimento
-        prd.setInt(1, Integer.parseInt(id));
+        prd.setInt(1, id);
 
         ResultSet rs = prd.executeQuery();
 

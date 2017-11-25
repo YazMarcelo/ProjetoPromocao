@@ -54,7 +54,7 @@ public class CadastroTipo extends javax.swing.JFrame {
         jPanelSuperior.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabelAcao.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabelAcao.setText("Novo Exemplo");
+        jLabelAcao.setText("Novo Tipo");
 
         javax.swing.GroupLayout jPanelSuperiorLayout = new javax.swing.GroupLayout(jPanelSuperior);
         jPanelSuperior.setLayout(jPanelSuperiorLayout);
@@ -63,7 +63,7 @@ public class CadastroTipo extends javax.swing.JFrame {
             .addGroup(jPanelSuperiorLayout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabelAcao)
-                .addContainerGap(221, Short.MAX_VALUE))
+                .addContainerGap(265, Short.MAX_VALUE))
         );
         jPanelSuperiorLayout.setVerticalGroup(
             jPanelSuperiorLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,7 +219,7 @@ public class CadastroTipo extends javax.swing.JFrame {
         this.aux = aux;
     }
 
-    public void alteracao(String acao, String id) throws Exception {
+    public void alteracao(String acao, int id) throws Exception {
         NTipo neg = new NTipo();
         Tipo objeto = (Tipo) neg.consultar(id);
 

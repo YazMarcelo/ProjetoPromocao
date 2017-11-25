@@ -47,11 +47,11 @@ public class NExemplo {
 
     }
 
-    public void excluir(String codigo) throws SQLException, Exception {
+    public void excluir(int codigo) throws SQLException, Exception {
         dao.excluir(codigo);
     }
 
-    public Exemplo consultar(String codigo) throws SQLException, Exception {
+    public Exemplo consultar(int codigo) throws SQLException, Exception {
         return (Exemplo) dao.consultar(codigo);
     }
 

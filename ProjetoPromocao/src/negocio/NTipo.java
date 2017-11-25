@@ -26,11 +26,11 @@ public class NTipo {
         }
     }
 
-    public void excluir(String codigo) throws SQLException, Exception {
+    public void excluir(int codigo) throws SQLException, Exception {
         dao.excluir(codigo);
     }
 
-    public Tipo consultar(String codigo) throws SQLException, Exception {
+    public Tipo consultar(int codigo) throws SQLException, Exception {
         return (Tipo) dao.consultar(codigo);
     }
 

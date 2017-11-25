@@ -42,14 +42,14 @@ public class TipoDAO implements CRUD {
     }
 
     @Override
-    public void excluir(String id) throws Exception {
+    public void excluir(int id) throws Exception {
         String sql = "UPDATE public.tipo set excluido = true WHERE tipo_id = ?;";
 
         Connection cnn = util.Conexao.getConexao();
 
         PreparedStatement prd = cnn.prepareStatement(sql);
 
-        prd.setInt(1, Integer.parseInt(id));
+        prd.setInt(1, id);
 
         prd.execute();
 
@@ -106,7 +106,7 @@ public class TipoDAO implements CRUD {
     }
 
     @Override
-    public Object consultar(String id) throws Exception {
+    public Object consultar(int id) throws Exception {
         String sql = "select * from public.tipo where tipo_id = ? and excluido = false;";
 
         Connection cnn = util.Conexao.getConexao();
@@ -114,7 +114,7 @@ public class TipoDAO implements CRUD {
         PreparedStatement prd = cnn.prepareStatement(sql);
 
         //Seta os valores para o procedimento
-        prd.setInt(1, Integer.parseInt(id));
+        prd.setInt(1, id);
 
         ResultSet rs = prd.executeQuery();
 

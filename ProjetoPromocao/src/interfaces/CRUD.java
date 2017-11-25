@@ -13,8 +13,8 @@ import java.util.ArrayList;
  */
 public interface CRUD {
     void incluir(Object objeto)throws Exception;
-    void excluir(String id)throws Exception;
+    void excluir(int id)throws Exception;
     void alterar(Object objeto)throws Exception;
-    public Object consultar(String id)throws Exception;
+    public Object consultar(int id)throws Exception;
     public ArrayList<?> listar()throws Exception;
 }

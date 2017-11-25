@@ -239,7 +239,7 @@ public class CadastroExemplo extends javax.swing.JFrame {
         this.aux = aux;
     }
 
-    public void alteracao(String acao, String id) throws Exception {
+    public void alteracao(String acao, int id) throws Exception {
         NExemplo neg = new NExemplo();
         Exemplo objeto = (Exemplo) neg.consultar(id);
 
