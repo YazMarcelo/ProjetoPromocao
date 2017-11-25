@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import negocio.NProduto;
 import negocio.NUnidadeMedida;
 import persistencia.ProdutoDAO;
-//import util.DatePickerSample;
+import util.DatePickerSample;
 import util.Mensagem;
 
 /**
@@ -26,7 +26,7 @@ public class CadastroProduto extends javax.swing.JFrame {
     int idAlteracao = 0;
     String descricao;
     TelaConsultaProduto aux;
-    //DatePickerSample dps;
+    DatePickerSample dps;
     
 
     /**
@@ -35,8 +35,8 @@ public class CadastroProduto extends javax.swing.JFrame {
     public CadastroProduto() {
         initComponents();
         setLocationRelativeTo(null);
-        //dps = new DatePickerSample();
-        //jPanelFundo.add(dps.initAndShowGUI(jTextFieldDataFabri));
+        dps = new DatePickerSample();
+        jPanelFundo.add(dps.initAndShowGUI(jTextFieldDataFabri));
     }
 
     /**
