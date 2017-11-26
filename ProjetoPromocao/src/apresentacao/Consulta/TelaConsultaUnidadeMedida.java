@@ -329,10 +329,11 @@ public class TelaConsultaUnidadeMedida extends javax.swing.JInternalFrame {
 
             model.setNumRows(0);
             for (int pos = 0; pos < listaDeEspecialidades.size(); pos++) {
-                String[] saida = new String[2];
+                String[] saida = new String[3];
                 UnidadeMedida aux = (UnidadeMedida) listaDeEspecialidades.get(pos);
                 saida[0] = String.valueOf(aux.getId());
                 saida[1] = aux.getDescricao();
+                saida[2] = aux.getSigla();
                 model.addRow(saida);
             }
         } catch (Exception erro) {
