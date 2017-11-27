@@ -72,12 +72,12 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Consulta de Exemplo");
+        jLabel1.setText("Consulta de Produto");
 
         jButton1.setBackground(new java.awt.Color(0, 136, 204));
         jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
-        jButton1.setText("+ Novo Exemplo");
+        jButton1.setText("+ Novo Produto");
         jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1ActionPerformed(evt);
@@ -93,7 +93,7 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(925, Short.MAX_VALUE))
+                .addContainerGap(932, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -110,11 +110,11 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Código", "Nome", "Descrição"
+                "Código", "Nome", "Valor", "Fabricação", "Vencimento", "Por produto", "Em estoque"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -124,11 +124,12 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
         jScrollPane1.setViewportView(jTableProduto);
         if (jTableProduto.getColumnModel().getColumnCount() > 0) {
             jTableProduto.getColumnModel().getColumn(0).setResizable(false);
-            jTableProduto.getColumnModel().getColumn(0).setPreferredWidth(15);
+            jTableProduto.getColumnModel().getColumn(0).setPreferredWidth(70);
             jTableProduto.getColumnModel().getColumn(1).setResizable(false);
-            jTableProduto.getColumnModel().getColumn(1).setPreferredWidth(150);
+            jTableProduto.getColumnModel().getColumn(1).setPreferredWidth(430);
             jTableProduto.getColumnModel().getColumn(2).setResizable(false);
-            jTableProduto.getColumnModel().getColumn(2).setPreferredWidth(430);
+            jTableProduto.getColumnModel().getColumn(3).setResizable(false);
+            jTableProduto.getColumnModel().getColumn(5).setResizable(false);
         }
 
         jButton2.setBackground(new java.awt.Color(0, 136, 204));
