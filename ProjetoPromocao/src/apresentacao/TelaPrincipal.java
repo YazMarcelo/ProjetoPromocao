@@ -94,7 +94,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuBar4.add(jMenu11);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("PetTop");
+        setTitle("MGM Comercial");
         setBackground(new java.awt.Color(51, 51, 51));
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));

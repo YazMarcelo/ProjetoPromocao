@@ -8,7 +8,9 @@ package apresentacao.Cadastro;
 import apresentacao.Consulta.TelaConsultaProduto;
 import entidade.Produto;
 import entidade.UnidadeMedida;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import negocio.NProduto;
@@ -28,6 +30,7 @@ public class CadastroProduto extends javax.swing.JFrame {
     String descricao;
     TelaConsultaProduto aux;
     DatePickerSample dps;
+    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 
     /**
      * Creates new form CadastroMarca
@@ -37,7 +40,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         setLocationRelativeTo(null);
         adicionandoDadosComboBox();
         dps = new DatePickerSample();
-        jPanelFundo.add(dps.initAndShowGUI(jTextFieldDataFabri));
+//        jPanelFundo.add(dps.initAndShowGUI(jTextFieldDataFabri));
     }
 
     /**
@@ -53,7 +56,6 @@ public class CadastroProduto extends javax.swing.JFrame {
         jPanelSuperior = new javax.swing.JPanel();
         jLabelAcao = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jTextFieldDataFabri = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
         jButtonSalvar = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -69,6 +71,8 @@ public class CadastroProduto extends javax.swing.JFrame {
         jComboBoxUnidadeMedida = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
         jTextFieldDesconto = new javax.swing.JTextField();
+        jTextFieldDataFabri = new javax.swing.JFormattedTextField();
+        jFormattedTextField1 = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -123,6 +127,26 @@ public class CadastroProduto extends javax.swing.JFrame {
 
         jLabel10.setText("Desconto MAX %");
 
+        try {
+            jTextFieldDataFabri.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+        jTextFieldDataFabri.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldDataFabriKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldDataFabriKeyTyped(evt);
+            }
+        });
+
+        try {
+            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout jPanelFundoLayout = new javax.swing.GroupLayout(jPanelFundo);
         jPanelFundo.setLayout(jPanelFundoLayout);
         jPanelFundoLayout.setHorizontalGroup(
@@ -135,31 +159,30 @@ public class CadastroProduto extends javax.swing.JFrame {
                         .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addGroup(jPanelFundoLayout.createSequentialGroup()
+                                        .addComponent(jLabel5)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextFieldDataVenci, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelFundoLayout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(7, 7, 7)
+                                        .addComponent(jTextFieldDataFabri)))
+                                .addGroup(jPanelFundoLayout.createSequentialGroup()
+                                    .addComponent(jLabel6)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jTextFieldQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                    .addComponent(jComboBoxUnidadeMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addGroup(jPanelFundoLayout.createSequentialGroup()
-                                            .addComponent(jLabel5)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jTextFieldDataVenci, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanelFundoLayout.createSequentialGroup()
-                                            .addComponent(jLabel3)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jTextFieldDataFabri, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFundoLayout.createSequentialGroup()
-                                        .addComponent(jLabel6)
+                                    .addGroup(jPanelFundoLayout.createSequentialGroup()
+                                        .addComponent(jLabel10)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextFieldQtd, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(jPanelFundoLayout.createSequentialGroup()
+                                        .addComponent(jLabel8)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jComboBoxUnidadeMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(jPanelFundoLayout.createSequentialGroup()
-                                            .addComponent(jLabel10)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                        .addGroup(jPanelFundoLayout.createSequentialGroup()
-                                            .addComponent(jLabel8)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(jTextFieldSaldoEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                        .addComponent(jTextFieldSaldoEstoque, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)))
                                 .addGroup(jPanelFundoLayout.createSequentialGroup()
                                     .addComponent(jLabel9)
                                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -170,11 +193,14 @@ public class CadastroProduto extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextFieldNome)
-                        .addGap(34, 34, 34))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFundoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jButtonSalvar)
-                .addGap(168, 168, 168))
+                        .addGap(34, 34, 34))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFundoLayout.createSequentialGroup()
+                        .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jFormattedTextField1)
+                            .addGroup(jPanelFundoLayout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(jButtonSalvar)))
+                        .addGap(168, 168, 168))))
         );
         jPanelFundoLayout.setVerticalGroup(
             jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -192,8 +218,8 @@ public class CadastroProduto extends javax.swing.JFrame {
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldDataFabri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jTextFieldDataFabri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldDataVenci, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -211,7 +237,9 @@ public class CadastroProduto extends javax.swing.JFrame {
                 .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
                 .addComponent(jButtonSalvar)
                 .addContainerGap())
         );
@@ -237,13 +265,25 @@ public class CadastroProduto extends javax.swing.JFrame {
             NProduto neg = new NProduto();
 
             esp.setId(idAlteracao);
-            esp.setDescricao(jTextFieldDataFabri.getText());
-            esp.setValor(Double.parseDouble(jTextFieldDataFabri.getText()));
-//            esp.setDataFabricacao(jTextFieldDataFabri.getText());
-//            esp.setDataVencimento(jTextFieldDataFabri.getText());
+            esp.setDescricao(jTextFieldNome.getText());
+            esp.setValor(Double.parseDouble(jTextFieldValor.getText()));
+            
+            if (!(jTextFieldDataFabri.getText().equals("  /  /    "))) {
+                Date dataNasc = formato.parse(jTextFieldDataFabri.getText());
+                java.sql.Date sqlDate = new java.sql.Date(dataNasc.getTime());
+                esp.setDataFabricacao(sqlDate);
+            }
+            
+            if (!(jTextFieldDataVenci.getText().equals("  /  /    "))) {
+                Date dataNasc = formato.parse(jTextFieldDataVenci.getText());
+                java.sql.Date sqlDate = new java.sql.Date(dataNasc.getTime());
+                esp.setDataVencimento(sqlDate);
+            }
+            
             esp.setQtdUnidade(Integer.parseInt(jTextFieldDataFabri.getText()));
-            esp.setUnidadeMedida(new NUnidadeMedida().consultar(Integer.parseInt(jTextFieldDataFabri.getText())));
-            esp.setSaldoEstoque(Integer.parseInt(jTextFieldDataFabri.getText()));
+            esp.setUnidadeMedida((UnidadeMedida) jComboBoxUnidadeMedida.getSelectedItem());
+            esp.setSaldoEstoque(Integer.parseInt(jTextFieldSaldoEstoque.getText()));
+            esp.setPorcentagemDesconto(Integer.parseInt(jTextFieldDesconto.getText()));
 
             neg.salvar(esp);
 
@@ -259,9 +299,24 @@ public class CadastroProduto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
+    private void jTextFieldDataFabriKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDataFabriKeyPressed
+
+    }//GEN-LAST:event_jTextFieldDataFabriKeyPressed
+
+    private void jTextFieldDataFabriKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDataFabriKeyTyped
+        Utilitarios.someteNumeros(evt);
+//        if (Utilitarios.retirarMascara(jTextFieldDataFabri.getText()).length() == 11) {;
+//            if (Utilitarios.validarData(Utilitarios.retirarMascara(jTextFieldDataFabri.getText()))) {
+//                msg.msg06();
+//                jTextFieldDataFabri.setText("");
+//            }
+//        }
+    }//GEN-LAST:event_jTextFieldDataFabriKeyTyped
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JComboBox jComboBoxUnidadeMedida;
+    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -273,7 +328,7 @@ public class CadastroProduto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelAcao;
     private javax.swing.JPanel jPanelFundo;
     private javax.swing.JPanel jPanelSuperior;
-    private javax.swing.JTextField jTextFieldDataFabri;
+    private javax.swing.JFormattedTextField jTextFieldDataFabri;
     private javax.swing.JTextField jTextFieldDataVenci;
     private javax.swing.JTextField jTextFieldDesconto;
     private javax.swing.JTextField jTextFieldNome;
