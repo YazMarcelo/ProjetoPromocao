@@ -20,6 +20,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 import negocio.NProduto;
 import util.Mensagem;
+import util.Utilitarios;
 
 /**
  *
@@ -284,7 +285,7 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
             try {
                 tce = new CadastroProduto();
                 tce.atualizarAposSalvar(this);
-//                tce.alteracao("Alterar Produto", Integer.valueOf(jTableProduto.getValueAt(jTableProduto.getSelectedRow(), 0).toString()));
+                tce.alteracao("Alterar Produto", Integer.valueOf(jTableProduto.getValueAt(jTableProduto.getSelectedRow(), 0).toString()));
                 tce.setVisible(true);
             } catch (Exception ex) {
                 Logger.getLogger(TelaConsultaProduto.class.getName()).log(Level.SEVERE, null, ex);
@@ -351,11 +352,17 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
 
             model.setNumRows(0);
             for (int pos = 0; pos < listaDeEspecialidades.size(); pos++) {
-                String[] saida = new String[3];
+                String[] saida = new String[7];
                 Produto aux = (Produto) listaDeEspecialidades.get(pos);
-//                saida[0] = String.valueOf(aux.getCodigo());
-//                saida[1] = aux.getNome();
-//                saida[2] = aux.getDescricao();
+                
+                saida[0] = String.valueOf(aux.getId());
+                saida[1] = aux.getDescricao();
+                saida[2] = String.valueOf(aux.getValor());
+                saida[3] = Utilitarios.dateBRFormat(String.valueOf(aux.getDataFabricacao()));
+                saida[4] = Utilitarios.dateBRFormat(String.valueOf(aux.getDataVencimento()));
+                saida[5] = (aux.getQtdUnidade()+" "+aux.getUnidadeMedida().getSigla());
+                saida[6] = String.valueOf(aux.getSaldoEstoque());
+
                 model.addRow(saida);
             }
         } catch (Exception erro) {

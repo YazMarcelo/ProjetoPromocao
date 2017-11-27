@@ -61,7 +61,6 @@ public class CadastroProduto extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jTextFieldNome = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextFieldDataVenci = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jTextFieldQtd = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
@@ -72,7 +71,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         jTextFieldDesconto = new javax.swing.JTextField();
         jTextFieldDataFabri = new javax.swing.JFormattedTextField();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jTextFieldDataVenci = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -142,10 +141,18 @@ public class CadastroProduto extends javax.swing.JFrame {
         });
 
         try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
+            jTextFieldDataVenci.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
+        jTextFieldDataVenci.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                jTextFieldDataVenciKeyPressed(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                jTextFieldDataVenciKeyTyped(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelFundoLayout = new javax.swing.GroupLayout(jPanelFundo);
         jPanelFundo.setLayout(jPanelFundoLayout);
@@ -159,12 +166,12 @@ public class CadastroProduto extends javax.swing.JFrame {
                         .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel2)
                             .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addGroup(jPanelFundoLayout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jTextFieldDataVenci, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanelFundoLayout.createSequentialGroup()
+                                    .addGroup(jPanelFundoLayout.createSequentialGroup()
                                         .addComponent(jLabel3)
                                         .addGap(7, 7, 7)
                                         .addComponent(jTextFieldDataFabri)))
@@ -195,11 +202,8 @@ public class CadastroProduto extends javax.swing.JFrame {
                         .addComponent(jTextFieldNome)
                         .addGap(34, 34, 34))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFundoLayout.createSequentialGroup()
-                        .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jFormattedTextField1)
-                            .addGroup(jPanelFundoLayout.createSequentialGroup()
-                                .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButtonSalvar)))
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jButtonSalvar)
                         .addGap(168, 168, 168))))
         );
         jPanelFundoLayout.setVerticalGroup(
@@ -222,8 +226,8 @@ public class CadastroProduto extends javax.swing.JFrame {
                     .addComponent(jTextFieldDataFabri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextFieldDataVenci, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5))
+                    .addComponent(jLabel5)
+                    .addComponent(jTextFieldDataVenci, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
@@ -237,9 +241,7 @@ public class CadastroProduto extends javax.swing.JFrame {
                 .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
                 .addComponent(jButtonSalvar)
                 .addContainerGap())
         );
@@ -280,7 +282,7 @@ public class CadastroProduto extends javax.swing.JFrame {
                 esp.setDataVencimento(sqlDate);
             }
             
-            esp.setQtdUnidade(Integer.parseInt(jTextFieldDataFabri.getText()));
+            esp.setQtdUnidade(Integer.parseInt(jTextFieldQtd.getText()));
             esp.setUnidadeMedida((UnidadeMedida) jComboBoxUnidadeMedida.getSelectedItem());
             esp.setSaldoEstoque(Integer.parseInt(jTextFieldSaldoEstoque.getText()));
             esp.setPorcentagemDesconto(Integer.parseInt(jTextFieldDesconto.getText()));
@@ -313,10 +315,17 @@ public class CadastroProduto extends javax.swing.JFrame {
 //        }
     }//GEN-LAST:event_jTextFieldDataFabriKeyTyped
 
+    private void jTextFieldDataVenciKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDataVenciKeyPressed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldDataVenciKeyPressed
+
+    private void jTextFieldDataVenciKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDataVenciKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextFieldDataVenciKeyTyped
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JComboBox jComboBoxUnidadeMedida;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -329,7 +338,7 @@ public class CadastroProduto extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelFundo;
     private javax.swing.JPanel jPanelSuperior;
     private javax.swing.JFormattedTextField jTextFieldDataFabri;
-    private javax.swing.JTextField jTextFieldDataVenci;
+    private javax.swing.JFormattedTextField jTextFieldDataVenci;
     private javax.swing.JTextField jTextFieldDesconto;
     private javax.swing.JTextField jTextFieldNome;
     private javax.swing.JTextField jTextFieldQtd;
@@ -356,6 +365,8 @@ public class CadastroProduto extends javax.swing.JFrame {
         jTextFieldDataVenci.setText(dateFormatedVenci);
         jTextFieldQtd.setText(String.valueOf(objeto.getQtdUnidade()));
         jTextFieldSaldoEstoque.setText(String.valueOf(objeto.getSaldoEstoque()));
+        jComboBoxUnidadeMedida.setSelectedItem(objeto.getUnidadeMedida());
+        jTextFieldDesconto.setText(String.valueOf(objeto.getPorcentagemDesconto()));
     }
 
     public void adicionandoDadosComboBox() {
