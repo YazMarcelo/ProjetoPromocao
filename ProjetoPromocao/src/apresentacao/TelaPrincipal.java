@@ -55,7 +55,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         filler1 = new javax.swing.Box.Filler(new java.awt.Dimension(0, 0), new java.awt.Dimension(0, 0), new java.awt.Dimension(32767, 32767));
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
-        jButtonExemplo = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jButtonTipo = new javax.swing.JButton();
         jButtonFormaPagamento = new javax.swing.JButton();
@@ -99,16 +98,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setBackground(new java.awt.Color(51, 51, 51));
 
         jPanel1.setBackground(new java.awt.Color(51, 51, 51));
-
-        jButtonExemplo.setBackground(new java.awt.Color(51, 51, 51));
-        jButtonExemplo.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        jButtonExemplo.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonExemplo.setText("Exemplo");
-        jButtonExemplo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonExemploActionPerformed(evt);
-            }
-        });
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -165,7 +154,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonExemplo, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
                     .addComponent(jButtonTipo, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
                     .addComponent(jButtonFormaPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButtonUnidadeMedida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -179,9 +167,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGap(10, 10, 10)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 5, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButtonExemplo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, 0)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButtonTipo, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jButtonFormaPagamento, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -261,10 +247,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jLabelSairMouseClicked
 
-    private void jButtonExemploActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExemploActionPerformed
-        abrirTela(tce);
-    }//GEN-LAST:event_jButtonExemploActionPerformed
-
     private void jButtonTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTipoActionPerformed
         abrirTela(tct);
     }//GEN-LAST:event_jButtonTipoActionPerformed
@@ -321,7 +303,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;
-    private javax.swing.JButton jButtonExemplo;
     private javax.swing.JButton jButtonFormaPagamento;
     private javax.swing.JButton jButtonProduto;
     private javax.swing.JButton jButtonTipo;
