@@ -3,38 +3,43 @@ package apresentacao;
 import apresentacao.Consulta.TelaConsultaExemplo;
 import apresentacao.Consulta.TelaConsultaFormaPagamento;
 import apresentacao.Consulta.TelaConsultaProduto;
+import apresentacao.Consulta.TelaConsultaPromocao;
 import apresentacao.Consulta.TelaConsultaTipo;
 import apresentacao.Consulta.TelaConsultaUnidadeMedida;
 import javax.swing.JInternalFrame;
 
 public class TelaPrincipal extends javax.swing.JFrame {
-    TelaConsultaExemplo tce = new TelaConsultaExemplo();
-    TelaConsultaTipo tct = new TelaConsultaTipo();
-    TelaConsultaFormaPagamento tcfp = new TelaConsultaFormaPagamento();
-    TelaConsultaUnidadeMedida tcum = new TelaConsultaUnidadeMedida();
-    TelaConsultaProduto tcp = new TelaConsultaProduto();
-    JInternalFrame telas[] = {tce, tct, tcfp, tcum, tcp};
 
-    public TelaPrincipal() {
-        initComponents();
-        setExtendedState(MAXIMIZED_BOTH);         
-    }
-    
-    private void abrirTela(JInternalFrame tela) {
-        tela.setLocation(182, 36);
-        add(tela);
-        tela.show();
-        fecharTelas(tela);
-        jLabelBemVindo.setText("");
-    }
-    
-    private void fecharTelas(JInternalFrame telaIgnorada) {
-        for (JInternalFrame tela : telas) {
-            if(!tela.equals(telaIgnorada)) tela.dispose();
-        }
-    }
+	TelaConsultaExemplo tce = new TelaConsultaExemplo();
+	TelaConsultaTipo tct = new TelaConsultaTipo();
+	TelaConsultaFormaPagamento tcfp = new TelaConsultaFormaPagamento();
+	TelaConsultaUnidadeMedida tcum = new TelaConsultaUnidadeMedida();
+	TelaConsultaProduto tcprod = new TelaConsultaProduto();
+	TelaConsultaPromocao tcprom = new TelaConsultaPromocao();
+	JInternalFrame telas[] = {tce, tct, tcfp, tcum, tcprod, tcprom};
 
-    @SuppressWarnings("unchecked")
+	public TelaPrincipal() {
+		initComponents();
+		setExtendedState(MAXIMIZED_BOTH);
+	}
+
+	private void abrirTela(JInternalFrame tela) {
+		tela.setLocation(182, 36);
+		add(tela);
+		tela.show();
+		fecharTelas(tela);
+		jLabelBemVindo.setText("");
+	}
+
+	private void fecharTelas(JInternalFrame telaIgnorada) {
+		for (JInternalFrame tela : telas) {
+			if (!tela.equals(telaIgnorada)) {
+				tela.dispose();
+			}
+		}
+	}
+
+	@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -60,6 +65,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jButtonFormaPagamento = new javax.swing.JButton();
         jButtonUnidadeMedida = new javax.swing.JButton();
         jButtonProduto = new javax.swing.JButton();
+        jButtonPromocao = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabelSair = new javax.swing.JLabel();
         jLabelBemVindo = new javax.swing.JLabel();
@@ -143,6 +149,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
 
+        jButtonPromocao.setBackground(new java.awt.Color(51, 51, 51));
+        jButtonPromocao.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        jButtonPromocao.setForeground(new java.awt.Color(255, 255, 255));
+        jButtonPromocao.setText("Promoção");
+        jButtonPromocao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPromocaoActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -153,12 +169,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButtonTipo, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
-                    .addComponent(jButtonFormaPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonUnidadeMedida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(jButtonTipo, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
+                        .addComponent(jButtonFormaPagamento, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonUnidadeMedida, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jButtonProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButtonPromocao, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(0, 0, Short.MAX_VALUE))
-            .addComponent(jButtonProduto, javax.swing.GroupLayout.DEFAULT_SIZE, 182, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -175,6 +193,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 .addComponent(jButtonUnidadeMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
                 .addComponent(jButtonProduto, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addComponent(jButtonPromocao, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -244,67 +264,72 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabelSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSairMouseClicked
-        this.dispose();
+		this.dispose();
     }//GEN-LAST:event_jLabelSairMouseClicked
 
     private void jButtonTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonTipoActionPerformed
-        abrirTela(tct);
+		abrirTela(tct);
     }//GEN-LAST:event_jButtonTipoActionPerformed
 
     private void jButtonFormaPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFormaPagamentoActionPerformed
-        abrirTela(tcfp);
+		abrirTela(tcfp);
     }//GEN-LAST:event_jButtonFormaPagamentoActionPerformed
 
     private void jButtonUnidadeMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUnidadeMedidaActionPerformed
-        abrirTela(tcum);
+		abrirTela(tcum);
     }//GEN-LAST:event_jButtonUnidadeMedidaActionPerformed
 
     private void jButtonProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProdutoActionPerformed
-    abrirTela(tcp);
+		abrirTela(tcprod);
     }//GEN-LAST:event_jButtonProdutoActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
-        //</editor-fold>
+    private void jButtonPromocaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPromocaoActionPerformed
+		abrirTela(tcprom);
+    }//GEN-LAST:event_jButtonPromocaoActionPerformed
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new TelaPrincipal().setVisible(true);
-            }
-        });
-    }
+	/**
+	 * @param args the command line arguments
+	 */
+	public static void main(String args[]) {
+		/* Set the Nimbus look and feel */
+		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+		 */
+		try {
+			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+				if ("Nimbus".equals(info.getName())) {
+					javax.swing.UIManager.setLookAndFeel(info.getClassName());
+					break;
+				}
+			}
+		} catch (ClassNotFoundException ex) {
+			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+		} catch (InstantiationException ex) {
+			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+		} catch (IllegalAccessException ex) {
+			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
+			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+		}
+		//</editor-fold>
+		//</editor-fold>
+		//</editor-fold>
+		//</editor-fold>
+
+		/* Create and display the form */
+		java.awt.EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				new TelaPrincipal().setVisible(true);
+			}
+		});
+	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;
     private javax.swing.JButton jButtonFormaPagamento;
     private javax.swing.JButton jButtonProduto;
+    private javax.swing.JButton jButtonPromocao;
     private javax.swing.JButton jButtonTipo;
     private javax.swing.JButton jButtonUnidadeMedida;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;

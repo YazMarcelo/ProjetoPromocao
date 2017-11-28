@@ -181,14 +181,17 @@
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
               <Group type="102" attributes="0">
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Component id="jButtonTipo" alignment="0" pref="182" max="32767" attributes="0"/>
-                      <Component id="jButtonFormaPagamento" alignment="0" max="32767" attributes="0"/>
-                      <Component id="jButtonUnidadeMedida" alignment="0" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="jButtonTipo" alignment="0" pref="182" max="32767" attributes="0"/>
+                          <Component id="jButtonFormaPagamento" alignment="0" max="32767" attributes="0"/>
+                          <Component id="jButtonUnidadeMedida" alignment="0" max="32767" attributes="0"/>
+                      </Group>
+                      <Component id="jButtonProduto" alignment="0" min="-2" pref="182" max="-2" attributes="0"/>
+                      <Component id="jButtonPromocao" alignment="0" min="-2" pref="182" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
               </Group>
-              <Component id="jButtonProduto" alignment="0" pref="182" max="32767" attributes="0"/>
           </Group>
         </DimensionLayout>
         <DimensionLayout dim="1">
@@ -206,6 +209,8 @@
                   <Component id="jButtonUnidadeMedida" min="-2" pref="44" max="-2" attributes="0"/>
                   <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
                   <Component id="jButtonProduto" min="-2" pref="44" max="-2" attributes="0"/>
+                  <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
+                  <Component id="jButtonPromocao" min="-2" pref="44" max="-2" attributes="0"/>
                   <EmptySpace max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -291,6 +296,23 @@
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonProdutoActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonPromocao">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="33" green="33" red="33" type="rgb"/>
+            </Property>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Tahoma" size="14" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Promo&#xe7;&#xe3;o"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButtonPromocaoActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
