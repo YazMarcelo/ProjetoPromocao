@@ -1,6 +1,5 @@
 package apresentacao;
 
-import apresentacao.Consulta.TelaConsultaExemplo;
 import apresentacao.Consulta.TelaConsultaFormaPagamento;
 import apresentacao.Consulta.TelaConsultaProduto;
 import apresentacao.Consulta.TelaConsultaPromocao;
@@ -10,13 +9,12 @@ import javax.swing.JInternalFrame;
 
 public class TelaPrincipal extends javax.swing.JFrame {
 
-	TelaConsultaExemplo tce = new TelaConsultaExemplo();
 	TelaConsultaTipo tct = new TelaConsultaTipo();
 	TelaConsultaFormaPagamento tcfp = new TelaConsultaFormaPagamento();
 	TelaConsultaUnidadeMedida tcum = new TelaConsultaUnidadeMedida();
 	TelaConsultaProduto tcprod = new TelaConsultaProduto();
 	TelaConsultaPromocao tcprom = new TelaConsultaPromocao();
-	JInternalFrame telas[] = {tce, tct, tcfp, tcum, tcprod, tcprom};
+	JInternalFrame telas[] = {tct, tcfp, tcum, tcprod, tcprom};
 
 	public TelaPrincipal() {
 		initComponents();

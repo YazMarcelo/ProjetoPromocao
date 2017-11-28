@@ -261,7 +261,7 @@ public class TelaConsultaPromocao extends javax.swing.JInternalFrame {
             try {
                 tcp = new CadastroPromocao();
                 tcp.atualizarAposSalvar(this);
-                tcp.alteracao("Alterar Promoção", Integer.valueOf(jTablePromocao.getValueAt(jTablePromocao.getSelectedRow(), 0).toString()));
+                tcp.alteracao("Alterar Promoção", new NPromocao().consultar(Integer.valueOf(jTablePromocao.getValueAt(jTablePromocao.getSelectedRow(), 0).toString())));
                 tcp.setVisible(true);
             } catch (Exception ex) {
                 Logger.getLogger(TelaConsultaPromocao.class.getName()).log(Level.SEVERE, null, ex);

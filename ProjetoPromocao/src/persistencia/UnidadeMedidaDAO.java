@@ -81,16 +81,14 @@ public class UnidadeMedidaDAO implements CRUD {
     public ArrayList<UnidadeMedida> listar() throws Exception {
         ArrayList<UnidadeMedida> listaUnidadeMedida = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM UNIDADE_MEDIDA ORDER BY UNME_ID;";
+            String sql = "SELECT * FROM UNIDADE_MEDIDA WHERE EXCLUIDO = FALSE ORDER BY UNME_ID;";
             ResultSet rs = cnn.createStatement().executeQuery(sql);
             while (rs.next()) {
-                if (!rs.getBoolean("EXCLUIDO")) {
-                    UnidadeMedida objeto = new UnidadeMedida();
-                    objeto.setId(rs.getInt("UNME_ID"));
-                    objeto.setDescricao(rs.getString("UNME_DESCRICAO"));
-                    objeto.setSigla(rs.getString("UNME_SIGLA"));
-                    listaUnidadeMedida.add(objeto);
-                }
+                UnidadeMedida objeto = new UnidadeMedida();
+                objeto.setId(rs.getInt("UNME_ID"));
+                objeto.setDescricao(rs.getString("UNME_DESCRICAO"));
+                objeto.setSigla(rs.getString("UNME_SIGLA"));
+                listaUnidadeMedida.add(objeto);
             }
             rs.close();
         } catch (SQLException e) {
@@ -103,7 +101,7 @@ public class UnidadeMedidaDAO implements CRUD {
     public Object consultar(int id) throws Exception {
         UnidadeMedida objeto = null;
         try {
-            String sql = "SELECT * FROM UNIDADE_MEDIDA WHERE UNME_ID = ?;";
+            String sql = "SELECT * FROM UNIDADE_MEDIDA WHERE UNME_ID = ? AND EXCLUIDO = FALSE;";
             PreparedStatement prd = cnn.prepareStatement(sql);
             prd.setInt(1, id);
             ResultSet rs = prd.executeQuery();

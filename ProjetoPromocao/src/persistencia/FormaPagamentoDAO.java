@@ -79,15 +79,13 @@ public class FormaPagamentoDAO implements CRUD {
     public ArrayList<FormaPagamento> listar() throws Exception {
         ArrayList<FormaPagamento> listaFormaPagamento = new ArrayList<>();
         try {
-            String sql = "SELECT * FROM FORMA_PAGAMENTO ORDER BY FOPA_ID;";
+            String sql = "SELECT * FROM FORMA_PAGAMENTO WHERE EXCLUIDO = FALSE ORDER BY FOPA_ID;";
             ResultSet rs = cnn.createStatement().executeQuery(sql);
             while (rs.next()) {
-                if (!rs.getBoolean("EXCLUIDO")) {
-                    FormaPagamento objeto = new FormaPagamento();
-                    objeto.setId(rs.getInt("FOPA_ID"));
-                    objeto.setDescricao(rs.getString("FOPA_DESCRICAO"));
-                    listaFormaPagamento.add(objeto);
-                }
+                FormaPagamento objeto = new FormaPagamento();
+                objeto.setId(rs.getInt("FOPA_ID"));
+                objeto.setDescricao(rs.getString("FOPA_DESCRICAO"));
+                listaFormaPagamento.add(objeto);
             }
             rs.close();
         } catch (SQLException e) {
@@ -100,7 +98,7 @@ public class FormaPagamentoDAO implements CRUD {
     public Object consultar(int id) throws Exception {
         FormaPagamento objeto = null;
         try {
-            String sql = "SELECT * FROM FORMA_PAGAMENTO WHERE FOPA_ID = ?;";
+            String sql = "SELECT * FROM FORMA_PAGAMENTO WHERE FOPA_ID = ? AND EXCLUIDO = FALSE;";
             PreparedStatement prd = cnn.prepareStatement(sql);
             prd.setInt(1, id);
             ResultSet rs = prd.executeQuery();

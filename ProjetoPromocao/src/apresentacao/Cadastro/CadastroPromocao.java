@@ -1,4 +1,4 @@
-package apresentacao.Cadastro;
+package apresentacao.Cadastro; 
 
 import apresentacao.Consulta.TelaConsultaPromocao;
 import entidade.Promocao;
@@ -9,17 +9,16 @@ import negocio.NPromocao;
 
 public class CadastroPromocao extends javax.swing.JFrame {
 
-	int idAlteracao = 0;
-	String descricao;
-	TelaConsultaPromocao aux;
+    Promocao promocao;
+    TelaConsultaPromocao frmPai;
 
-	public CadastroPromocao() {
-		initComponents();
-		setLocationRelativeTo(null);
-		atualizarCampos(TipoPromocao.DESCONTO);
-	}
+    public CadastroPromocao() {
+        initComponents();
+        setLocationRelativeTo(null);
+        atualizarCampos(TipoPromocao.DESCONTO);
+    }
 
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -152,7 +151,7 @@ public class CadastroPromocao extends javax.swing.JFrame {
                     .addGroup(jPanelFundoLayout.createSequentialGroup()
                         .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanelFundoLayout.createSequentialGroup()
-                                .addGap(68, 68, 68)
+                                .addGap(74, 74, 74)
                                 .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addComponent(jLabel3)
                                     .addComponent(jLabel4)
@@ -183,7 +182,7 @@ public class CadastroPromocao extends javax.swing.JFrame {
                             .addComponent(jTextFieldQtdLeva)
                             .addComponent(jTextFieldQtdPaga)
                             .addComponent(jTextFieldPorcentagem))))
-                .addGap(80, 80, 80))
+                .addGap(74, 74, 74))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelFundoLayout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButtonSalvar)
@@ -255,26 +254,24 @@ public class CadastroPromocao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-		try {
+        try {
+            NPromocao neg = new NPromocao();
 
-			Promocao prom = new Promocao();
-			NPromocao neg = new NPromocao();
+            promocao.setDescricao(jTextFieldDescricao.getText());
+            promocao.setTipo((TipoPromocao) jComboBoxTipo.getSelectedItem());
+            //promocao.setDataInicio(jDatePickerInicio.get);
+            neg.salvar(promocao);
 
-			prom.setId(idAlteracao);
-			prom.setDescricao(jTextFieldDescricao.getText());
+            if (promocao.getId() > 0) {
+                frmPai.atualizar();
+                this.dispose();
+            } else {
+                limparCampos();
+            }
 
-			neg.salvar(prom);
-
-			if (idAlteracao > 0) {
-				aux.atualizar();
-				this.dispose();
-			} else {
-				limparCampos();
-			}
-
-		} catch (Exception ex) {
-			Logger.getLogger(CadastroPromocao.class.getName()).log(Level.SEVERE, null, ex);
-		}
+        } catch (Exception ex) {
+            Logger.getLogger(CadastroPromocao.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jTextFieldProdPagaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldProdPagaActionPerformed
@@ -286,7 +283,7 @@ public class CadastroPromocao extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldProdLevaActionPerformed
 
     private void jComboBoxTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTipoActionPerformed
-		atualizarCampos((TipoPromocao) jComboBoxTipo.getSelectedItem());
+        atualizarCampos((TipoPromocao) jComboBoxTipo.getSelectedItem());
     }//GEN-LAST:event_jComboBoxTipoActionPerformed
 
     private void jTextFieldQtdPagaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldQtdPagaActionPerformed
@@ -323,70 +320,71 @@ public class CadastroPromocao extends javax.swing.JFrame {
     // End of variables declaration//GEN-END:variables
     private javafx.scene.layout.Pane pane;
 
-	public void atualizarAposSalvar(TelaConsultaPromocao aux) {
-		this.aux = aux;
-	}
+    public void atualizarAposSalvar(TelaConsultaPromocao aux) {
+        this.frmPai = aux;
+    }
 
-	public void alteracao(String acao, int id) throws Exception {
-		NPromocao neg = new NPromocao();
-		Promocao objeto = (Promocao) neg.consultar(id);
+    public void alteracao(String acao, Promocao promocao) throws Exception {
+        NPromocao neg = new NPromocao();
+        this.promocao = promocao;
 
-		jLabelAcao.setText(acao);
-		this.idAlteracao = objeto.getId();
-		jTextFieldDescricao.setText(objeto.getDescricao());
+        jLabelAcao.setText(acao);
+        
+        jTextFieldDescricao.setText(promocao.getDescricao());
+        jComboBoxTipo.setSelectedItem(promocao.getTipo());
+        //jDatePickerInicio.set
+    }
 
-	}
+    public void limparCampos() {
+        jTextFieldDescricao.setText("");
 
-	public void limparCampos() {
-		jTextFieldDescricao.setText("");
+    }
 
-	}
+    private void atualizarCampos(TipoPromocao tipoPromocao) {
+        switch (tipoPromocao) {
+            case DESCONTO:
+                jLabelPorcentagem.setVisible(true);
+                jTextFieldPorcentagem.setVisible(true);
+                jLabelQtdPaga.setVisible(true);
+                jTextFieldQtdPaga.setVisible(true);
+                jLabelQtdLeva.setVisible(false);
+                jTextFieldQtdLeva.setVisible(false);
+                jLabelProdPaga.setVisible(true);
+                jTextFieldProdPaga.setVisible(true);
+                jButtonPesquisarProdPaga.setVisible(true);
+                jLabelProdLeva.setVisible(false);
+                jTextFieldProdLeva.setVisible(false);
+                jButtonPesquisarProdLeva.setVisible(false);
+                break;
+            case QUANTIDADE:
+                jLabelPorcentagem.setVisible(false);
+                jTextFieldPorcentagem.setVisible(false);
+                jLabelQtdPaga.setVisible(true);
+                jTextFieldQtdPaga.setVisible(true);
+                jLabelQtdLeva.setVisible(true);
+                jTextFieldQtdLeva.setVisible(true);
+                jLabelProdPaga.setVisible(true);
+                jTextFieldProdPaga.setVisible(true);
+                jButtonPesquisarProdPaga.setVisible(true);
+                jLabelProdLeva.setVisible(true);
+                jTextFieldProdLeva.setVisible(true);
+                jButtonPesquisarProdLeva.setVisible(true);
+                break;
+            default:
+                jLabelPorcentagem.setVisible(false);
+                jTextFieldPorcentagem.setVisible(false);
+                jLabelQtdPaga.setVisible(false);
+                jTextFieldQtdPaga.setVisible(false);
+                jLabelQtdLeva.setVisible(false);
+                jTextFieldQtdLeva.setVisible(false);
+                jLabelProdPaga.setVisible(false);
+                jTextFieldProdPaga.setVisible(false);
+                jButtonPesquisarProdPaga.setVisible(false);
+                jLabelProdLeva.setVisible(false);
+                jTextFieldProdLeva.setVisible(false);
+                jButtonPesquisarProdLeva.setVisible(false);
 
-	private void atualizarCampos(TipoPromocao tipoPromocao) {
-		switch (tipoPromocao) {
-			case DESCONTO:
-				jLabelPorcentagem.setVisible(true);
-				jTextFieldPorcentagem.setVisible(true);
-				jLabelQtdPaga.setVisible(true);
-				jTextFieldQtdPaga.setVisible(true);
-				jLabelQtdLeva.setVisible(false);
-				jTextFieldQtdLeva.setVisible(false);
-				jLabelProdPaga.setVisible(true);
-				jTextFieldProdPaga.setVisible(true);
-				jButtonPesquisarProdPaga.setVisible(true);
-				jLabelProdLeva.setVisible(false);
-				jTextFieldProdLeva.setVisible(false);
-				jButtonPesquisarProdLeva.setVisible(false);
-				break;
-			case QUANTIDADE:
-				jLabelPorcentagem.setVisible(false);
-				jTextFieldPorcentagem.setVisible(false);
-				jLabelQtdPaga.setVisible(true);
-				jTextFieldQtdPaga.setVisible(true);
-				jLabelQtdLeva.setVisible(true);
-				jTextFieldQtdLeva.setVisible(true);
-				jLabelProdPaga.setVisible(true);
-				jTextFieldProdPaga.setVisible(true);
-				jButtonPesquisarProdPaga.setVisible(true);
-				jLabelProdLeva.setVisible(true);
-				jTextFieldProdLeva.setVisible(true);
-				jButtonPesquisarProdLeva.setVisible(true);
-				break;
-			default:
-				jLabelPorcentagem.setVisible(false);
-				jTextFieldPorcentagem.setVisible(false);
-				jLabelQtdPaga.setVisible(false);
-				jTextFieldQtdPaga.setVisible(false);
-				jLabelQtdLeva.setVisible(false);
-				jTextFieldQtdLeva.setVisible(false);
-				jLabelProdPaga.setVisible(false);
-				jTextFieldProdPaga.setVisible(false);
-				jButtonPesquisarProdPaga.setVisible(false);
-				jLabelProdLeva.setVisible(false);
-				jTextFieldProdLeva.setVisible(false);
-				jButtonPesquisarProdLeva.setVisible(false);
-					
-		}
-	}
+        }
+    }
 
 }
