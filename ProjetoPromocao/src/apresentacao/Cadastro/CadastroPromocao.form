@@ -51,19 +51,50 @@
                           <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="jLabel3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelProdPaga" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelProdLeva" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="jLabelQtdPaga" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelPorcentagem" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabelQtdLeva" alignment="1" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
                           </Group>
-                          <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jTextFieldProdPaga" max="32767" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jButtonPesquisarProdPaga" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jDatePickerFim" pref="0" max="32767" attributes="0"/>
+                              <Component id="jDatePickerInicio" pref="0" max="32767" attributes="0"/>
                               <Component id="jComboBoxTipo" max="32767" attributes="0"/>
-                              <Component id="jTextFieldDescricao" pref="187" max="32767" attributes="0"/>
+                              <Component id="jTextFieldDescricao" max="32767" attributes="0"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Component id="jTextFieldProdLeva" min="-2" pref="102" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="jButtonPesquisarProdLeva" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <Component id="jTextFieldQtdLeva" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jTextFieldQtdPaga" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jTextFieldPorcentagem" alignment="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
-                  <EmptySpace min="0" pref="79" max="32767" attributes="0"/>
+                  <EmptySpace min="-2" pref="80" max="-2" attributes="0"/>
               </Group>
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace max="32767" attributes="0"/>
@@ -78,7 +109,7 @@
                   <Component id="jPanelSuperior" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="11" pref="11" max="-2" attributes="0"/>
                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="18" pref="18" max="-2" attributes="0"/>
+                  <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="3" pref="3" max="-2" attributes="0"/>
@@ -86,13 +117,50 @@
                       </Group>
                       <Component id="jTextFieldDescricao" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="jComboBoxTipo" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
-                  <Component id="jButtonSalvar" max="32767" attributes="0"/>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="jDatePickerInicio" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="jDatePickerFim" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jTextFieldPorcentagem" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelPorcentagem" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jTextFieldQtdPaga" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelQtdPaga" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jTextFieldQtdLeva" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelQtdLeva" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jTextFieldProdPaga" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonPesquisarProdPaga" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelProdPaga" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="3" attributes="0">
+                      <Component id="jTextFieldProdLeva" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jButtonPesquisarProdLeva" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="jLabelProdLeva" alignment="3" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="separate" min="-2" max="-2" attributes="0"/>
+                  <Component id="jButtonSalvar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -114,7 +182,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                       <Component id="jLabelAcao" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace pref="205" max="32767" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -177,7 +245,11 @@
               <StringArray count="0"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBoxTipoActionPerformed"/>
+          </Events>
           <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JComboBox&lt;TipoPromocao&gt;()"/>
             <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="for (TipoPromocao tipoPromocao : TipoPromocao.values()) {&#xa;    jComboBoxTipo.addItem(tipoPromocao);&#xa;}"/>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;TipoPromocao&gt;"/>
           </AuxValues>
@@ -185,6 +257,80 @@
         <Component class="javax.swing.JLabel" name="jLabel4">
           <Properties>
             <Property name="text" type="java.lang.String" value="Tipo*"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldPorcentagem">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelPorcentagem">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Porcentagem"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelQtdPaga">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Qtd. Paga*"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldQtdPaga">
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldQtdPagaActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldQtdLeva">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelQtdLeva">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Qtd. Leva"/>
+          </Properties>
+        </Component>
+        <Component class="org.jdatepicker.JDatePicker" name="jDatePickerInicio">
+        </Component>
+        <Component class="org.jdatepicker.JDatePicker" name="jDatePickerFim">
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel7">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Inicio*"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabel8">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Fim*"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldProdPaga">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldProdPagaActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonPesquisarProdPaga">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Pesquisar"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelProdPaga">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Produto Paga*"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JLabel" name="jLabelProdLeva">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Produto Leva*"/>
+          </Properties>
+        </Component>
+        <Component class="javax.swing.JTextField" name="jTextFieldProdLeva">
+          <Properties>
+            <Property name="editable" type="boolean" value="false"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jTextFieldProdLevaActionPerformed"/>
+          </Events>
+        </Component>
+        <Component class="javax.swing.JButton" name="jButtonPesquisarProdLeva">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Pesquisar"/>
           </Properties>
         </Component>
       </SubComponents>
