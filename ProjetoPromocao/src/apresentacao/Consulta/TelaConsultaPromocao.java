@@ -296,6 +296,7 @@ public class TelaConsultaPromocao extends javax.swing.JInternalFrame {
             colunas.add("Qtd. Leva");
             colunas.add("Produto Paga");
             colunas.add("Produto Leva");
+            colunas.add("Valor Mínimo");
             Vector detalhes = new Vector();
             while (promocoes.hasNext()) {
                 Promocao promocao = promocoes.next();
@@ -310,6 +311,7 @@ public class TelaConsultaPromocao extends javax.swing.JInternalFrame {
                 linha.add(promocao.getQtdLeva() == 0 ? "" : promocao.getQtdLeva());
                 linha.add(promocao.getProdPaga() == null ? "" : promocao.getProdPaga().getDescricao());
                 linha.add(promocao.getProdLeva() == null ? "" : promocao.getProdLeva().getDescricao());
+                linha.add(promocao.getValorMinimo() == 0 ? "" : promocao.getValorMinimo());
                 detalhes.add(linha);
             }
             jTablePromocao.setModel(new DefaultTableModel(detalhes, colunas));

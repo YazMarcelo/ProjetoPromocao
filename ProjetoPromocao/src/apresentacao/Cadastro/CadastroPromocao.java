@@ -43,7 +43,7 @@ public class CadastroPromocao extends javax.swing.JFrame {
 
     private boolean validarCamposNumericos(JTextField... campos) {
         for (JTextField campo : campos) {
-            if (campo.getText().matches("[0-9]+")) {
+            if (campo.getText().matches("[a-zA-Z]+")) {
                 return false;
             }
         }

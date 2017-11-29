@@ -343,7 +343,6 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
                 int linha = jTableProduto.getSelectedRow();
                 if (linha >= 0 && evt.getClickCount() == 2) {
                     telaCadastroPromocao.selecionarProduto(nProduto.consultar(Integer.parseInt(jTableProduto.getValueAt(linha, 0).toString())), qualProd);
-                    
                 }
             }
         } catch (Exception ex) {
