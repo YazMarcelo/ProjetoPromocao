@@ -7,18 +7,14 @@ import java.awt.Dimension;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import negocio.NPromocao;
 import util.Mensagem;
 
 public class CadastroPromocao extends javax.swing.JFrame {
 
 	Promocao promocao = null;
-	Date dataInicio;
-	Date dataFim;
+
 	TelaConsultaPromocao frmPai;
 
 	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -27,7 +23,25 @@ public class CadastroPromocao extends javax.swing.JFrame {
 		initComponents();
 		setLocationRelativeTo(null);
 		atualizarCampos(TipoPromocao.DESCONTO);
+		promocao = new Promocao();
+	}
 
+	private boolean validarCamposObrigatorios(JTextField... campos) {
+		for (JTextField campo : campos) {
+			if (campo.getText().isEmpty()) {
+				return false;
+			}
+		}
+		return true;
+	}
+
+	private boolean validarCamposNumericos(JTextField... campos) {
+		for (JTextField campo : campos) {
+			if (campo.getText().matches("[0-9]+")) {
+				return false;
+			}
+		}
+		return true;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -286,43 +300,80 @@ public class CadastroPromocao extends javax.swing.JFrame {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
 		try {
-			if (promocao == null) {
-				promocao = new Promocao();
+			if (!validarCamposObrigatorios(jTextFieldDescricao, jDatePickerInicio.getFormattedTextField(), jDatePickerFim.getFormattedTextField())) {
+				Mensagem.msg10(this);
+				return;
 			}
 			promocao.setDescricao(jTextFieldDescricao.getText());
+			promocao.setDataInicio(dateFormat.parse(jDatePickerInicio.getFormattedTextField().getText()));
+			promocao.setDataFim(dateFormat.parse(jDatePickerFim.getFormattedTextField().getText()));
 			TipoPromocao tipoPromocao = (TipoPromocao) jComboBoxTipo.getSelectedItem();
 			promocao.setTipo(tipoPromocao);
-			dataInicio = dateFormat.parse(jDatePickerInicio.getFormattedTextField().getText());
-			dataFim = dateFormat.parse(jDatePickerFim.getFormattedTextField().getText());
 			switch (tipoPromocao) {
 				case DESCONTO:
-					float desconto = 0;
-					try {
-						desconto = Float.parseFloat(jTextFieldDesconto.getText());
-						promocao.setDesconto(desconto);
-					} catch (Exception e) {
-						
+					if (!validarCamposObrigatorios(jTextFieldDesconto, jTextFieldProdPaga, jTextFieldQtdPaga)) {
+						Mensagem.msg10(this);
+						return;
 					}
-					
+					if (!validarCamposNumericos(jTextFieldQtdPaga)) {
+						Mensagem.msg06(this);
+						return;
+					}
+					try {
+						promocao.setDesconto(Float.parseFloat(jTextFieldDesconto.getText()));
+					} catch (Exception e) {
+						Mensagem.msg06(this);
+						return;
+					}
+					int qtdPaga = Integer.valueOf(jTextFieldQtdPaga.getText());
+					if (qtdPaga < 0) {
+						Mensagem.msg06(this);
+						return;
+					}
+					promocao.setQtdPaga(qtdPaga);
 					break;
 				case QUANTIDADE:
+					if (!validarCamposObrigatorios(jTextFieldProdPaga, jTextFieldQtdPaga, jTextFieldProdLeva, jTextFieldQtdLeva)) {
+						Mensagem.msg10(this);
+						return;
+					}
+					if (!validarCamposNumericos(jTextFieldQtdPaga, jTextFieldQtdLeva)) {
+						Mensagem.msg06(this);
+						return;
+					}
+					qtdPaga = Integer.valueOf(jTextFieldQtdPaga.getText());
+					int qtdLeva = Integer.valueOf(jTextFieldQtdLeva.getText());
+					if (qtdPaga < 0 || qtdLeva < 0) {
+						Mensagem.msg06(this);
+						return;
+					}
+					promocao.setQtdPaga(qtdPaga);
+					promocao.setQtdLeva(qtdLeva);
 					break;
 				default:
-
+					if (!validarCamposObrigatorios(jTextFieldDesconto, jTextFieldValorMinimo)) {
+						Mensagem.msg10(this);
+						return;
+					}
+					try {
+						promocao.setDesconto(Float.parseFloat(jTextFieldDesconto.getText()));
+						promocao.setValorMinimo(Double.valueOf(jTextFieldValorMinimo.getText()));
+					} catch (Exception e) {
+						Mensagem.msg06(this);
+						return;
+					}
 			}
-
-			NPromocao neg = new NPromocao();
-
-			//neg.salvar(promocao);
+			NPromocao nPromocao = new NPromocao();
+			nPromocao.salvar(promocao);
 			if (promocao.getId() > 0) {
 				frmPai.atualizar();
 				this.dispose();
 			} else {
 				limparCampos();
 			}
-
+			Mensagem.msg01(this);
 		} catch (Exception ex) {
-			Logger.getLogger(CadastroPromocao.class.getName()).log(Level.SEVERE, null, ex);
+			Mensagem.msg08(this);
 		}
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
@@ -348,8 +399,8 @@ public class CadastroPromocao extends javax.swing.JFrame {
 
     private void jDatePickerInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDatePickerInicioActionPerformed
 		try {
-			dataInicio = dateFormat.parse(jDatePickerInicio.getFormattedTextField().getText());
-			if (dataFim.getTime() < dataInicio.getTime()) {
+			promocao.setDataInicio(dateFormat.parse(jDatePickerInicio.getFormattedTextField().getText()));
+			if (promocao.getDataFim().getTime() < promocao.getDataInicio().getTime()) {
 				jDatePickerFim.getFormattedTextField().setText("");
 			}
 		} catch (ParseException ex) {
@@ -358,9 +409,9 @@ public class CadastroPromocao extends javax.swing.JFrame {
     }//GEN-LAST:event_jDatePickerInicioActionPerformed
 
     private void jDatePickerFimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDatePickerFimActionPerformed
-        try {
-			dataFim = dateFormat.parse(jDatePickerFim.getFormattedTextField().getText());
-			if (dataFim.getTime() < dataInicio.getTime()) {
+		try {
+			promocao.setDataFim(dateFormat.parse(jDatePickerFim.getFormattedTextField().getText()));
+			if (promocao.getDataFim().getTime() < promocao.getDataInicio().getTime()) {
 				Mensagem.msg06(this); //Dado inválido
 				jDatePickerFim.getFormattedTextField().setText("");
 			}
@@ -400,19 +451,34 @@ public class CadastroPromocao extends javax.swing.JFrame {
     javax.swing.JTextField jTextFieldValorMinimo;
     // End of variables declaration//GEN-END:variables
 
-	public void atualizarAposSalvar(TelaConsultaPromocao aux) {
-		this.frmPai = aux;
+	public void atualizarAposSalvar(TelaConsultaPromocao frmPai) {
+		this.frmPai = frmPai;
 	}
 
 	public void alteracao(String acao, Promocao promocao) throws Exception {
-		NPromocao neg = new NPromocao();
 		this.promocao = promocao;
-
 		jLabelAcao.setText(acao);
 
 		jTextFieldDescricao.setText(promocao.getDescricao());
 		jComboBoxTipo.setSelectedItem(promocao.getTipo());
-		//jDatePickerInicio.set
+		jDatePickerInicio.getFormattedTextField().setText(dateFormat.format(promocao.getDataInicio()));
+		jDatePickerFim.getFormattedTextField().setText(dateFormat.format(promocao.getDataFim()));
+		switch (promocao.getTipo()) {
+			case DESCONTO:
+				jTextFieldDesconto.setText(promocao.getDesconto().toString());
+				jTextFieldProdPaga.setText(promocao.getProdPaga().getDescricao());
+				jTextFieldQtdPaga.setText(promocao.getQtdPaga().toString());
+				break;
+			case QUANTIDADE:
+				jTextFieldProdPaga.setText(promocao.getProdPaga().getDescricao());
+				jTextFieldQtdPaga.setText(promocao.getQtdPaga().toString());
+				jTextFieldProdLeva.setText(promocao.getProdLeva().getDescricao());
+				jTextFieldQtdLeva.setText(promocao.getQtdLeva().toString());
+				break;
+			default:
+				jTextFieldDesconto.setText(promocao.getDesconto().toString());
+				jTextFieldValorMinimo.setText(promocao.getValorMinimo().toString());
+		}
 	}
 
 	public void limparCampos() {

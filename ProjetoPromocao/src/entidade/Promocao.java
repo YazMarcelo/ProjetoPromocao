@@ -14,6 +14,7 @@ public class Promocao {
 	private Date dataFim;
 	private Produto prodPaga = null;
 	private Produto prodLeva = null;
+	private double valorMinimo = 0;
 
 	public Integer getId() {
 		return id;
@@ -93,6 +94,14 @@ public class Promocao {
 
 	public void setProdLeva(Produto prodLeva) {
 		this.prodLeva = prodLeva;
+	}
+
+	public Double getValorMinimo() {
+		return valorMinimo;
+	}
+
+	public void setValorMinimo(double valorMinimo) {
+		this.valorMinimo = valorMinimo;
 	}
 
 }
