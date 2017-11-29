@@ -1,11 +1,17 @@
 package apresentacao.Cadastro;
 
+import apresentacao.Consulta.TelaConsultaProduto;
 import apresentacao.Consulta.TelaConsultaPromocao;
+import entidade.Produto;
 import entidade.Promocao;
 import entidade.TipoPromocao;
 import java.awt.Dimension;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.ParseException;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import negocio.NPromocao;
 import util.Mensagem;
@@ -16,8 +22,11 @@ public class CadastroPromocao extends javax.swing.JFrame {
     Promocao promocao = null;
     TelaConsultaPromocao frmPai;
 
-    public CadastroPromocao() {
+    JFrame jFrameConsultarProduto;
+
+    public CadastroPromocao(TelaConsultaPromocao frmPai) {
         initComponents();
+        this.frmPai = frmPai;
         setLocationRelativeTo(null);
         atualizarCampos(TipoPromocao.DESCONTO);
         promocao = new Promocao();
@@ -186,6 +195,11 @@ public class CadastroPromocao extends javax.swing.JFrame {
         });
 
         jButtonPesquisarProdLeva.setText("Buscar");
+        jButtonPesquisarProdLeva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPesquisarProdLevaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelFundoLayout = new javax.swing.GroupLayout(jPanelFundo);
         jPanelFundo.setLayout(jPanelFundoLayout);
@@ -368,13 +382,13 @@ public class CadastroPromocao extends javax.swing.JFrame {
                     }
             }
             new NPromocao().salvar(promocao);
+            frmPai.atualizar();
             if (promocao.getId() > 0) {
                 this.dispose();
             } else {
                 limparCampos();
             }
             Mensagem.msg01(this);
-            frmPai.atualizar();
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex);
         }
@@ -393,17 +407,17 @@ public class CadastroPromocao extends javax.swing.JFrame {
     }//GEN-LAST:event_jComboBoxTipoActionPerformed
 
     private void jTextFieldQtdPagaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldQtdPagaActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_jTextFieldQtdPagaActionPerformed
 
     private void jButtonPesquisarProdPagaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarProdPagaActionPerformed
-        // TODO add your handling code here:
+        consultarProduto(1);
     }//GEN-LAST:event_jButtonPesquisarProdPagaActionPerformed
 
     private void jDatePickerInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDatePickerInicioActionPerformed
         try {
             promocao.setDataInicio(Utilitarios.stringToDate(jDatePickerInicio.getFormattedTextField().getText()));
-            if (promocao.getDataFim().getTime() < promocao.getDataInicio().getTime()) {
+            if (promocao.getDataFim() != null && promocao.getDataFim().getTime() < promocao.getDataInicio().getTime()) {
                 jDatePickerFim.getFormattedTextField().setText("");
             }
         } catch (ParseException ex) {
@@ -414,7 +428,7 @@ public class CadastroPromocao extends javax.swing.JFrame {
     private void jDatePickerFimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDatePickerFimActionPerformed
         try {
             promocao.setDataFim(Utilitarios.stringToDate(jDatePickerFim.getFormattedTextField().getText()));
-            if (promocao.getDataFim().getTime() < promocao.getDataInicio().getTime()) {
+            if (promocao.getDataInicio() != null && promocao.getDataFim().getTime() < promocao.getDataInicio().getTime()) {
                 Mensagem.msg06(this); //Dado inválido
                 jDatePickerFim.getFormattedTextField().setText("");
             }
@@ -429,6 +443,10 @@ public class CadastroPromocao extends javax.swing.JFrame {
         } catch (Exception e) {
         }
     }//GEN-LAST:event_formWindowClosing
+
+    private void jButtonPesquisarProdLevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarProdLevaActionPerformed
+        consultarProduto(2);
+    }//GEN-LAST:event_jButtonPesquisarProdLevaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -460,10 +478,6 @@ public class CadastroPromocao extends javax.swing.JFrame {
     javax.swing.JTextField jTextFieldQtdPaga;
     javax.swing.JTextField jTextFieldValorMinimo;
     // End of variables declaration//GEN-END:variables
-
-    public void atualizarAposSalvar(TelaConsultaPromocao frmPai) {
-        this.frmPai = frmPai;
-    }
 
     public void alteracao(String acao, Promocao promocao) throws Exception {
         this.promocao = promocao;
@@ -556,4 +570,39 @@ public class CadastroPromocao extends javax.swing.JFrame {
         //526 406 446 366
     }
 
+    public void selecionarProduto(Produto produto, int qual) {
+        if (qual == 1) {
+            promocao.setProdPaga(produto);
+            jTextFieldProdPaga.setText(produto.getDescricao());
+        } else if (qual == 2) {
+            promocao.setProdLeva(produto);
+            jTextFieldProdLeva.setText(produto.getDescricao());
+        }
+        jFrameConsultarProduto.setVisible(false);
+        jFrameConsultarProduto.dispose();
+        this.setVisible(true);
+
+    }
+
+    private void consultarProduto(int qual) {
+        jFrameConsultarProduto = new JFrame();
+        TelaConsultaProduto iFrame = new TelaConsultaProduto(this, qual);
+        JPanel panel = iFrame.getMainPanel();
+        jFrameConsultarProduto.setSize(1174, 631);
+        jFrameConsultarProduto.setUndecorated(false);
+        jFrameConsultarProduto.setLocationRelativeTo(this);
+        jFrameConsultarProduto.setAlwaysOnTop(true);
+        jFrameConsultarProduto.setResizable(false);
+        jFrameConsultarProduto.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                jFrameConsultarProduto.setVisible(false);
+                jFrameConsultarProduto.dispose();
+                CadastroPromocao.this.setVisible(true);
+            }
+        });
+        jFrameConsultarProduto.add(panel);
+        panel.setVisible(true);
+        jFrameConsultarProduto.setVisible(true);
+    }
 }

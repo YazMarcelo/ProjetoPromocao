@@ -13,15 +13,16 @@ import util.Mensagem;
 import util.Utilitarios;
 
 public class TelaConsultaPromocao extends javax.swing.JInternalFrame {
-	CadastroPromocao telaCadastroPromocao;
-	NPromocao nPromocao = new NPromocao();
 
-	public TelaConsultaPromocao() {
-		initComponents();
-		atualizar();
-	}
+    CadastroPromocao telaCadastroPromocao;
+    NPromocao nPromocao = new NPromocao();
 
-	@SuppressWarnings("unchecked")
+    public TelaConsultaPromocao() {
+        initComponents();
+        atualizar();
+    }
+
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -209,53 +210,52 @@ public class TelaConsultaPromocao extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-		telaCadastroPromocao = new CadastroPromocao();
-		telaCadastroPromocao.setVisible(true);
+        telaCadastroPromocao = new CadastroPromocao(this);
+        telaCadastroPromocao.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarActionPerformed
-		atualizar();
+        atualizar();
     }//GEN-LAST:event_jButtonAtualizarActionPerformed
 
     private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
-		if (jTablePromocao.getSelectedRow() >= 0) {
-			int resposta = Mensagem.msg03(this);
-			if (resposta == JOptionPane.YES_OPTION) {
-				try {
-					int id = Integer.valueOf(jTablePromocao.getValueAt(jTablePromocao.getSelectedRow(), 0).toString());
-					nPromocao.excluir(id);
-					atualizar();
-					Mensagem.msg05(this);
-				} catch (Exception ex) {
-					Logger.getLogger(TelaConsultaPromocao.class.getName()).log(Level.SEVERE, null, ex);
-				}
-			}
-		} else {
-			Mensagem.msg12(this);
-		}
+        if (jTablePromocao.getSelectedRow() >= 0) {
+            int resposta = Mensagem.msg03(this);
+            if (resposta == JOptionPane.YES_OPTION) {
+                try {
+                    int id = Integer.valueOf(jTablePromocao.getValueAt(jTablePromocao.getSelectedRow(), 0).toString());
+                    nPromocao.excluir(id);
+                    atualizar();
+                    Mensagem.msg05(this);
+                } catch (Exception ex) {
+                    Logger.getLogger(TelaConsultaPromocao.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        } else {
+            Mensagem.msg12(this);
+        }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
-		if (jTablePromocao.getSelectedRow() >= 0) {
-			try {
-				telaCadastroPromocao = new CadastroPromocao();
-				telaCadastroPromocao.atualizarAposSalvar(this);
-				telaCadastroPromocao.alteracao("Alterar Promoção", nPromocao.consultar(Integer.valueOf(jTablePromocao.getValueAt(jTablePromocao.getSelectedRow(), 0).toString())));
-				telaCadastroPromocao.setVisible(true);
-			} catch (Exception ex) {
-				Logger.getLogger(TelaConsultaPromocao.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		} else {
-			Mensagem.msg12(this);
-		}
+        if (jTablePromocao.getSelectedRow() >= 0) {
+            try {
+                telaCadastroPromocao = new CadastroPromocao(this);
+                telaCadastroPromocao.alteracao("Alterar Promoção", nPromocao.consultar(Integer.valueOf(jTablePromocao.getValueAt(jTablePromocao.getSelectedRow(), 0).toString())));
+                telaCadastroPromocao.setVisible(true);
+            } catch (Exception ex) {
+                Logger.getLogger(TelaConsultaPromocao.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        } else {
+            Mensagem.msg12(this);
+        }
     }//GEN-LAST:event_jButtonAlterarActionPerformed
 
     private void jTextFieldPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarMouseClicked
-		jTextFieldPesquisar.setText("");
+        jTextFieldPesquisar.setText("");
     }//GEN-LAST:event_jTextFieldPesquisarMouseClicked
 
     private void jTextFieldPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarActionPerformed
-		// TODO add your handling code here:
+        // TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldPesquisarActionPerformed
 
     private void jTextFieldPesquisarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarKeyReleased
@@ -282,39 +282,39 @@ public class TelaConsultaPromocao extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextFieldPesquisar;
     // End of variables declaration//GEN-END:variables
 
-	public void atualizar() {
-		try {
-			Iterator<Promocao> promocoes = nPromocao.listar();
-			Vector colunas = new Vector();
-			colunas.add("Código");
-			colunas.add("Descrição");
-			colunas.add("Tipo");
-			colunas.add("Desconto");
-			colunas.add("Qtd. Paga");
-			colunas.add("Qtd. Leva");
-			colunas.add("Inicio");
-			colunas.add("Fim");
-			colunas.add("Produto Paga");
-			colunas.add("Produto Leva");
-			Vector linhas = new Vector();
-			while (promocoes.hasNext()) {
-				Promocao promocao = promocoes.next();
-				linhas.add(new Object[]{
-					promocao.getId(),
-					promocao.getDescricao(),
-					promocao.getTipo().toString(),
-					promocao.getDesconto(),
-					promocao.getQtdPaga(),
-					promocao.getQtdLeva(),
-					Utilitarios.dateToString(promocao.getDataInicio()),
-					Utilitarios.dateToString(promocao.getDataFim()),
-					promocao.getProdPaga() == null ? "" : promocao.getProdPaga().getDescricao(),
-					promocao.getProdLeva() == null ? "" : promocao.getProdLeva().getDescricao()
-				});
-			}
-			jTablePromocao.setModel(new DefaultTableModel(linhas, colunas));
-		} catch (Exception e) {
-			JOptionPane.showMessageDialog(this, e.getMessage());
-		}
-	}
+    public void atualizar() {
+        try {
+            Iterator<Promocao> promocoes = nPromocao.listarIterator();
+            Vector colunas = new Vector();
+            colunas.add("Código");
+            colunas.add("Descrição");
+            colunas.add("Tipo");
+            colunas.add("Inicio");
+            colunas.add("Fim");
+            colunas.add("Desconto");
+            colunas.add("Qtd. Paga");
+            colunas.add("Qtd. Leva");
+            colunas.add("Produto Paga");
+            colunas.add("Produto Leva");
+            Vector detalhes = new Vector();
+            while (promocoes.hasNext()) {
+                Promocao promocao = promocoes.next();
+                Vector linha = new Vector();
+                linha.add(promocao.getId());
+                linha.add(promocao.getDescricao());
+                linha.add(promocao.getTipo().toString());
+                linha.add(Utilitarios.dateToString(promocao.getDataInicio()));
+                linha.add(Utilitarios.dateToString(promocao.getDataFim()));
+                linha.add(promocao.getDesconto());
+                linha.add(promocao.getQtdPaga() == 0 ? "" : promocao.getQtdPaga());
+                linha.add(promocao.getQtdLeva() == 0 ? "" : promocao.getQtdLeva());
+                linha.add(promocao.getProdPaga() == null ? "" : promocao.getProdPaga().getDescricao());
+                linha.add(promocao.getProdLeva() == null ? "" : promocao.getProdLeva().getDescricao());
+                detalhes.add(linha);
+            }
+            jTablePromocao.setModel(new DefaultTableModel(detalhes, colunas));
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
 }
