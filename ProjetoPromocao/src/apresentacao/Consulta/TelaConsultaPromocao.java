@@ -234,7 +234,7 @@ public class TelaConsultaPromocao extends javax.swing.JInternalFrame {
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
         if (jTablePromocao.getSelectedRow() >= 0) {
-            int resposta = Mensagem.msg03();
+            int resposta = Mensagem.msg03(this);
             if (resposta == JOptionPane.YES_OPTION) {
                 try {
 
@@ -246,13 +246,13 @@ public class TelaConsultaPromocao extends javax.swing.JInternalFrame {
                     model.removeRow(jTablePromocao.getSelectedRow());
                     jTablePromocao.setModel(model);
 
-                    Mensagem.msg05();
+                    Mensagem.msg05(this);
                 } catch (Exception ex) {
                     Logger.getLogger(TelaConsultaPromocao.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } else {
-            Mensagem.msg12();
+            Mensagem.msg12(this);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -267,7 +267,7 @@ public class TelaConsultaPromocao extends javax.swing.JInternalFrame {
                 Logger.getLogger(TelaConsultaPromocao.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            Mensagem.msg12();
+            Mensagem.msg12(this);
         }
         atualizaAposFechar();
     }//GEN-LAST:event_jButton2ActionPerformed

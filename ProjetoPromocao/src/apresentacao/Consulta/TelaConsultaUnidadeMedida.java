@@ -236,7 +236,7 @@ public class TelaConsultaUnidadeMedida extends javax.swing.JInternalFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
         if (jTableUnidadeMedida.getSelectedRow() >= 0) {
-            int resposta = msg.msg03();
+            int resposta = msg.msg03(this);
             if (resposta == JOptionPane.YES_OPTION) {
                 try {
 
@@ -248,13 +248,13 @@ public class TelaConsultaUnidadeMedida extends javax.swing.JInternalFrame {
                     model.removeRow(jTableUnidadeMedida.getSelectedRow());
                     jTableUnidadeMedida.setModel(model);
 
-                    msg.msg05();
+                    msg.msg05(this);
                 } catch (Exception ex) {
                     Logger.getLogger(TelaConsultaUnidadeMedida.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } else {
-            msg.msg12();
+            msg.msg12(this);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -269,7 +269,7 @@ public class TelaConsultaUnidadeMedida extends javax.swing.JInternalFrame {
                 Logger.getLogger(TelaConsultaUnidadeMedida.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            msg.msg12();
+            msg.msg12(this);
         }
         atualizaAposFechar();
     }//GEN-LAST:event_jButton2ActionPerformed

@@ -4,23 +4,33 @@ import apresentacao.Consulta.TelaConsultaPromocao;
 import entidade.Promocao;
 import entidade.TipoPromocao;
 import java.awt.Dimension;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import negocio.NPromocao;
+import util.Mensagem;
 
 public class CadastroPromocao extends javax.swing.JFrame {
 
-    Promocao promocao = null;
-    TelaConsultaPromocao frmPai;
+	Promocao promocao = null;
+	Date dataInicio;
+	Date dataFim;
+	TelaConsultaPromocao frmPai;
 
-    public CadastroPromocao() {
-        initComponents();
-        setLocationRelativeTo(null);
-        atualizarCampos(TipoPromocao.DESCONTO);
-        
-    }
+	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-    @SuppressWarnings("unchecked")
+	public CadastroPromocao() {
+		initComponents();
+		setLocationRelativeTo(null);
+		atualizarCampos(TipoPromocao.DESCONTO);
+
+	}
+
+	@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -116,6 +126,18 @@ public class CadastroPromocao extends javax.swing.JFrame {
 
         jLabelQtdLeva.setText("Qtd. Leva*");
 
+        jDatePickerInicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDatePickerInicioActionPerformed(evt);
+            }
+        });
+
+        jDatePickerFim.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDatePickerFimActionPerformed(evt);
+            }
+        });
+
         jLabel7.setText("Inicio*");
 
         jLabel8.setText("Fim*");
@@ -156,8 +178,7 @@ public class CadastroPromocao extends javax.swing.JFrame {
             .addComponent(jPanelSuperior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanelFundoLayout.createSequentialGroup()
                 .addGap(10, 10, 10)
-                .addComponent(jLabel2)
-                .addGap(0, 0, 0))
+                .addComponent(jLabel2))
             .addGroup(jPanelFundoLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -264,26 +285,45 @@ public class CadastroPromocao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-        try {
-            if (promocao == null) {
-                promocao = new Promocao();
-            }
-            promocao.setDescricao(jTextFieldDescricao.getText());
-            promocao.setTipo((TipoPromocao) jComboBoxTipo.getSelectedItem());
-            System.out.println(jDatePickerInicio.getFormattedTextField().getText());
-            NPromocao neg = new NPromocao();
+		try {
+			if (promocao == null) {
+				promocao = new Promocao();
+			}
+			promocao.setDescricao(jTextFieldDescricao.getText());
+			TipoPromocao tipoPromocao = (TipoPromocao) jComboBoxTipo.getSelectedItem();
+			promocao.setTipo(tipoPromocao);
+			dataInicio = dateFormat.parse(jDatePickerInicio.getFormattedTextField().getText());
+			dataFim = dateFormat.parse(jDatePickerFim.getFormattedTextField().getText());
+			switch (tipoPromocao) {
+				case DESCONTO:
+					float desconto = 0;
+					try {
+						desconto = Float.parseFloat(jTextFieldDesconto.getText());
+						promocao.setDesconto(desconto);
+					} catch (Exception e) {
+						
+					}
+					
+					break;
+				case QUANTIDADE:
+					break;
+				default:
 
-            //neg.salvar(promocao);
-            if (promocao.getId() > 0) {
-                frmPai.atualizar();
-                this.dispose();
-            } else {
-                limparCampos();
-            }
+			}
 
-        } catch (Exception ex) {
-            Logger.getLogger(CadastroPromocao.class.getName()).log(Level.SEVERE, null, ex);
-        }
+			NPromocao neg = new NPromocao();
+
+			//neg.salvar(promocao);
+			if (promocao.getId() > 0) {
+				frmPai.atualizar();
+				this.dispose();
+			} else {
+				limparCampos();
+			}
+
+		} catch (Exception ex) {
+			Logger.getLogger(CadastroPromocao.class.getName()).log(Level.SEVERE, null, ex);
+		}
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jTextFieldProdPagaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldProdPagaActionPerformed
@@ -295,23 +335,46 @@ public class CadastroPromocao extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldProdLevaActionPerformed
 
     private void jComboBoxTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTipoActionPerformed
-        atualizarCampos((TipoPromocao) jComboBoxTipo.getSelectedItem());
+		atualizarCampos((TipoPromocao) jComboBoxTipo.getSelectedItem());
     }//GEN-LAST:event_jComboBoxTipoActionPerformed
 
     private void jTextFieldQtdPagaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldQtdPagaActionPerformed
-        // TODO add your handling code here:
+		// TODO add your handling code here:
     }//GEN-LAST:event_jTextFieldQtdPagaActionPerformed
 
     private void jButtonPesquisarProdPagaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarProdPagaActionPerformed
-        // TODO add your handling code here:
+		// TODO add your handling code here:
     }//GEN-LAST:event_jButtonPesquisarProdPagaActionPerformed
+
+    private void jDatePickerInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDatePickerInicioActionPerformed
+		try {
+			dataInicio = dateFormat.parse(jDatePickerInicio.getFormattedTextField().getText());
+			if (dataFim.getTime() < dataInicio.getTime()) {
+				jDatePickerFim.getFormattedTextField().setText("");
+			}
+		} catch (ParseException ex) {
+
+		}
+    }//GEN-LAST:event_jDatePickerInicioActionPerformed
+
+    private void jDatePickerFimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDatePickerFimActionPerformed
+        try {
+			dataFim = dateFormat.parse(jDatePickerFim.getFormattedTextField().getText());
+			if (dataFim.getTime() < dataInicio.getTime()) {
+				Mensagem.msg06(this); //Dado inválido
+				jDatePickerFim.getFormattedTextField().setText("");
+			}
+		} catch (ParseException ex) {
+
+		}
+    }//GEN-LAST:event_jDatePickerFimActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     javax.swing.JButton jButtonPesquisarProdLeva;
     javax.swing.JButton jButtonPesquisarProdPaga;
     javax.swing.JButton jButtonSalvar;
-    private javax.swing.JComboBox<TipoPromocao> jComboBoxTipo;
+    javax.swing.JComboBox<TipoPromocao> jComboBoxTipo;
     org.jdatepicker.JDatePicker jDatePickerFim;
     org.jdatepicker.JDatePicker jDatePickerInicio;
     javax.swing.JLabel jLabel2;
@@ -337,84 +400,84 @@ public class CadastroPromocao extends javax.swing.JFrame {
     javax.swing.JTextField jTextFieldValorMinimo;
     // End of variables declaration//GEN-END:variables
 
-    public void atualizarAposSalvar(TelaConsultaPromocao aux) {
-        this.frmPai = aux;
-    }
+	public void atualizarAposSalvar(TelaConsultaPromocao aux) {
+		this.frmPai = aux;
+	}
 
-    public void alteracao(String acao, Promocao promocao) throws Exception {
-        NPromocao neg = new NPromocao();
-        this.promocao = promocao;
+	public void alteracao(String acao, Promocao promocao) throws Exception {
+		NPromocao neg = new NPromocao();
+		this.promocao = promocao;
 
-        jLabelAcao.setText(acao);
+		jLabelAcao.setText(acao);
 
-        jTextFieldDescricao.setText(promocao.getDescricao());
-        jComboBoxTipo.setSelectedItem(promocao.getTipo());
-        //jDatePickerInicio.set
-    }
+		jTextFieldDescricao.setText(promocao.getDescricao());
+		jComboBoxTipo.setSelectedItem(promocao.getTipo());
+		//jDatePickerInicio.set
+	}
 
-    public void limparCampos() {
-        jTextFieldDescricao.setText("");
+	public void limparCampos() {
+		jTextFieldDescricao.setText("");
 
-    }
+	}
 
-    private void atualizarCampos(TipoPromocao tipoPromocao) {
-        Dimension dimension = new Dimension(437, 0);
-        switch (tipoPromocao) {
-            case DESCONTO:
-                jLabelDesconto.setVisible(true);
-                jTextFieldDesconto.setVisible(true);
-                jLabelQtdPaga.setVisible(true);
-                jTextFieldQtdPaga.setVisible(true);
-                jLabelQtdLeva.setVisible(false);
-                jTextFieldQtdLeva.setVisible(false);
-                jLabelProdPaga.setVisible(true);
-                jTextFieldProdPaga.setVisible(true);
-                jButtonPesquisarProdPaga.setVisible(true);
-                jLabelProdLeva.setVisible(false);
-                jTextFieldProdLeva.setVisible(false);
-                jButtonPesquisarProdLeva.setVisible(false);
-                jLabelValorMinimo.setVisible(false);
-                jTextFieldValorMinimo.setVisible(false);
-                dimension.height = 478;
-                break;
-            case QUANTIDADE:
-                jLabelDesconto.setVisible(false);
-                jTextFieldDesconto.setVisible(false);
-                jLabelQtdPaga.setVisible(true);
-                jTextFieldQtdPaga.setVisible(true);
-                jLabelQtdLeva.setVisible(true);
-                jTextFieldQtdLeva.setVisible(true);
-                jLabelProdPaga.setVisible(true);
-                jTextFieldProdPaga.setVisible(true);
-                jButtonPesquisarProdPaga.setVisible(true);
-                jLabelProdLeva.setVisible(true);
-                jTextFieldProdLeva.setVisible(true);
-                jButtonPesquisarProdLeva.setVisible(true);
-                jLabelValorMinimo.setVisible(false);
-                jTextFieldValorMinimo.setVisible(false);
-                dimension.height = 518;
-                break;
-            default:
-                jLabelDesconto.setVisible(true);
-                jTextFieldDesconto.setVisible(true);
-                jLabelQtdPaga.setVisible(false);
-                jTextFieldQtdPaga.setVisible(false);
-                jLabelQtdLeva.setVisible(false);
-                jTextFieldQtdLeva.setVisible(false);
-                jLabelProdPaga.setVisible(false);
-                jTextFieldProdPaga.setVisible(false);
-                jButtonPesquisarProdPaga.setVisible(false);
-                jLabelProdLeva.setVisible(false);
-                jTextFieldProdLeva.setVisible(false);
-                jButtonPesquisarProdLeva.setVisible(false);
-                jLabelValorMinimo.setVisible(true);
-                jTextFieldValorMinimo.setVisible(true);
-                dimension.height = 438;
-        }
-        this.setSize(dimension);
-        //x 437
-        //y 594
-        //526 406 446 366
-    }
+	private void atualizarCampos(TipoPromocao tipoPromocao) {
+		Dimension dimension = new Dimension(437, 0);
+		switch (tipoPromocao) {
+			case DESCONTO:
+				jLabelDesconto.setVisible(true);
+				jTextFieldDesconto.setVisible(true);
+				jLabelQtdPaga.setVisible(true);
+				jTextFieldQtdPaga.setVisible(true);
+				jLabelQtdLeva.setVisible(false);
+				jTextFieldQtdLeva.setVisible(false);
+				jLabelProdPaga.setVisible(true);
+				jTextFieldProdPaga.setVisible(true);
+				jButtonPesquisarProdPaga.setVisible(true);
+				jLabelProdLeva.setVisible(false);
+				jTextFieldProdLeva.setVisible(false);
+				jButtonPesquisarProdLeva.setVisible(false);
+				jLabelValorMinimo.setVisible(false);
+				jTextFieldValorMinimo.setVisible(false);
+				dimension.height = 478;
+				break;
+			case QUANTIDADE:
+				jLabelDesconto.setVisible(false);
+				jTextFieldDesconto.setVisible(false);
+				jLabelQtdPaga.setVisible(true);
+				jTextFieldQtdPaga.setVisible(true);
+				jLabelQtdLeva.setVisible(true);
+				jTextFieldQtdLeva.setVisible(true);
+				jLabelProdPaga.setVisible(true);
+				jTextFieldProdPaga.setVisible(true);
+				jButtonPesquisarProdPaga.setVisible(true);
+				jLabelProdLeva.setVisible(true);
+				jTextFieldProdLeva.setVisible(true);
+				jButtonPesquisarProdLeva.setVisible(true);
+				jLabelValorMinimo.setVisible(false);
+				jTextFieldValorMinimo.setVisible(false);
+				dimension.height = 518;
+				break;
+			default:
+				jLabelDesconto.setVisible(true);
+				jTextFieldDesconto.setVisible(true);
+				jLabelQtdPaga.setVisible(false);
+				jTextFieldQtdPaga.setVisible(false);
+				jLabelQtdLeva.setVisible(false);
+				jTextFieldQtdLeva.setVisible(false);
+				jLabelProdPaga.setVisible(false);
+				jTextFieldProdPaga.setVisible(false);
+				jButtonPesquisarProdPaga.setVisible(false);
+				jLabelProdLeva.setVisible(false);
+				jTextFieldProdLeva.setVisible(false);
+				jButtonPesquisarProdLeva.setVisible(false);
+				jLabelValorMinimo.setVisible(true);
+				jTextFieldValorMinimo.setVisible(true);
+				dimension.height = 438;
+		}
+		this.setSize(dimension);
+		//x 437
+		//y 594
+		//526 406 446 366
+	}
 
 }
