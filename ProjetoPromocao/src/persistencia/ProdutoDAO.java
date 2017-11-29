@@ -18,7 +18,7 @@ public class ProdutoDAO implements CRUD {
     public void incluir(Object objeto) throws Exception {
         Produto obj = (Produto) (objeto);
 
-        String sql = "insert into produto (prod_descricao,prod_valor,prod_data_fabricacao,prod_data_vencimento,prod_qtd_unidade,prod_unme_id,prod_saldo_estoque,prod_porcentagem_desconto) VALUES (?,?,?,?,?,?,?,?);";
+        String sql = "insert into produto (prod_descricao,prod_valor,prod_data_fabricacao,prod_data_vencimento,prod_qtd_unidade,prod_unme_id,prod_saldo_estoque,prod_desconto) VALUES (?,?,?,?,?,?,?,?);";
 
         PreparedStatement prd = cnn.prepareStatement(sql);
 
@@ -75,7 +75,7 @@ public class ProdutoDAO implements CRUD {
                 + "prod_qtd_unidade = ?,"
                 + "prod_unme_id = ?,"
                 + "prod_saldo_estoque = ?,"
-                + "prod_porcentagem_desconto = ?"
+                + "prod_desconto = ?"
                 + " where prod_id = ?;";
 
         PreparedStatement prd = cnn.prepareStatement(sql);
