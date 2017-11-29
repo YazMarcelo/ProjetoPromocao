@@ -110,9 +110,9 @@ public class VendedorDAO implements CRUD {
     }
 
     @Override
-    public ArrayList<Object> listar() throws Exception {
+    public ArrayList<Vendedor> listar() throws Exception {
 
-        ArrayList<Object> listaObjs = new ArrayList<>();
+        ArrayList<Vendedor> listaObjs = new ArrayList<>();
 
         String sql = "select * from public.vendedor where excluido = false order by vend_id ";
 
