@@ -9,6 +9,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class PromocaoDAO implements CRUD {
 
@@ -124,6 +125,10 @@ public class PromocaoDAO implements CRUD {
             throw e;
         }
         return listaPromocao;
+    }
+	
+    public Iterator<Promocao> listarIterator() throws Exception {
+        return listar().iterator();
     }
 
     @Override

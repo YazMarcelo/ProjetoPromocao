@@ -80,6 +80,16 @@ public class Utilitarios {
         return null;
 
     }
+	
+	public static String dateToString(Date date) {
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		return dateFormat.format(date);
+	}
+	
+	public static Date stringToDate(String string) throws ParseException {
+		DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+		return dateFormat.parse(string);
+	}
 
     public static boolean isDateValid(String strDate) {
         String dateFormat = "dd/MM/yyyy";

@@ -4,6 +4,7 @@ import entidade.*;
 import persistencia.*;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class NPromocao {
 
@@ -29,7 +30,7 @@ public class NPromocao {
         return (Promocao) dao.consultar(codigo);
     }
 
-    public ArrayList<Promocao> listar() throws SQLException, Exception {
-        return dao.listar();
+    public Iterator<Promocao> listar() throws SQLException, Exception {
+        return dao.listarIterator();
     }
 }

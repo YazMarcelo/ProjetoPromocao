@@ -10,14 +10,12 @@ import java.text.SimpleDateFormat;
 import javax.swing.JTextField;
 import negocio.NPromocao;
 import util.Mensagem;
+import util.Utilitarios;
 
 public class CadastroPromocao extends javax.swing.JFrame {
 
 	Promocao promocao = null;
-
 	TelaConsultaPromocao frmPai;
-
-	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
 	public CadastroPromocao() {
 		initComponents();
@@ -77,6 +75,11 @@ public class CadastroPromocao extends javax.swing.JFrame {
         jButtonPesquisarProdLeva = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanelFundo.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -191,9 +194,6 @@ public class CadastroPromocao extends javax.swing.JFrame {
             jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanelSuperior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanelFundoLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel2))
-            .addGroup(jPanelFundoLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel4)
@@ -227,8 +227,13 @@ public class CadastroPromocao extends javax.swing.JFrame {
                         .addGap(1, 1, 1)))
                 .addGap(50, 50, 50))
             .addGroup(jPanelFundoLayout.createSequentialGroup()
-                .addGap(174, 174, 174)
-                .addComponent(jButtonSalvar)
+                .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelFundoLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanelFundoLayout.createSequentialGroup()
+                        .addGap(174, 174, 174)
+                        .addComponent(jButtonSalvar)))
                 .addGap(173, 173, 173))
         );
         jPanelFundoLayout.setVerticalGroup(
@@ -305,8 +310,8 @@ public class CadastroPromocao extends javax.swing.JFrame {
 				return;
 			}
 			promocao.setDescricao(jTextFieldDescricao.getText());
-			promocao.setDataInicio(dateFormat.parse(jDatePickerInicio.getFormattedTextField().getText()));
-			promocao.setDataFim(dateFormat.parse(jDatePickerFim.getFormattedTextField().getText()));
+			promocao.setDataInicio(Utilitarios.stringToDate(jDatePickerInicio.getFormattedTextField().getText()));
+			promocao.setDataFim(Utilitarios.stringToDate(jDatePickerFim.getFormattedTextField().getText()));
 			TipoPromocao tipoPromocao = (TipoPromocao) jComboBoxTipo.getSelectedItem();
 			promocao.setTipo(tipoPromocao);
 			switch (tipoPromocao) {
@@ -363,15 +368,14 @@ public class CadastroPromocao extends javax.swing.JFrame {
 						return;
 					}
 			}
-			NPromocao nPromocao = new NPromocao();
-			nPromocao.salvar(promocao);
+			new NPromocao().salvar(promocao);
 			if (promocao.getId() > 0) {
-				frmPai.atualizar();
 				this.dispose();
 			} else {
 				limparCampos();
 			}
 			Mensagem.msg01(this);
+			frmPai.atualizar();
 		} catch (Exception ex) {
 			Mensagem.msg08(this);
 		}
@@ -399,7 +403,7 @@ public class CadastroPromocao extends javax.swing.JFrame {
 
     private void jDatePickerInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDatePickerInicioActionPerformed
 		try {
-			promocao.setDataInicio(dateFormat.parse(jDatePickerInicio.getFormattedTextField().getText()));
+			promocao.setDataInicio(Utilitarios.stringToDate(jDatePickerInicio.getFormattedTextField().getText()));
 			if (promocao.getDataFim().getTime() < promocao.getDataInicio().getTime()) {
 				jDatePickerFim.getFormattedTextField().setText("");
 			}
@@ -410,7 +414,7 @@ public class CadastroPromocao extends javax.swing.JFrame {
 
     private void jDatePickerFimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDatePickerFimActionPerformed
 		try {
-			promocao.setDataFim(dateFormat.parse(jDatePickerFim.getFormattedTextField().getText()));
+			promocao.setDataFim(Utilitarios.stringToDate(jDatePickerFim.getFormattedTextField().getText()));
 			if (promocao.getDataFim().getTime() < promocao.getDataInicio().getTime()) {
 				Mensagem.msg06(this); //Dado inválido
 				jDatePickerFim.getFormattedTextField().setText("");
@@ -419,6 +423,13 @@ public class CadastroPromocao extends javax.swing.JFrame {
 
 		}
     }//GEN-LAST:event_jDatePickerFimActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+		try {
+			frmPai.atualizar();
+		} catch (Exception e) {
+		}
+    }//GEN-LAST:event_formWindowClosing
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -461,8 +472,8 @@ public class CadastroPromocao extends javax.swing.JFrame {
 
 		jTextFieldDescricao.setText(promocao.getDescricao());
 		jComboBoxTipo.setSelectedItem(promocao.getTipo());
-		jDatePickerInicio.getFormattedTextField().setText(dateFormat.format(promocao.getDataInicio()));
-		jDatePickerFim.getFormattedTextField().setText(dateFormat.format(promocao.getDataFim()));
+		jDatePickerInicio.getFormattedTextField().setText(Utilitarios.dateToString(promocao.getDataInicio()));
+		jDatePickerFim.getFormattedTextField().setText(Utilitarios.dateToString(promocao.getDataFim()));
 		switch (promocao.getTipo()) {
 			case DESCONTO:
 				jTextFieldDesconto.setText(promocao.getDesconto().toString());
