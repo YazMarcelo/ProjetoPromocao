@@ -20,9 +20,18 @@ public class PromocaoDAO implements CRUD {
         try {
             cnn.setAutoCommit(false);
             Promocao objPromocao = (Promocao) (objeto);
-            String sql = "INSERT INTO PROMOCAO(PROM_DESCRICAO, PROM_TIPO, PROM_PORCENTAGEM, "
-                    + "PROM_QTD_PAGA, PROM_QTD_LEVA, PROM_DATA_INICIO, PROM_DATA_FIM,"
-                    + "PROM_PAGA_PROD_ID, PROM_LEVA_PROD_ID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);";
+            String sql = "INSERT INTO PROMOCAO("
+                    + "PROM_DESCRICAO, "
+                    + "PROM_TIPO, "
+                    + "PROM_DESCONTO, "
+                    + "PROM_QTD_PAGA, "
+                    + "PROM_QTD_LEVA, "
+                    + "PROM_DATA_INICIO, "
+                    + "PROM_DATA_FIM, "
+                    + "PROM_PAGA_PROD_ID, "
+                    + "PROM_LEVA_PROD_ID, "
+                    + "PROM_VALOR_MINIMO) "
+                    + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             PreparedStatement prd = cnn.prepareStatement(sql);
             prd.setString(1, objPromocao.getDescricao());
             prd.setInt(2, objPromocao.getTipo().getId());
@@ -33,6 +42,7 @@ public class PromocaoDAO implements CRUD {
             prd.setTimestamp(7, new java.sql.Timestamp(objPromocao.getDataFim().getTime()));
             prd.setInt(8, objPromocao.getProdPaga() == null ? 0 : objPromocao.getProdPaga().getId());
             prd.setInt(9, objPromocao.getProdLeva() == null ? 0 : objPromocao.getProdLeva().getId());
+            prd.setDouble(10, objPromocao.getValorMinimo());
             prd.execute();
             prd.close();
             String sql2 = "SELECT CURRVAL('PROMOCAO_PROM_ID_SEQ') AS PROM_ID;";
@@ -73,9 +83,9 @@ public class PromocaoDAO implements CRUD {
         try {
             cnn.setAutoCommit(false);
             Promocao objPromocao = (Promocao) (objeto);
-            String sql = "UPDATE PROMOCAO SET PROM_DESCRICAO = ?, PROM_TIPO = ?, PROM_PORCENTAGEM = ?, "
+            String sql = "UPDATE PROMOCAO SET PROM_DESCRICAO = ?, PROM_TIPO = ?, PROM_DESCONTO = ?, "
                     + "PROM_QTD_PAGA = ?, PROM_QTD_LEVA = ?, PROM_DATA_INICIO = ?, PROM_DATA_FIM = ?,"
-                    + "PROM_PAGA_PROD_ID = ?, PROM_LEVA_PROD_ID = ? WHERE PROM_ID = ?;";
+                    + "PROM_PAGA_PROD_ID = ?, PROM_LEVA_PROD_ID = ?, PROM_VALOR_MINIMO WHERE PROM_ID = ?;";
             PreparedStatement prd = cnn.prepareStatement(sql);
             prd.setString(1, objPromocao.getDescricao());
             prd.setInt(2, objPromocao.getTipo().getId());
@@ -86,7 +96,8 @@ public class PromocaoDAO implements CRUD {
             prd.setTimestamp(7, new java.sql.Timestamp(objPromocao.getDataFim().getTime()));
             prd.setInt(8, objPromocao.getProdPaga() == null ? 0 : objPromocao.getProdPaga().getId());
             prd.setInt(9, objPromocao.getProdLeva() == null ? 0 : objPromocao.getProdLeva().getId());
-            prd.setInt(10, objPromocao.getId());
+            prd.setDouble(10, objPromocao.getValorMinimo());
+            prd.setInt(11, objPromocao.getId());
             prd.executeUpdate();
             prd.close();
             cnn.commit();
@@ -109,7 +120,7 @@ public class PromocaoDAO implements CRUD {
                 objeto.setId(rs.getInt("PROM_ID"));
                 objeto.setDescricao(rs.getString("PROM_DESCRICAO"));
                 objeto.setTipo(TipoPromocao.valueOf(rs.getInt("PROM_TIPO")));
-                objeto.setDesconto(rs.getFloat("PROM_PORCENTAGEM"));
+                objeto.setDesconto(rs.getFloat("PROM_DESCONTO"));
                 objeto.setQtdPaga(rs.getInt("PROM_QTD_PAGA"));
                 objeto.setQtdLeva(rs.getInt("PROM_QTD_LEVA"));
                 objeto.setDataInicio(rs.getTimestamp("PROM_DATA_INICIO"));
@@ -118,6 +129,7 @@ public class PromocaoDAO implements CRUD {
                 objeto.setProdPaga(prodPaga == 0 ? null : new Produto(prodPaga));
                 int prodLeva = rs.getInt("PROM_LEVA_PROD_ID");
                 objeto.setProdLeva(prodLeva == 0 ? null : new Produto(prodLeva));
+                objeto.setValorMinimo(rs.getDouble("PROM_VALOR_MINIMO"));
                 listaPromocao.add(objeto);
             }
             rs.close();
@@ -153,6 +165,7 @@ public class PromocaoDAO implements CRUD {
                 objeto.setProdPaga(prodPaga == 0 ? null : new Produto(prodPaga));
                 int prodLeva = rs.getInt("PROM_LEVA_PROD_ID");
                 objeto.setProdLeva(prodLeva == 0 ? null : new Produto(prodLeva));
+                objeto.setValorMinimo(rs.getDouble("PROM_VALOR_MINIMO"));
             }
             rs.close();
             prd.close();
