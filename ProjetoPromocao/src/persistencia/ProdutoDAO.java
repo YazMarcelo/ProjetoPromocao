@@ -29,7 +29,7 @@ public class ProdutoDAO implements CRUD {
         prd.setInt(5, obj.getQtdUnidade());
         prd.setInt(6, obj.getUnidadeMedida().getId());
         prd.setInt(7, obj.getSaldoEstoque());
-        prd.setInt(8, obj.getPorcentagemDesconto());
+        prd.setFloat(8, obj.getDesconto());
 
         prd.execute();
 
@@ -87,7 +87,7 @@ public class ProdutoDAO implements CRUD {
         prd.setInt(5, obj.getQtdUnidade());
         prd.setInt(6, obj.getUnidadeMedida().getId());
         prd.setInt(7, obj.getSaldoEstoque());
-        prd.setInt(8, obj.getPorcentagemDesconto());
+        prd.setFloat(8, obj.getDesconto());
         prd.setInt(9, obj.getId());
 
         prd.execute();
@@ -117,7 +117,7 @@ public class ProdutoDAO implements CRUD {
             objeto.setQtdUnidade(rs.getInt("prod_qtd_unidade"));
             objeto.setUnidadeMedida(new NUnidadeMedida().consultar(rs.getInt("prod_unme_id")));
             objeto.setSaldoEstoque(rs.getInt("prod_saldo_estoque"));
-            objeto.setPorcentagemDesconto(rs.getInt("prod_porcentagem_desconto"));
+            objeto.setDesconto(rs.getFloat("prod_desconto"));
             listaObjs.add(objeto);
         }
 
@@ -148,7 +148,7 @@ public class ProdutoDAO implements CRUD {
             objeto.setQtdUnidade(rs.getInt("prod_qtd_unidade"));
             objeto.setUnidadeMedida(new NUnidadeMedida().consultar(rs.getInt("prod_unme_id")));
             objeto.setSaldoEstoque(rs.getInt("prod_saldo_estoque"));
-            objeto.setPorcentagemDesconto(rs.getInt("prod_porcentagem_desconto"));
+            objeto.setDesconto(rs.getFloat("prod_desconto"));
         }
 
         prd.execute();

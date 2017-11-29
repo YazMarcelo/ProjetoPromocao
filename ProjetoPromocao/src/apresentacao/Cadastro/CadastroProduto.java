@@ -271,7 +271,7 @@ public class CadastroProduto extends javax.swing.JFrame {
             esp.setQtdUnidade(Integer.parseInt(jTextFieldQtd.getText()));
             esp.setUnidadeMedida((UnidadeMedida) jComboBoxUnidadeMedida.getSelectedItem());
             esp.setSaldoEstoque(Integer.parseInt(jTextFieldSaldoEstoque.getText()));
-            esp.setPorcentagemDesconto(Integer.parseInt(jTextFieldDesconto.getText()));
+            esp.setDesconto(Integer.parseInt(jTextFieldDesconto.getText()));
 
             neg.salvar(esp);
 
@@ -352,7 +352,7 @@ public class CadastroProduto extends javax.swing.JFrame {
         jTextFieldQtd.setText(String.valueOf(objeto.getQtdUnidade()));
         jTextFieldSaldoEstoque.setText(String.valueOf(objeto.getSaldoEstoque()));
         jComboBoxUnidadeMedida.setSelectedItem(objeto.getUnidadeMedida());
-        jTextFieldDesconto.setText(String.valueOf(objeto.getPorcentagemDesconto()));
+        jTextFieldDesconto.setText(String.valueOf(objeto.getDesconto()));
     }
 
     public void adicionandoDadosComboBox() {

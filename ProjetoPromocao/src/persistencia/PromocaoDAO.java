@@ -25,7 +25,7 @@ public class PromocaoDAO implements CRUD {
             PreparedStatement prd = cnn.prepareStatement(sql);
             prd.setString(1, objPromocao.getDescricao());
             prd.setInt(2, objPromocao.getTipo().getId());
-            prd.setFloat(3, objPromocao.getPorcentagem());
+            prd.setFloat(3, objPromocao.getDesconto());
             prd.setInt(4, objPromocao.getQtdPaga());
             prd.setInt(5, objPromocao.getQtdLeva());
             prd.setTimestamp(6, new java.sql.Timestamp(objPromocao.getDataInicio().getTime()));
@@ -78,7 +78,7 @@ public class PromocaoDAO implements CRUD {
             PreparedStatement prd = cnn.prepareStatement(sql);
             prd.setString(1, objPromocao.getDescricao());
             prd.setInt(2, objPromocao.getTipo().getId());
-            prd.setFloat(3, objPromocao.getPorcentagem());
+            prd.setFloat(3, objPromocao.getDesconto());
             prd.setInt(4, objPromocao.getQtdPaga());
             prd.setInt(5, objPromocao.getQtdLeva());
             prd.setTimestamp(6, new java.sql.Timestamp(objPromocao.getDataInicio().getTime()));
@@ -108,7 +108,7 @@ public class PromocaoDAO implements CRUD {
                 objeto.setId(rs.getInt("PROM_ID"));
                 objeto.setDescricao(rs.getString("PROM_DESCRICAO"));
                 objeto.setTipo(TipoPromocao.valueOf(rs.getInt("PROM_TIPO")));
-                objeto.setPorcentagem(rs.getFloat("PROM_PORCENTAGEM"));
+                objeto.setDesconto(rs.getFloat("PROM_PORCENTAGEM"));
                 objeto.setQtdPaga(rs.getInt("PROM_QTD_PAGA"));
                 objeto.setQtdLeva(rs.getInt("PROM_QTD_LEVA"));
                 objeto.setDataInicio(rs.getTimestamp("PROM_DATA_INICIO"));
@@ -139,7 +139,7 @@ public class PromocaoDAO implements CRUD {
                 objeto.setId(rs.getInt("PROM_ID"));
                 objeto.setDescricao(rs.getString("PROM_DESCRICAO"));
                 objeto.setTipo(TipoPromocao.valueOf(rs.getInt("PROM_TIPO")));
-                objeto.setPorcentagem(rs.getFloat("PROM_PORCENTAGEM"));
+                objeto.setDesconto(rs.getFloat("PROM_PORCENTAGEM"));
                 objeto.setQtdPaga(rs.getInt("PROM_QTD_PAGA"));
                 objeto.setQtdLeva(rs.getInt("PROM_QTD_LEVA"));
                 objeto.setDataInicio(rs.getTimestamp("PROM_DATA_INICIO"));

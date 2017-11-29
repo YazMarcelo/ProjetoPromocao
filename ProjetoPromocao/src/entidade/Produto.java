@@ -12,7 +12,7 @@ public class Produto {
 	private int qtdUnidade;
 	private UnidadeMedida unidadeMedida;
 	private int saldoEstoque;
-	private int porcentagemDesconto;
+	private float desconto;
 
 	public Produto() {
 	}
@@ -85,12 +85,12 @@ public class Produto {
 		this.saldoEstoque = saldoEstoque;
 	}
 
-	public int getPorcentagemDesconto() {
-		return porcentagemDesconto;
+	public float getDesconto() {
+		return desconto;
 	}
 
-	public void setPorcentagemDesconto(int porcentagemDesconto) {
-		this.porcentagemDesconto = porcentagemDesconto;
+	public void setDesconto(float desconto) {
+		this.desconto = desconto;
 	}
 
 }

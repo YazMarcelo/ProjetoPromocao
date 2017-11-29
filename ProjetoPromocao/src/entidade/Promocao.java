@@ -7,7 +7,7 @@ public class Promocao {
 	private int id;
 	private String descricao;
 	private TipoPromocao tipo;
-	private float porcentagem = 0;
+	private float desconto = 0;
 	private int qtdPaga;
 	private int qtdLeva = 0;
 	private Date dataInicio;
@@ -39,12 +39,12 @@ public class Promocao {
 		this.tipo = tipo;
 	}
 
-	public Float getPorcentagem() {
-		return porcentagem;
+	public Float getDesconto() {
+		return desconto;
 	}
 
-	public void setPorcentagem(float porcentagem) {
-		this.porcentagem = porcentagem;
+	public void setDesconto(float desconto) {
+		this.desconto = desconto;
 	}
 
 	public Integer getQtdPaga() {

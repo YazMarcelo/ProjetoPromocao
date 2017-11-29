@@ -332,7 +332,7 @@ public class TelaConsultaPromocao extends javax.swing.JInternalFrame {
                 linha[0] = String.valueOf(objeto.getId());
                 linha[1] = objeto.getDescricao();
                 linha[2] = objeto.getTipo().toString();
-				linha[3] = objeto.getPorcentagem().toString();
+				linha[3] = objeto.getDesconto().toString();
 				linha[4] = objeto.getQtdPaga().toString();
 				linha[5] = objeto.getQtdLeva().toString();
 				linha[6] = objeto.getDataInicio().toString();
