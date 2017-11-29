@@ -42,7 +42,7 @@ public class DatePickerSample {
 //        Locale.setDefault(Locale.US);
 //        launch(args);
 //    }
- 
+// 
     	public JPanel initAndShowGUI(JTextField jtf) {
 		JPanel panel = new JPanel();
 		JFXPanel fxPanel = new JFXPanel();
