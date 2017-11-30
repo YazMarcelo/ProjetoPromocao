@@ -241,7 +241,7 @@ public class CadastroProduto extends javax.swing.JFrame {
             esp.setValor(Double.parseDouble(jTextFieldValor.getText()));
             esp.setDataFabricacao(Utilitarios.stringToDate(jDatePickerDataFabri.getFormattedTextField().getText()));
             esp.setDataVencimento(Utilitarios.stringToDate(jDatePickerVend.getFormattedTextField().getText()));
-            
+
             esp.setQtdUnidade(Integer.parseInt(jTextFieldQtd.getText()));
             esp.setUnidadeMedida((UnidadeMedida) jComboBoxUnidadeMedida.getSelectedItem());
             esp.setSaldoEstoque(Integer.parseInt(jTextFieldSaldoEstoque.getText()));
@@ -262,9 +262,9 @@ public class CadastroProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jDatePickerDataFabriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDatePickerDataFabriActionPerformed
-                try {
+        try {
             esp.setDataFabricacao(Utilitarios.stringToDate(jDatePickerDataFabri.getFormattedTextField().getText()));
-            if (esp.getDataVencimento()!= null && esp.getDataVencimento().getTime() < esp.getDataFabricacao().getTime()) {
+            if (esp.getDataVencimento() != null && esp.getDataVencimento().getTime() < esp.getDataFabricacao().getTime()) {
                 jDatePickerDataFabri.getFormattedTextField().setText("");
             }
         } catch (ParseException ex) {
@@ -273,11 +273,11 @@ public class CadastroProduto extends javax.swing.JFrame {
     }//GEN-LAST:event_jDatePickerDataFabriActionPerformed
 
     private void jDatePickerVendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDatePickerVendActionPerformed
-                try {
+        try {
             esp.setDataVencimento(Utilitarios.stringToDate(jDatePickerVend.getFormattedTextField().getText()));
-            if (esp.getDataFabricacao()!= null && esp.getDataVencimento().getTime() < esp.getDataFabricacao().getTime()) {
+            if (esp.getDataFabricacao() != null && esp.getDataVencimento().getTime() < esp.getDataFabricacao().getTime()) {
                 Mensagem.msg06(this); //Dado inválido
-               jDatePickerVend.getFormattedTextField().setText("");
+                jDatePickerVend.getFormattedTextField().setText("");
             }
         } catch (ParseException ex) {
         }
@@ -322,8 +322,7 @@ public class CadastroProduto extends javax.swing.JFrame {
 
         jDatePickerVend.getFormattedTextField().setText(Utilitarios.dateBRFormat(String.valueOf(objeto.getDataVencimento())));
         jDatePickerDataFabri.getFormattedTextField().setText(Utilitarios.dateBRFormat(String.valueOf(objeto.getDataFabricacao())));
-        
-        
+
         jTextFieldQtd.setText(String.valueOf(objeto.getQtdUnidade()));
         jTextFieldSaldoEstoque.setText(String.valueOf(objeto.getSaldoEstoque()));
         jComboBoxUnidadeMedida.setSelectedItem(objeto.getUnidadeMedida());
@@ -339,7 +338,7 @@ public class CadastroProduto extends javax.swing.JFrame {
             for (UnidadeMedida objeto : lista) {
                 jComboBoxUnidadeMedida.addItem(objeto);
             }
-            
+
         } catch (Exception ex) {
 
         }
