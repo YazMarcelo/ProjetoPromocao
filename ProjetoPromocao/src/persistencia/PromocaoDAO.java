@@ -109,21 +109,39 @@ public class PromocaoDAO implements CRUD {
         try {
             cnn.setAutoCommit(false);
             Promocao objPromocao = (Promocao) (objeto);
-            String sql = "UPDATE PROMOCAO SET PROM_DESCRICAO = ?, PROM_TIPO = ?, PROM_DESCONTO = ?, "
-                    + "PROM_QTD_PAGA = ?, PROM_QTD_LEVA = ?, PROM_DATA_INICIO = ?, PROM_DATA_FIM = ?,"
-                    + "PROM_PAGA_PROD_ID = ?, PROM_LEVA_PROD_ID = ?, PROM_VALOR_MINIMO WHERE PROM_ID = ?;";
-            PreparedStatement prd = cnn.prepareStatement(sql);
-            prd.setString(1, objPromocao.getDescricao());
-            prd.setInt(2, objPromocao.getTipo().getId());
-            prd.setFloat(3, objPromocao.getDesconto());
-            prd.setInt(4, objPromocao.getQtdPaga());
-            prd.setInt(5, objPromocao.getQtdLeva());
-            prd.setTimestamp(6, new java.sql.Timestamp(objPromocao.getDataInicio().getTime()));
-            prd.setTimestamp(7, new java.sql.Timestamp(objPromocao.getDataFim().getTime()));
-            prd.setInt(8, objPromocao.getProdPaga() == null ? 0 : objPromocao.getProdPaga().getId());
-            prd.setInt(9, objPromocao.getProdLeva() == null ? 0 : objPromocao.getProdLeva().getId());
-            prd.setDouble(10, objPromocao.getValorMinimo());
-            prd.setInt(11, objPromocao.getId());
+            String sql = "UPDATE PROMOCAO SET PROM_DESCRICAO = ?, PROM_TIPO = ?";
+            String sqlDesconto = sql + ", PROM_DESCONTO = ?, PROM_QTD_PAGA = ?, PROM_PAGA_PROD_ID = ? WHERE PROM_ID = ?;";
+            String sqlQuantidade = sql + ", PROM_QTD_PAGA = ?, PROM_QTD_LEVA = ?, PROM_PAGA_PROD_ID = ?, PROM_LEVA_PROD_ID = ? WHERE PROM_ID = ?;";
+            String sqlGeral = sql + ", PROM_DESCONTO = ?, PROM_VALOR_MINIMO = ? WHERE PROM_ID = ?;";
+            PreparedStatement prd;
+            switch (objPromocao.getTipo()) {  
+                case DESCONTO: 
+                    prd = cnn.prepareStatement(sqlDesconto);
+                    prd.setString(1, objPromocao.getDescricao());
+                    prd.setInt(2, objPromocao.getTipo().getId());
+                    prd.setFloat(3, objPromocao.getDesconto());
+                    prd.setInt(4, objPromocao.getQtdPaga());
+                    prd.setInt(5, objPromocao.getProdPaga().getId());
+                    prd.setInt(6, objPromocao.getId());
+                    break;
+                case QUANTIDADE:
+                    prd = cnn.prepareStatement(sqlQuantidade);
+                    prd.setString(1, objPromocao.getDescricao());
+                    prd.setInt(2, objPromocao.getTipo().getId());
+                    prd.setInt(3, objPromocao.getQtdPaga());
+                    prd.setInt(4, objPromocao.getQtdLeva());
+                    prd.setInt(5, objPromocao.getProdPaga().getId());
+                    prd.setInt(6, objPromocao.getProdLeva().getId());
+                    prd.setInt(7, objPromocao.getId());
+                    break;
+                default:
+                    prd = cnn.prepareStatement(sqlGeral);
+                    prd.setString(1, objPromocao.getDescricao());
+                    prd.setInt(2, objPromocao.getTipo().getId());
+                    prd.setFloat(3, objPromocao.getDesconto());
+                    prd.setDouble(4, objPromocao.getValorMinimo());
+                    prd.setInt(5, objPromocao.getId());
+            }
             prd.executeUpdate();
             prd.close();
             cnn.commit();
@@ -184,7 +202,7 @@ public class PromocaoDAO implements CRUD {
                 objeto.setId(rs.getInt("PROM_ID"));
                 objeto.setDescricao(rs.getString("PROM_DESCRICAO"));
                 objeto.setTipo(TipoPromocao.valueOf(rs.getInt("PROM_TIPO")));
-                objeto.setDesconto(rs.getFloat("PROM_PORCENTAGEM"));
+                objeto.setDesconto(rs.getFloat("PROM_DESCONTO"));
                 objeto.setQtdPaga(rs.getInt("PROM_QTD_PAGA"));
                 objeto.setQtdLeva(rs.getInt("PROM_QTD_LEVA"));
                 objeto.setDataInicio(rs.getTimestamp("PROM_DATA_INICIO"));
