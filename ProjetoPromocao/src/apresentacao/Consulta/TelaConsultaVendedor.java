@@ -1,8 +1,7 @@
 package apresentacao.Consulta;
 
-import apresentacao.Cadastro.CadastroProduto;
-import apresentacao.Cadastro.CadastroPromocao;
-import entidade.Produto;
+import apresentacao.Cadastro.CadastroVendedor;
+import entidade.Vendedor;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
@@ -10,40 +9,23 @@ import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
-import negocio.NProduto;
+import negocio.NVendedor;
 import util.Mensagem;
-import util.Utilitarios;
 
-public class TelaConsultaProduto extends javax.swing.JInternalFrame {
+public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
 
     DefaultTableModel model = null;
     TableRowSorter trs;
     int esc;
-    CadastroProduto telaCadastroProduto;
-    NProduto nProduto = new NProduto();
+    CadastroVendedor tce;
 
-    public TelaConsultaProduto() {
+    public TelaConsultaVendedor() {
         initComponents();
         atualizar();
-    }
-
-    CadastroPromocao telaCadastroPromocao = null; //para o 2° comportamento desta tela, em CadastroPromocao
-    int qualProd; //para saber para qual produto é a consulta em CadastroPromocao (ProdPaga ou ProdLeva)
-
-    public TelaConsultaProduto(CadastroPromocao telaCadastroPromocao, int qualProd) {
-        this();
-        this.telaCadastroPromocao = telaCadastroPromocao;
-        jButtonNovo.setVisible(false);
-        jButtonAlterar.setVisible(false);
-        jButtonAtualizar.setVisible(false);
-        jButtonExcluir.setVisible(false);
-        this.qualProd = qualProd;
     }
 
     @SuppressWarnings("unchecked")
@@ -53,12 +35,12 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jButtonNovo = new javax.swing.JButton();
+        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableProduto = new javax.swing.JTable();
-        jButtonAlterar = new javax.swing.JButton();
-        jButtonExcluir = new javax.swing.JButton();
-        jButtonAtualizar = new javax.swing.JButton();
+        jTableVendedor = new javax.swing.JTable();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        jButton5 = new javax.swing.JButton();
         jTextFieldPesquisar1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox<>();
@@ -72,15 +54,15 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
-        jLabel1.setText("Consulta de Produto");
+        jLabel1.setText("Consulta de Tipo");
 
-        jButtonNovo.setBackground(new java.awt.Color(0, 136, 204));
-        jButtonNovo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButtonNovo.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonNovo.setText("+ Novo Produto");
-        jButtonNovo.addActionListener(new java.awt.event.ActionListener() {
+        jButton1.setBackground(new java.awt.Color(0, 136, 204));
+        jButton1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(255, 255, 255));
+        jButton1.setText("+ Novo Tipo");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonNovoActionPerformed(evt);
+                jButton1ActionPerformed(evt);
             }
         });
 
@@ -92,8 +74,8 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButtonNovo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(932, Short.MAX_VALUE))
+                    .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(969, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -101,72 +83,61 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
                 .addGap(21, 21, 21)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButtonNovo, javax.swing.GroupLayout.DEFAULT_SIZE, 49, Short.MAX_VALUE)
+                .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 48, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        jTableProduto.setModel(new javax.swing.table.DefaultTableModel(
+        jTableVendedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Código", "Nome", "Valor", "Fabricação", "Vencimento", "Por produto", "Em estoque"
+                "Código", "Descrição"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTableProduto.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableProdutoMouseClicked(evt);
-            }
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jTableProdutoMousePressed(evt);
-            }
-        });
-        jScrollPane1.setViewportView(jTableProduto);
-        if (jTableProduto.getColumnModel().getColumnCount() > 0) {
-            jTableProduto.getColumnModel().getColumn(0).setResizable(false);
-            jTableProduto.getColumnModel().getColumn(0).setPreferredWidth(70);
-            jTableProduto.getColumnModel().getColumn(1).setResizable(false);
-            jTableProduto.getColumnModel().getColumn(1).setPreferredWidth(430);
-            jTableProduto.getColumnModel().getColumn(2).setResizable(false);
-            jTableProduto.getColumnModel().getColumn(3).setResizable(false);
-            jTableProduto.getColumnModel().getColumn(5).setResizable(false);
+        jScrollPane1.setViewportView(jTableVendedor);
+        if (jTableVendedor.getColumnModel().getColumnCount() > 0) {
+            jTableVendedor.getColumnModel().getColumn(0).setResizable(false);
+            jTableVendedor.getColumnModel().getColumn(0).setPreferredWidth(15);
+            jTableVendedor.getColumnModel().getColumn(1).setResizable(false);
+            jTableVendedor.getColumnModel().getColumn(1).setPreferredWidth(430);
         }
 
-        jButtonAlterar.setBackground(new java.awt.Color(0, 136, 204));
-        jButtonAlterar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButtonAlterar.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonAlterar.setText("Alterar");
-        jButtonAlterar.addActionListener(new java.awt.event.ActionListener() {
+        jButton2.setBackground(new java.awt.Color(0, 136, 204));
+        jButton2.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton2.setForeground(new java.awt.Color(255, 255, 255));
+        jButton2.setText("Alterar");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAlterarActionPerformed(evt);
+                jButton2ActionPerformed(evt);
             }
         });
 
-        jButtonExcluir.setBackground(new java.awt.Color(210, 50, 45));
-        jButtonExcluir.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButtonExcluir.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonExcluir.setText("Excluir");
-        jButtonExcluir.addActionListener(new java.awt.event.ActionListener() {
+        jButton3.setBackground(new java.awt.Color(210, 50, 45));
+        jButton3.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton3.setForeground(new java.awt.Color(255, 255, 255));
+        jButton3.setText("Excluir");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonExcluirActionPerformed(evt);
+                jButton3ActionPerformed(evt);
             }
         });
 
-        jButtonAtualizar.setBackground(new java.awt.Color(4, 165, 30));
-        jButtonAtualizar.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
-        jButtonAtualizar.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonAtualizar.setText("Atualizar");
-        jButtonAtualizar.addActionListener(new java.awt.event.ActionListener() {
+        jButton5.setBackground(new java.awt.Color(4, 165, 30));
+        jButton5.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jButton5.setForeground(new java.awt.Color(255, 255, 255));
+        jButton5.setText("Atualizar");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonAtualizarActionPerformed(evt);
+                jButton5ActionPerformed(evt);
             }
         });
 
@@ -205,16 +176,16 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 1070, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(jButtonAlterar)
+                            .addComponent(jButton2)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButtonExcluir)
+                            .addComponent(jButton3)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jButtonAtualizar)
+                            .addComponent(jButton5)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jTextFieldPesquisar1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(56, Short.MAX_VALUE))
@@ -223,15 +194,15 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonAlterar)
-                    .addComponent(jButtonExcluir)
-                    .addComponent(jButtonAtualizar)
+                    .addComponent(jButton2)
+                    .addComponent(jButton3)
+                    .addComponent(jButton5)
                     .addComponent(jTextFieldPesquisar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 405, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -252,55 +223,56 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
-        telaCadastroProduto = new CadastroProduto();
-        telaCadastroProduto.setVisible(true);
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        tce = new CadastroVendedor();
+        tce.setVisible(true);
         atualizaAposFechar();
-    }//GEN-LAST:event_jButtonNovoActionPerformed
+    }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButtonAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAtualizarActionPerformed
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         atualizar();
-    }//GEN-LAST:event_jButtonAtualizarActionPerformed
+    }//GEN-LAST:event_jButton5ActionPerformed
 
-    private void jButtonExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonExcluirActionPerformed
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
-        if (jTableProduto.getSelectedRow() >= 0) {
+        if (jTableVendedor.getSelectedRow() >= 0) {
             int resposta = Mensagem.msg03(this);
             if (resposta == JOptionPane.YES_OPTION) {
                 try {
 
-                    int id = Integer.valueOf(jTableProduto.getValueAt(jTableProduto.getSelectedRow(), 0).toString());
+                    int id = Integer.valueOf(jTableVendedor.getValueAt(jTableVendedor.getSelectedRow(), 0).toString());
 
-                    nProduto.excluir(id);
+                    NVendedor neg = new NVendedor();
+                    neg.excluir(id);
 
-                    model.removeRow(jTableProduto.getSelectedRow());
-                    jTableProduto.setModel(model);
+                    model.removeRow(jTableVendedor.getSelectedRow());
+                    jTableVendedor.setModel(model);
 
                     Mensagem.msg05(this);
                 } catch (Exception ex) {
-                    Logger.getLogger(TelaConsultaProduto.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(TelaConsultaVendedor.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } else {
             Mensagem.msg12(this);
         }
-    }//GEN-LAST:event_jButtonExcluirActionPerformed
+    }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
-        if (jTableProduto.getSelectedRow() >= 0) {
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        if (jTableVendedor.getSelectedRow() >= 0) {
             try {
-                telaCadastroProduto = new CadastroProduto();
-                telaCadastroProduto.atualizarAposSalvar(this);
-                telaCadastroProduto.alteracao("Alterar Produto", Integer.valueOf(jTableProduto.getValueAt(jTableProduto.getSelectedRow(), 0).toString()));
-                telaCadastroProduto.setVisible(true);
+                tce = new CadastroVendedor();
+                tce.atualizarAposSalvar(this);
+                tce.alteracao("Alterar Vendedor", Integer.valueOf(jTableVendedor.getValueAt(jTableVendedor.getSelectedRow(), 0).toString()));
+                tce.setVisible(true);
             } catch (Exception ex) {
-                Logger.getLogger(TelaConsultaProduto.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(TelaConsultaVendedor.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
             Mensagem.msg12(this);
         }
         atualizaAposFechar();
-    }//GEN-LAST:event_jButtonAlterarActionPerformed
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextFieldPesquisar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldPesquisar1MouseClicked
         jTextFieldPesquisar1.setText("");
@@ -330,62 +302,37 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
             }
         });
         trs = new TableRowSorter(model);
-        jTableProduto.setRowSorter(trs);
+        jTableVendedor.setRowSorter(trs);
     }//GEN-LAST:event_jTextFieldPesquisar1KeyTyped
-
-    private void jTableProdutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProdutoMouseClicked
-
-    }//GEN-LAST:event_jTableProdutoMouseClicked
-
-    private void jTableProdutoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableProdutoMousePressed
-        try {
-            if (telaCadastroPromocao != null) {
-                int linha = jTableProduto.getSelectedRow();
-                if (linha >= 0 && evt.getClickCount() == 2) {
-                    telaCadastroPromocao.selecionarProduto(nProduto.consultar(Integer.parseInt(jTableProduto.getValueAt(linha, 0).toString())), qualProd);
-                }
-            }
-        } catch (Exception ex) {
-            JOptionPane.showMessageDialog(this, ex);
-        }
-    }//GEN-LAST:event_jTableProdutoMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButtonAlterar;
-    private javax.swing.JButton jButtonAtualizar;
-    private javax.swing.JButton jButtonExcluir;
-    private javax.swing.JButton jButtonNovo;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton5;
     private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableProduto;
+    private javax.swing.JTable jTableVendedor;
     private javax.swing.JTextField jTextFieldPesquisar1;
     // End of variables declaration//GEN-END:variables
 
     public void atualizar() {
         try {
-            ArrayList<Produto> listaDeEspecialidades;
-
-            listaDeEspecialidades = nProduto.listar();
-            model = (DefaultTableModel) jTableProduto.getModel();
+            ArrayList<Vendedor> listaDeVendedores;
+            NVendedor neg = new NVendedor();
+            listaDeVendedores = neg.listar();
+            model = (DefaultTableModel) jTableVendedor.getModel();
 
             model.setNumRows(0);
-            for (int pos = 0; pos < listaDeEspecialidades.size(); pos++) {
-                String[] saida = new String[7];
-                Produto aux = (Produto) listaDeEspecialidades.get(pos);
-
+            for (int pos = 0; pos < listaDeVendedores.size(); pos++) {
+                String[] saida = new String[2];
+                Vendedor aux = (Vendedor) listaDeVendedores.get(pos);
                 saida[0] = String.valueOf(aux.getId());
-                saida[1] = aux.getDescricao();
-                saida[2] = String.valueOf(aux.getValor());
-                saida[3] = Utilitarios.dateBRFormat(String.valueOf(aux.getDataFabricacao()));
-                saida[4] = Utilitarios.dateBRFormat(String.valueOf(aux.getDataVencimento()));
-                saida[5] = (aux.getQtdUnidade() + " " + aux.getUnidadeMedida().getSigla());
-                saida[6] = String.valueOf(aux.getSaldoEstoque());
-
                 model.addRow(saida);
             }
         } catch (Exception erro) {
@@ -394,14 +341,11 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
     }
 
     public void atualizaAposFechar() {
-        telaCadastroProduto.addWindowListener(new WindowAdapter() {
+        tce.addWindowListener(new WindowAdapter() {
             public void windowClosing(WindowEvent evt) {
                 atualizar();
             }
         });
     }
 
-    public JPanel getMainPanel() {
-        return jPanel1;
-    }
 }

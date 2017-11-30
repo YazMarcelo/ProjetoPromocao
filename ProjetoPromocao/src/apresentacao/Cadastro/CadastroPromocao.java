@@ -1,50 +1,56 @@
 package apresentacao.Cadastro;
 
+import apresentacao.Consulta.TelaConsultaProduto;
 import apresentacao.Consulta.TelaConsultaPromocao;
+import entidade.Produto;
 import entidade.Promocao;
 import entidade.TipoPromocao;
 import java.awt.Dimension;
-import java.text.DateFormat;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 import negocio.NPromocao;
 import util.Mensagem;
+import util.Utilitarios;
 
 public class CadastroPromocao extends javax.swing.JFrame {
 
-	Promocao promocao = null;
+    Promocao promocao = null;
+    TelaConsultaPromocao frmPai;
 
-	TelaConsultaPromocao frmPai;
+    JFrame jFrameConsultarProduto;
 
-	DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    public CadastroPromocao(TelaConsultaPromocao frmPai) {
+        initComponents();
+        this.frmPai = frmPai;
+        setLocationRelativeTo(null);
+        atualizarCampos(TipoPromocao.DESCONTO);
+        promocao = new Promocao();
+    }
 
-	public CadastroPromocao() {
-		initComponents();
-		setLocationRelativeTo(null);
-		atualizarCampos(TipoPromocao.DESCONTO);
-		promocao = new Promocao();
-	}
+    private boolean validarCamposObrigatorios(JTextField... campos) {
+        for (JTextField campo : campos) {
+            if (campo.getText().isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	private boolean validarCamposObrigatorios(JTextField... campos) {
-		for (JTextField campo : campos) {
-			if (campo.getText().isEmpty()) {
-				return false;
-			}
-		}
-		return true;
-	}
+    private boolean validarCamposNumericos(JTextField... campos) {
+        for (JTextField campo : campos) {
+            if (campo.getText().matches("[a-zA-Z]+")) {
+                return false;
+            }
+        }
+        return true;
+    }
 
-	private boolean validarCamposNumericos(JTextField... campos) {
-		for (JTextField campo : campos) {
-			if (campo.getText().matches("[0-9]+")) {
-				return false;
-			}
-		}
-		return true;
-	}
-
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -77,6 +83,11 @@ public class CadastroPromocao extends javax.swing.JFrame {
         jButtonPesquisarProdLeva = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanelFundo.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -184,15 +195,17 @@ public class CadastroPromocao extends javax.swing.JFrame {
         });
 
         jButtonPesquisarProdLeva.setText("Buscar");
+        jButtonPesquisarProdLeva.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonPesquisarProdLevaActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanelFundoLayout = new javax.swing.GroupLayout(jPanelFundo);
         jPanelFundo.setLayout(jPanelFundoLayout);
         jPanelFundoLayout.setHorizontalGroup(
             jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanelSuperior, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addGroup(jPanelFundoLayout.createSequentialGroup()
-                .addGap(10, 10, 10)
-                .addComponent(jLabel2))
             .addGroup(jPanelFundoLayout.createSequentialGroup()
                 .addGap(50, 50, 50)
                 .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -227,8 +240,13 @@ public class CadastroPromocao extends javax.swing.JFrame {
                         .addGap(1, 1, 1)))
                 .addGap(50, 50, 50))
             .addGroup(jPanelFundoLayout.createSequentialGroup()
-                .addGap(174, 174, 174)
-                .addComponent(jButtonSalvar)
+                .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanelFundoLayout.createSequentialGroup()
+                        .addGap(10, 10, 10)
+                        .addComponent(jLabel2))
+                    .addGroup(jPanelFundoLayout.createSequentialGroup()
+                        .addGap(174, 174, 174)
+                        .addComponent(jButtonSalvar)))
                 .addGap(173, 173, 173))
         );
         jPanelFundoLayout.setVerticalGroup(
@@ -299,82 +317,81 @@ public class CadastroPromocao extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
-		try {
-			if (!validarCamposObrigatorios(jTextFieldDescricao, jDatePickerInicio.getFormattedTextField(), jDatePickerFim.getFormattedTextField())) {
-				Mensagem.msg10(this);
-				return;
-			}
-			promocao.setDescricao(jTextFieldDescricao.getText());
-			promocao.setDataInicio(dateFormat.parse(jDatePickerInicio.getFormattedTextField().getText()));
-			promocao.setDataFim(dateFormat.parse(jDatePickerFim.getFormattedTextField().getText()));
-			TipoPromocao tipoPromocao = (TipoPromocao) jComboBoxTipo.getSelectedItem();
-			promocao.setTipo(tipoPromocao);
-			switch (tipoPromocao) {
-				case DESCONTO:
-					if (!validarCamposObrigatorios(jTextFieldDesconto, jTextFieldProdPaga, jTextFieldQtdPaga)) {
-						Mensagem.msg10(this);
-						return;
-					}
-					if (!validarCamposNumericos(jTextFieldQtdPaga)) {
-						Mensagem.msg06(this);
-						return;
-					}
-					try {
-						promocao.setDesconto(Float.parseFloat(jTextFieldDesconto.getText()));
-					} catch (Exception e) {
-						Mensagem.msg06(this);
-						return;
-					}
-					int qtdPaga = Integer.valueOf(jTextFieldQtdPaga.getText());
-					if (qtdPaga < 0) {
-						Mensagem.msg06(this);
-						return;
-					}
-					promocao.setQtdPaga(qtdPaga);
-					break;
-				case QUANTIDADE:
-					if (!validarCamposObrigatorios(jTextFieldProdPaga, jTextFieldQtdPaga, jTextFieldProdLeva, jTextFieldQtdLeva)) {
-						Mensagem.msg10(this);
-						return;
-					}
-					if (!validarCamposNumericos(jTextFieldQtdPaga, jTextFieldQtdLeva)) {
-						Mensagem.msg06(this);
-						return;
-					}
-					qtdPaga = Integer.valueOf(jTextFieldQtdPaga.getText());
-					int qtdLeva = Integer.valueOf(jTextFieldQtdLeva.getText());
-					if (qtdPaga < 0 || qtdLeva < 0) {
-						Mensagem.msg06(this);
-						return;
-					}
-					promocao.setQtdPaga(qtdPaga);
-					promocao.setQtdLeva(qtdLeva);
-					break;
-				default:
-					if (!validarCamposObrigatorios(jTextFieldDesconto, jTextFieldValorMinimo)) {
-						Mensagem.msg10(this);
-						return;
-					}
-					try {
-						promocao.setDesconto(Float.parseFloat(jTextFieldDesconto.getText()));
-						promocao.setValorMinimo(Double.valueOf(jTextFieldValorMinimo.getText()));
-					} catch (Exception e) {
-						Mensagem.msg06(this);
-						return;
-					}
-			}
-			NPromocao nPromocao = new NPromocao();
-			nPromocao.salvar(promocao);
-			if (promocao.getId() > 0) {
-				frmPai.atualizar();
-				this.dispose();
-			} else {
-				limparCampos();
-			}
-			Mensagem.msg01(this);
-		} catch (Exception ex) {
-			Mensagem.msg08(this);
-		}
+        try {
+            if (!validarCamposObrigatorios(jTextFieldDescricao, jDatePickerInicio.getFormattedTextField(), jDatePickerFim.getFormattedTextField())) {
+                Mensagem.msg10(this);
+                return;
+            }
+            promocao.setDescricao(jTextFieldDescricao.getText());
+            promocao.setDataInicio(Utilitarios.stringToDate(jDatePickerInicio.getFormattedTextField().getText()));
+            promocao.setDataFim(Utilitarios.stringToDate(jDatePickerFim.getFormattedTextField().getText()));
+            TipoPromocao tipoPromocao = (TipoPromocao) jComboBoxTipo.getSelectedItem();
+            promocao.setTipo(tipoPromocao);
+            switch (tipoPromocao) {
+                case DESCONTO:
+                    if (!validarCamposObrigatorios(jTextFieldDesconto, jTextFieldProdPaga, jTextFieldQtdPaga)) {
+                        Mensagem.msg10(this);
+                        return;
+                    }
+                    if (!validarCamposNumericos(jTextFieldQtdPaga)) {
+                        Mensagem.msg06(this);
+                        return;
+                    }
+                    try {
+                        promocao.setDesconto(Float.parseFloat(jTextFieldDesconto.getText()));
+                    } catch (Exception e) {
+                        Mensagem.msg06(this);
+                        return;
+                    }
+                    int qtdPaga = Integer.valueOf(jTextFieldQtdPaga.getText());
+                    if (qtdPaga < 0) {
+                        Mensagem.msg06(this);
+                        return;
+                    }
+                    promocao.setQtdPaga(qtdPaga);
+                    break;
+                case QUANTIDADE:
+                    if (!validarCamposObrigatorios(jTextFieldProdPaga, jTextFieldQtdPaga, jTextFieldProdLeva, jTextFieldQtdLeva)) {
+                        Mensagem.msg10(this);
+                        return;
+                    }
+                    if (!validarCamposNumericos(jTextFieldQtdPaga, jTextFieldQtdLeva)) {
+                        Mensagem.msg06(this);
+                        return;
+                    }
+                    qtdPaga = Integer.valueOf(jTextFieldQtdPaga.getText());
+                    int qtdLeva = Integer.valueOf(jTextFieldQtdLeva.getText());
+                    if (qtdPaga < 0 || qtdLeva < 0) {
+                        Mensagem.msg06(this);
+                        return;
+                    }
+                    promocao.setQtdPaga(qtdPaga);
+                    promocao.setQtdLeva(qtdLeva);
+                    break;
+                default:
+                    if (!validarCamposObrigatorios(jTextFieldDesconto, jTextFieldValorMinimo)) {
+                        Mensagem.msg10(this);
+                        return;
+                    }
+                    try {
+                        promocao.setDesconto(Float.parseFloat(jTextFieldDesconto.getText()));
+                        promocao.setValorMinimo(Double.valueOf(jTextFieldValorMinimo.getText()));
+                    } catch (Exception e) {
+                        Mensagem.msg06(this);
+                        return;
+                    }
+            }
+            new NPromocao().salvar(promocao);
+            frmPai.atualizar();
+            if (promocao.getId() > 0) {
+                this.dispose();
+            } else {
+                limparCampos();
+            }
+            Mensagem.msg01(this);
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, ex);
+        }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
     private void jTextFieldProdPagaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldProdPagaActionPerformed
@@ -386,39 +403,50 @@ public class CadastroPromocao extends javax.swing.JFrame {
     }//GEN-LAST:event_jTextFieldProdLevaActionPerformed
 
     private void jComboBoxTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBoxTipoActionPerformed
-		atualizarCampos((TipoPromocao) jComboBoxTipo.getSelectedItem());
+        atualizarCampos((TipoPromocao) jComboBoxTipo.getSelectedItem());
     }//GEN-LAST:event_jComboBoxTipoActionPerformed
 
     private void jTextFieldQtdPagaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextFieldQtdPagaActionPerformed
-		// TODO add your handling code here:
+
     }//GEN-LAST:event_jTextFieldQtdPagaActionPerformed
 
     private void jButtonPesquisarProdPagaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarProdPagaActionPerformed
-		// TODO add your handling code here:
+        consultarProduto(1);
     }//GEN-LAST:event_jButtonPesquisarProdPagaActionPerformed
 
     private void jDatePickerInicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDatePickerInicioActionPerformed
-		try {
-			promocao.setDataInicio(dateFormat.parse(jDatePickerInicio.getFormattedTextField().getText()));
-			if (promocao.getDataFim().getTime() < promocao.getDataInicio().getTime()) {
-				jDatePickerFim.getFormattedTextField().setText("");
-			}
-		} catch (ParseException ex) {
+        try {
+            promocao.setDataInicio(Utilitarios.stringToDate(jDatePickerInicio.getFormattedTextField().getText()));
+            if (promocao.getDataFim() != null && promocao.getDataFim().getTime() < promocao.getDataInicio().getTime()) {
+                jDatePickerFim.getFormattedTextField().setText("");
+            }
+        } catch (ParseException ex) {
 
-		}
+        }
     }//GEN-LAST:event_jDatePickerInicioActionPerformed
 
     private void jDatePickerFimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDatePickerFimActionPerformed
-		try {
-			promocao.setDataFim(dateFormat.parse(jDatePickerFim.getFormattedTextField().getText()));
-			if (promocao.getDataFim().getTime() < promocao.getDataInicio().getTime()) {
-				Mensagem.msg06(this); //Dado inválido
-				jDatePickerFim.getFormattedTextField().setText("");
-			}
-		} catch (ParseException ex) {
+        try {
+            promocao.setDataFim(Utilitarios.stringToDate(jDatePickerFim.getFormattedTextField().getText()));
+            if (promocao.getDataInicio() != null && promocao.getDataFim().getTime() < promocao.getDataInicio().getTime()) {
+                Mensagem.msg06(this); //Dado inválido
+                jDatePickerFim.getFormattedTextField().setText("");
+            }
+        } catch (ParseException ex) {
 
-		}
+        }
     }//GEN-LAST:event_jDatePickerFimActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try {
+            frmPai.atualizar();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_formWindowClosing
+
+    private void jButtonPesquisarProdLevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarProdLevaActionPerformed
+        consultarProduto(2);
+    }//GEN-LAST:event_jButtonPesquisarProdLevaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -451,99 +479,130 @@ public class CadastroPromocao extends javax.swing.JFrame {
     javax.swing.JTextField jTextFieldValorMinimo;
     // End of variables declaration//GEN-END:variables
 
-	public void atualizarAposSalvar(TelaConsultaPromocao frmPai) {
-		this.frmPai = frmPai;
-	}
+    public void alteracao(String acao, Promocao promocao) throws Exception {
+        this.promocao = promocao;
+        jLabelAcao.setText(acao);
 
-	public void alteracao(String acao, Promocao promocao) throws Exception {
-		this.promocao = promocao;
-		jLabelAcao.setText(acao);
+        jTextFieldDescricao.setText(promocao.getDescricao());
+        jComboBoxTipo.setSelectedItem(promocao.getTipo());
+        jDatePickerInicio.getFormattedTextField().setText(Utilitarios.dateToString(promocao.getDataInicio()));
+        jDatePickerFim.getFormattedTextField().setText(Utilitarios.dateToString(promocao.getDataFim()));
+        switch (promocao.getTipo()) {
+            case DESCONTO:
+                jTextFieldDesconto.setText(promocao.getDesconto().toString());
+                jTextFieldProdPaga.setText(promocao.getProdPaga().getDescricao());
+                jTextFieldQtdPaga.setText(promocao.getQtdPaga().toString());
+                break;
+            case QUANTIDADE:
+                jTextFieldProdPaga.setText(promocao.getProdPaga().getDescricao());
+                jTextFieldQtdPaga.setText(promocao.getQtdPaga().toString());
+                jTextFieldProdLeva.setText(promocao.getProdLeva().getDescricao());
+                jTextFieldQtdLeva.setText(promocao.getQtdLeva().toString());
+                break;
+            default:
+                jTextFieldDesconto.setText(promocao.getDesconto().toString());
+                jTextFieldValorMinimo.setText(promocao.getValorMinimo().toString());
+        }
+    }
 
-		jTextFieldDescricao.setText(promocao.getDescricao());
-		jComboBoxTipo.setSelectedItem(promocao.getTipo());
-		jDatePickerInicio.getFormattedTextField().setText(dateFormat.format(promocao.getDataInicio()));
-		jDatePickerFim.getFormattedTextField().setText(dateFormat.format(promocao.getDataFim()));
-		switch (promocao.getTipo()) {
-			case DESCONTO:
-				jTextFieldDesconto.setText(promocao.getDesconto().toString());
-				jTextFieldProdPaga.setText(promocao.getProdPaga().getDescricao());
-				jTextFieldQtdPaga.setText(promocao.getQtdPaga().toString());
-				break;
-			case QUANTIDADE:
-				jTextFieldProdPaga.setText(promocao.getProdPaga().getDescricao());
-				jTextFieldQtdPaga.setText(promocao.getQtdPaga().toString());
-				jTextFieldProdLeva.setText(promocao.getProdLeva().getDescricao());
-				jTextFieldQtdLeva.setText(promocao.getQtdLeva().toString());
-				break;
-			default:
-				jTextFieldDesconto.setText(promocao.getDesconto().toString());
-				jTextFieldValorMinimo.setText(promocao.getValorMinimo().toString());
-		}
-	}
+    public void limparCampos() {
+        jTextFieldDescricao.setText("");
 
-	public void limparCampos() {
-		jTextFieldDescricao.setText("");
+    }
 
-	}
+    private void atualizarCampos(TipoPromocao tipoPromocao) {
+        Dimension dimension = new Dimension(437, 0);
+        switch (tipoPromocao) {
+            case DESCONTO:
+                jLabelDesconto.setVisible(true);
+                jTextFieldDesconto.setVisible(true);
+                jLabelQtdPaga.setVisible(true);
+                jTextFieldQtdPaga.setVisible(true);
+                jLabelQtdLeva.setVisible(false);
+                jTextFieldQtdLeva.setVisible(false);
+                jLabelProdPaga.setVisible(true);
+                jTextFieldProdPaga.setVisible(true);
+                jButtonPesquisarProdPaga.setVisible(true);
+                jLabelProdLeva.setVisible(false);
+                jTextFieldProdLeva.setVisible(false);
+                jButtonPesquisarProdLeva.setVisible(false);
+                jLabelValorMinimo.setVisible(false);
+                jTextFieldValorMinimo.setVisible(false);
+                dimension.height = 478;
+                break;
+            case QUANTIDADE:
+                jLabelDesconto.setVisible(false);
+                jTextFieldDesconto.setVisible(false);
+                jLabelQtdPaga.setVisible(true);
+                jTextFieldQtdPaga.setVisible(true);
+                jLabelQtdLeva.setVisible(true);
+                jTextFieldQtdLeva.setVisible(true);
+                jLabelProdPaga.setVisible(true);
+                jTextFieldProdPaga.setVisible(true);
+                jButtonPesquisarProdPaga.setVisible(true);
+                jLabelProdLeva.setVisible(true);
+                jTextFieldProdLeva.setVisible(true);
+                jButtonPesquisarProdLeva.setVisible(true);
+                jLabelValorMinimo.setVisible(false);
+                jTextFieldValorMinimo.setVisible(false);
+                dimension.height = 518;
+                break;
+            default:
+                jLabelDesconto.setVisible(true);
+                jTextFieldDesconto.setVisible(true);
+                jLabelQtdPaga.setVisible(false);
+                jTextFieldQtdPaga.setVisible(false);
+                jLabelQtdLeva.setVisible(false);
+                jTextFieldQtdLeva.setVisible(false);
+                jLabelProdPaga.setVisible(false);
+                jTextFieldProdPaga.setVisible(false);
+                jButtonPesquisarProdPaga.setVisible(false);
+                jLabelProdLeva.setVisible(false);
+                jTextFieldProdLeva.setVisible(false);
+                jButtonPesquisarProdLeva.setVisible(false);
+                jLabelValorMinimo.setVisible(true);
+                jTextFieldValorMinimo.setVisible(true);
+                dimension.height = 438;
+        }
+        this.setSize(dimension);
+        //x 437
+        //y 594
+        //526 406 446 366
+    }
 
-	private void atualizarCampos(TipoPromocao tipoPromocao) {
-		Dimension dimension = new Dimension(437, 0);
-		switch (tipoPromocao) {
-			case DESCONTO:
-				jLabelDesconto.setVisible(true);
-				jTextFieldDesconto.setVisible(true);
-				jLabelQtdPaga.setVisible(true);
-				jTextFieldQtdPaga.setVisible(true);
-				jLabelQtdLeva.setVisible(false);
-				jTextFieldQtdLeva.setVisible(false);
-				jLabelProdPaga.setVisible(true);
-				jTextFieldProdPaga.setVisible(true);
-				jButtonPesquisarProdPaga.setVisible(true);
-				jLabelProdLeva.setVisible(false);
-				jTextFieldProdLeva.setVisible(false);
-				jButtonPesquisarProdLeva.setVisible(false);
-				jLabelValorMinimo.setVisible(false);
-				jTextFieldValorMinimo.setVisible(false);
-				dimension.height = 478;
-				break;
-			case QUANTIDADE:
-				jLabelDesconto.setVisible(false);
-				jTextFieldDesconto.setVisible(false);
-				jLabelQtdPaga.setVisible(true);
-				jTextFieldQtdPaga.setVisible(true);
-				jLabelQtdLeva.setVisible(true);
-				jTextFieldQtdLeva.setVisible(true);
-				jLabelProdPaga.setVisible(true);
-				jTextFieldProdPaga.setVisible(true);
-				jButtonPesquisarProdPaga.setVisible(true);
-				jLabelProdLeva.setVisible(true);
-				jTextFieldProdLeva.setVisible(true);
-				jButtonPesquisarProdLeva.setVisible(true);
-				jLabelValorMinimo.setVisible(false);
-				jTextFieldValorMinimo.setVisible(false);
-				dimension.height = 518;
-				break;
-			default:
-				jLabelDesconto.setVisible(true);
-				jTextFieldDesconto.setVisible(true);
-				jLabelQtdPaga.setVisible(false);
-				jTextFieldQtdPaga.setVisible(false);
-				jLabelQtdLeva.setVisible(false);
-				jTextFieldQtdLeva.setVisible(false);
-				jLabelProdPaga.setVisible(false);
-				jTextFieldProdPaga.setVisible(false);
-				jButtonPesquisarProdPaga.setVisible(false);
-				jLabelProdLeva.setVisible(false);
-				jTextFieldProdLeva.setVisible(false);
-				jButtonPesquisarProdLeva.setVisible(false);
-				jLabelValorMinimo.setVisible(true);
-				jTextFieldValorMinimo.setVisible(true);
-				dimension.height = 438;
-		}
-		this.setSize(dimension);
-		//x 437
-		//y 594
-		//526 406 446 366
-	}
+    public void selecionarProduto(Produto produto, int qual) {
+        if (qual == 1) {
+            promocao.setProdPaga(produto);
+            jTextFieldProdPaga.setText(produto.getDescricao());
+        } else if (qual == 2) {
+            promocao.setProdLeva(produto);
+            jTextFieldProdLeva.setText(produto.getDescricao());
+        }
+        jFrameConsultarProduto.setVisible(false);
+        jFrameConsultarProduto.dispose();
+        this.setVisible(true);
 
+    }
+
+    private void consultarProduto(int qual) {
+        jFrameConsultarProduto = new JFrame();
+        TelaConsultaProduto iFrame = new TelaConsultaProduto(this, qual);
+        JPanel panel = iFrame.getMainPanel();
+        jFrameConsultarProduto.setSize(1174, 631);
+        jFrameConsultarProduto.setUndecorated(false);
+        jFrameConsultarProduto.setLocationRelativeTo(this);
+        jFrameConsultarProduto.setAlwaysOnTop(true);
+        jFrameConsultarProduto.setResizable(false);
+        jFrameConsultarProduto.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                jFrameConsultarProduto.setVisible(false);
+                jFrameConsultarProduto.dispose();
+                CadastroPromocao.this.setVisible(true);
+            }
+        });
+        jFrameConsultarProduto.add(panel);
+        panel.setVisible(true);
+        jFrameConsultarProduto.setVisible(true);
+    }
 }

@@ -33,7 +33,7 @@ public class NVendedor {
         return (Vendedor) dao.consultar(codigo);
     }
 
-    public ArrayList<Object> listar() throws SQLException, Exception {
+    public ArrayList<Vendedor> listar() throws SQLException, Exception {
         return dao.listar();
     }
 }

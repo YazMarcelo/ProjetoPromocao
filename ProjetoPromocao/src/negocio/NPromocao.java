@@ -3,7 +3,8 @@ package negocio;
 import entidade.*;
 import persistencia.*;
 import java.sql.SQLException;
-import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class NPromocao {
 
@@ -29,7 +30,11 @@ public class NPromocao {
         return (Promocao) dao.consultar(codigo);
     }
 
-    public ArrayList<Promocao> listar() throws SQLException, Exception {
+    public Iterator<Promocao> listarIterator() throws SQLException, Exception {
+        return dao.listarIterator();
+    }
+    
+    public List<Promocao> listar() throws SQLException, Exception {
         return dao.listar();
     }
 }

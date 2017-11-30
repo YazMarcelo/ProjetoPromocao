@@ -11,14 +11,13 @@ import java.util.ArrayList;
  * @author Marcelo
  */
 public class VendedorDAO implements CRUD {
-
+private final Connection cnn = util.Conexao.getConexao();
     @Override
     public void incluir(Object objeto) throws Exception {
         Vendedor obj = (Vendedor) (objeto);
 
         String sql = "insert into vendedor (vend_nome,vend_cpf,vend_telefone,vend_celular,vend_email,vend_cep,vend_logradouro,vend_numero,vend_complemento,vend_bairro,vend_muni_id) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
 
-        Connection cnn = util.Conexao.getConexao();
 
         PreparedStatement prd = cnn.prepareStatement(sql);
 
@@ -48,14 +47,12 @@ public class VendedorDAO implements CRUD {
         }
 
         rs.close();
-        cnn.close();
     }
 
     @Override
     public void excluir(int id) throws Exception {
         String sql = "UPDATE public.vendedor set excluido = true WHERE vend_id = ?;";
 
-        Connection cnn = util.Conexao.getConexao();
 
         PreparedStatement prd = cnn.prepareStatement(sql);
 
@@ -64,7 +61,6 @@ public class VendedorDAO implements CRUD {
         prd.execute();
 
         prd.close();
-        cnn.close();
     }
 
     @Override
@@ -86,7 +82,6 @@ public class VendedorDAO implements CRUD {
                 + "vend_muni_id = ?"
                 + " where vend_id = ?;";
 
-        Connection cnn = util.Conexao.getConexao();
 
         PreparedStatement prd = cnn.prepareStatement(sql);
 
@@ -106,17 +101,15 @@ public class VendedorDAO implements CRUD {
         prd.execute();
 
         prd.close();
-        cnn.close();
     }
 
     @Override
-    public ArrayList<Object> listar() throws Exception {
+    public ArrayList<Vendedor> listar() throws Exception {
 
-        ArrayList<Object> listaObjs = new ArrayList<>();
+        ArrayList<Vendedor> listaObjs = new ArrayList<>();
 
         String sql = "select * from public.vendedor where excluido = false order by vend_id ";
 
-        Connection cnn = util.Conexao.getConexao();
         Statement stm = cnn.createStatement();
         ResultSet rs = stm.executeQuery(sql);
 
@@ -138,11 +131,10 @@ public class VendedorDAO implements CRUD {
             objeto.setMuniId(rs.getInt("vend_muni_id"));
             listaObjs.add(objeto);
         }
-
         rs.close();
-        cnn.close();
 
         return listaObjs;
+
     }
 
     @Override
@@ -178,7 +170,6 @@ public class VendedorDAO implements CRUD {
         prd.execute();
 
         prd.close();
-        cnn.close();
 
         return objeto;
     }

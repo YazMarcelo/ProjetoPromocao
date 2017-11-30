@@ -8,7 +8,7 @@ public class Promocao {
 	private String descricao;
 	private TipoPromocao tipo;
 	private float desconto = 0;
-	private int qtdPaga;
+	private int qtdPaga = 0;
 	private int qtdLeva = 0;
 	private Date dataInicio;
 	private Date dataFim;
