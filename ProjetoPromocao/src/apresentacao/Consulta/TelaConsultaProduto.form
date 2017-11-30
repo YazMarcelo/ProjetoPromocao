@@ -172,7 +172,7 @@
                     <Column editable="false" title="Valor" type="java.lang.Object"/>
                     <Column editable="false" title="Fabrica&#xe7;&#xe3;o" type="java.lang.Object"/>
                     <Column editable="false" title="Vencimento" type="java.lang.Object"/>
-                    <Column editable="false" title="Por produto" type="java.lang.Object"/>
+                    <Column editable="false" title="Conte&#xfa;do" type="java.lang.Object"/>
                     <Column editable="false" title="Em estoque" type="java.lang.Object"/>
                   </Table>
                 </Property>
