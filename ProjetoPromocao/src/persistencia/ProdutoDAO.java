@@ -1,7 +1,6 @@
 package persistencia;
 
 import entidade.*;
-import negocio.*;
 import interfaces.CRUD;
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,8 +23,8 @@ public class ProdutoDAO implements CRUD {
 
         prd.setString(1, obj.getDescricao());
         prd.setDouble(2, obj.getValor());
-        prd.setDate(3, (Date) obj.getDataFabricacao());
-        prd.setDate(4, (Date) obj.getDataVencimento());
+        prd.setDate(3, new Date(obj.getDataFabricacao().getTime()));
+        prd.setDate(4, new Date(obj.getDataVencimento().getTime()));
         prd.setInt(5, obj.getQtdUnidade());
         prd.setInt(6, obj.getUnidadeMedida().getId());
         prd.setInt(7, obj.getSaldoEstoque());
@@ -82,8 +81,8 @@ public class ProdutoDAO implements CRUD {
 
         prd.setString(1, obj.getDescricao());
         prd.setDouble(2, obj.getValor());
-        prd.setDate(3, (Date) obj.getDataFabricacao());
-        prd.setDate(4, (Date) obj.getDataVencimento());
+        prd.setDate(3, new Date(obj.getDataFabricacao().getTime()));
+        prd.setDate(4, new Date(obj.getDataVencimento().getTime()));
         prd.setInt(5, obj.getQtdUnidade());
         prd.setInt(6, obj.getUnidadeMedida().getId());
         prd.setInt(7, obj.getSaldoEstoque());
@@ -106,8 +105,9 @@ public class ProdutoDAO implements CRUD {
         ResultSet rs = stm.executeQuery(sql);
 
         Produto objeto;
-
+        UnidadeMedidaDAO unidadeMedidaDAO = null;
         while (rs.next()) {
+            if (unidadeMedidaDAO == null) unidadeMedidaDAO = new UnidadeMedidaDAO();
             objeto = new Produto();
             objeto.setId(rs.getInt("prod_id"));
             objeto.setDescricao(rs.getString("prod_descricao"));
@@ -115,7 +115,7 @@ public class ProdutoDAO implements CRUD {
             objeto.setDataFabricacao(rs.getDate("prod_data_fabricacao"));
             objeto.setDataVencimento(rs.getDate("prod_data_vencimento"));
             objeto.setQtdUnidade(rs.getInt("prod_qtd_unidade"));
-            objeto.setUnidadeMedida(new NUnidadeMedida().consultar(rs.getInt("prod_unme_id")));
+            objeto.setUnidadeMedida((UnidadeMedida) unidadeMedidaDAO.consultar(rs.getInt("prod_unme_id")));
             objeto.setSaldoEstoque(rs.getInt("prod_saldo_estoque"));
             objeto.setDesconto(rs.getFloat("prod_desconto"));
             listaObjs.add(objeto);
@@ -146,7 +146,7 @@ public class ProdutoDAO implements CRUD {
             objeto.setDataFabricacao(rs.getDate("prod_data_fabricacao"));
             objeto.setDataVencimento(rs.getDate("prod_data_vencimento"));
             objeto.setQtdUnidade(rs.getInt("prod_qtd_unidade"));
-            objeto.setUnidadeMedida(new NUnidadeMedida().consultar(rs.getInt("prod_unme_id")));
+            objeto.setUnidadeMedida((UnidadeMedida) (new UnidadeMedidaDAO().consultar(rs.getInt("prod_unme_id"))));
             objeto.setSaldoEstoque(rs.getInt("prod_saldo_estoque"));
             objeto.setDesconto(rs.getFloat("prod_desconto"));
         }
