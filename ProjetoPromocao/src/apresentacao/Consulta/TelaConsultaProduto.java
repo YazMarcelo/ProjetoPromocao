@@ -258,7 +258,7 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButtonNovoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonNovoActionPerformed
-        telaCadastroProduto = new CadastroProduto();
+        telaCadastroProduto = new CadastroProduto(this);
         telaCadastroProduto.setVisible(true);
         atualizaAposFechar();
     }//GEN-LAST:event_jButtonNovoActionPerformed
@@ -294,8 +294,7 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
         if (jTableProduto.getSelectedRow() >= 0) {
             try {
-                telaCadastroProduto = new CadastroProduto();
-                telaCadastroProduto.atualizarAposSalvar(this);
+                telaCadastroProduto = new CadastroProduto(this);
                 telaCadastroProduto.alteracao("Alterar Produto", Integer.valueOf(jTableProduto.getValueAt(jTableProduto.getSelectedRow(), 0).toString()));
                 telaCadastroProduto.setVisible(true);
             } catch (Exception ex) {

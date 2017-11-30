@@ -7,8 +7,8 @@ public class Produto {
 	private int id;
 	private String descricao;
 	private double valor;
-	private Date dataFabricacao;
-	private Date dataVencimento;
+	private Date dataFabricacao = null;
+	private Date dataVencimento = null;
 	private int qtdUnidade;
 	private UnidadeMedida unidadeMedida;
 	private int saldoEstoque;
