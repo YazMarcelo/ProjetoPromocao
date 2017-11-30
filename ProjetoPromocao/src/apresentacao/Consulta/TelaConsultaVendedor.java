@@ -92,11 +92,11 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Código", "Descrição"
+                "Código", "Nome", "CPF", "Celular", "Telefone", "E-mail"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false
+                false, false, true, true, true, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -108,7 +108,7 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
             jTableVendedor.getColumnModel().getColumn(0).setResizable(false);
             jTableVendedor.getColumnModel().getColumn(0).setPreferredWidth(15);
             jTableVendedor.getColumnModel().getColumn(1).setResizable(false);
-            jTableVendedor.getColumnModel().getColumn(1).setPreferredWidth(430);
+            jTableVendedor.getColumnModel().getColumn(1).setPreferredWidth(200);
         }
 
         jButton2.setBackground(new java.awt.Color(0, 136, 204));
@@ -164,7 +164,12 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
 
         jLabel2.setText("Filtro");
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Código", "Descrição" }));
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Selecione...", "Código", "Nome" }));
+        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -288,7 +293,7 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
 
     private void jTextFieldPesquisar1KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldPesquisar1KeyTyped
         jTextFieldPesquisar1.setForeground(new java.awt.Color(0, 0, 0));
-        if (jComboBox1.getSelectedItem().equals("Descrição") || jComboBox1.getSelectedItem().equals("Selecione...")) {
+        if (jComboBox1.getSelectedItem().equals("Nome") || jComboBox1.getSelectedItem().equals("Selecione...")) {
             esc = 1;
         } else {
             esc = 0;
@@ -304,6 +309,10 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
         trs = new TableRowSorter(model);
         jTableVendedor.setRowSorter(trs);
     }//GEN-LAST:event_jTextFieldPesquisar1KeyTyped
+
+    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jComboBox1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -330,9 +339,14 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
 
             model.setNumRows(0);
             for (int pos = 0; pos < listaDeVendedores.size(); pos++) {
-                String[] saida = new String[2];
+                String[] saida = new String[6];
                 Vendedor aux = (Vendedor) listaDeVendedores.get(pos);
                 saida[0] = String.valueOf(aux.getId());
+                saida[1] = String.valueOf(aux.getNome());
+                saida[2] = String.valueOf(aux.getCpf());
+                saida[3] = String.valueOf(aux.getCelular());
+                saida[4] = String.valueOf(aux.getTelefone());
+                saida[5] = String.valueOf(aux.getEmail());
                 model.addRow(saida);
             }
         } catch (Exception erro) {

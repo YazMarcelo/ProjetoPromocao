@@ -8,6 +8,7 @@ package apresentacao.Cadastro;
 import apresentacao.Consulta.TelaConsultaProduto;
 import entidade.Produto;
 import entidade.UnidadeMedida;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +32,7 @@ public class CadastroProduto extends javax.swing.JFrame {
     TelaConsultaProduto aux;
     DatePickerSample dps;
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+    Produto esp = null;
 
     /**
      * Creates new form CadastroMarca
@@ -70,8 +72,8 @@ public class CadastroProduto extends javax.swing.JFrame {
         jComboBoxUnidadeMedida = new javax.swing.JComboBox();
         jLabel10 = new javax.swing.JLabel();
         jTextFieldDesconto = new javax.swing.JTextField();
-        jTextFieldDataFabri = new javax.swing.JFormattedTextField();
-        jTextFieldDataVenci = new javax.swing.JFormattedTextField();
+        jDatePickerDataFabri = new org.jdatepicker.JDatePicker();
+        jDatePickerVend = new org.jdatepicker.JDatePicker();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -126,31 +128,15 @@ public class CadastroProduto extends javax.swing.JFrame {
 
         jLabel10.setText("Desconto MAX %");
 
-        try {
-            jTextFieldDataFabri.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jTextFieldDataFabri.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextFieldDataFabriKeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextFieldDataFabriKeyTyped(evt);
+        jDatePickerDataFabri.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDatePickerDataFabriActionPerformed(evt);
             }
         });
 
-        try {
-            jTextFieldDataVenci.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-        jTextFieldDataVenci.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyPressed(java.awt.event.KeyEvent evt) {
-                jTextFieldDataVenciKeyPressed(evt);
-            }
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                jTextFieldDataVenciKeyTyped(evt);
+        jDatePickerVend.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jDatePickerVendActionPerformed(evt);
             }
         });
 
@@ -166,7 +152,7 @@ public class CadastroProduto extends javax.swing.JFrame {
             .addGroup(jPanelFundoLayout.createSequentialGroup()
                 .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanelFundoLayout.createSequentialGroup()
-                        .addContainerGap()
+                        .addGap(50, 50, 50)
                         .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel9, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -184,13 +170,13 @@ public class CadastroProduto extends javax.swing.JFrame {
                                 .addComponent(jComboBoxUnidadeMedida, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jTextFieldSaldoEstoque)
                             .addComponent(jTextFieldDesconto)
-                            .addComponent(jTextFieldDataFabri)
-                            .addComponent(jTextFieldDataVenci, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
-                            .addComponent(jTextFieldNome)))
+                            .addComponent(jTextFieldNome)
+                            .addComponent(jDatePickerDataFabri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jDatePickerVend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanelFundoLayout.createSequentialGroup()
                         .addGap(10, 10, 10)
                         .addComponent(jLabel2)))
-                .addContainerGap(113, Short.MAX_VALUE))
+                .addContainerGap(50, Short.MAX_VALUE))
         );
         jPanelFundoLayout.setVerticalGroup(
             jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -207,14 +193,14 @@ public class CadastroProduto extends javax.swing.JFrame {
                     .addComponent(jTextFieldValor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel3)
-                    .addComponent(jTextFieldDataFabri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel5)
-                    .addComponent(jTextFieldDataVenci, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jDatePickerDataFabri, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jDatePickerVend, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jComboBoxUnidadeMedida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -227,7 +213,7 @@ public class CadastroProduto extends javax.swing.JFrame {
                 .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jTextFieldDesconto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 46, Short.MAX_VALUE)
+                .addGap(18, 18, Short.MAX_VALUE)
                 .addComponent(jButtonSalvar)
                 .addContainerGap())
         );
@@ -248,25 +234,13 @@ public class CadastroProduto extends javax.swing.JFrame {
 
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         try {
-
-            Produto esp = new Produto();
             NProduto neg = new NProduto();
 
             esp.setId(idAlteracao);
             esp.setDescricao(jTextFieldNome.getText());
             esp.setValor(Double.parseDouble(jTextFieldValor.getText()));
-            
-            if (!(jTextFieldDataFabri.getText().equals("  /  /    "))) {
-                Date dataNasc = formato.parse(jTextFieldDataFabri.getText());
-                java.sql.Date sqlDate = new java.sql.Date(dataNasc.getTime());
-                esp.setDataFabricacao(sqlDate);
-            }
-            
-            if (!(jTextFieldDataVenci.getText().equals("  /  /    "))) {
-                Date dataNasc = formato.parse(jTextFieldDataVenci.getText());
-                java.sql.Date sqlDate = new java.sql.Date(dataNasc.getTime());
-                esp.setDataVencimento(sqlDate);
-            }
+            esp.setDataFabricacao(Utilitarios.stringToDate(jDatePickerDataFabri.getFormattedTextField().getText()));
+            esp.setDataVencimento(Utilitarios.stringToDate(jDatePickerVend.getFormattedTextField().getText()));
             
             esp.setQtdUnidade(Integer.parseInt(jTextFieldQtd.getText()));
             esp.setUnidadeMedida((UnidadeMedida) jComboBoxUnidadeMedida.getSelectedItem());
@@ -287,31 +261,33 @@ public class CadastroProduto extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
-    private void jTextFieldDataFabriKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDataFabriKeyPressed
+    private void jDatePickerDataFabriActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDatePickerDataFabriActionPerformed
+                try {
+            esp.setDataFabricacao(Utilitarios.stringToDate(jDatePickerDataFabri.getFormattedTextField().getText()));
+            if (esp.getDataVencimento()!= null && esp.getDataVencimento().getTime() < esp.getDataFabricacao().getTime()) {
+                jDatePickerDataFabri.getFormattedTextField().setText("");
+            }
+        } catch (ParseException ex) {
 
-    }//GEN-LAST:event_jTextFieldDataFabriKeyPressed
+        }
+    }//GEN-LAST:event_jDatePickerDataFabriActionPerformed
 
-    private void jTextFieldDataFabriKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDataFabriKeyTyped
-        Utilitarios.someteNumeros(evt);
-//        if (Utilitarios.retirarMascara(jTextFieldDataFabri.getText()).length() == 11) {;
-//            if (Utilitarios.validarData(Utilitarios.retirarMascara(jTextFieldDataFabri.getText()))) {
-//                msg.msg06();
-//                jTextFieldDataFabri.setText("");
-//            }
-//        }
-    }//GEN-LAST:event_jTextFieldDataFabriKeyTyped
-
-    private void jTextFieldDataVenciKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDataVenciKeyPressed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldDataVenciKeyPressed
-
-    private void jTextFieldDataVenciKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextFieldDataVenciKeyTyped
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jTextFieldDataVenciKeyTyped
+    private void jDatePickerVendActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jDatePickerVendActionPerformed
+                try {
+            esp.setDataVencimento(Utilitarios.stringToDate(jDatePickerVend.getFormattedTextField().getText()));
+            if (esp.getDataFabricacao()!= null && esp.getDataVencimento().getTime() < esp.getDataFabricacao().getTime()) {
+                Mensagem.msg06(this); //Dado inválido
+               jDatePickerVend.getFormattedTextField().setText("");
+            }
+        } catch (ParseException ex) {
+        }
+    }//GEN-LAST:event_jDatePickerVendActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JComboBox jComboBoxUnidadeMedida;
+    private org.jdatepicker.JDatePicker jDatePickerDataFabri;
+    private org.jdatepicker.JDatePicker jDatePickerVend;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -323,8 +299,6 @@ public class CadastroProduto extends javax.swing.JFrame {
     private javax.swing.JLabel jLabelAcao;
     private javax.swing.JPanel jPanelFundo;
     private javax.swing.JPanel jPanelSuperior;
-    private javax.swing.JFormattedTextField jTextFieldDataFabri;
-    private javax.swing.JFormattedTextField jTextFieldDataVenci;
     private javax.swing.JTextField jTextFieldDesconto;
     private javax.swing.JTextField jTextFieldNome;
     private javax.swing.JTextField jTextFieldQtd;
@@ -345,10 +319,11 @@ public class CadastroProduto extends javax.swing.JFrame {
         this.idAlteracao = objeto.getId();
         jTextFieldNome.setText(objeto.getDescricao());
         jTextFieldValor.setText(String.valueOf(objeto.getValor()));
-        String dateFormatedFabri = Utilitarios.dateBRFormat(String.valueOf(objeto.getDataFabricacao()));
-        String dateFormatedVenci = Utilitarios.dateBRFormat(String.valueOf(objeto.getDataVencimento()));
-        jTextFieldDataFabri.setText(dateFormatedFabri);
-        jTextFieldDataVenci.setText(dateFormatedVenci);
+
+        jDatePickerVend.getFormattedTextField().setText(Utilitarios.dateBRFormat(String.valueOf(objeto.getDataVencimento())));
+        jDatePickerDataFabri.getFormattedTextField().setText(Utilitarios.dateBRFormat(String.valueOf(objeto.getDataFabricacao())));
+        
+        
         jTextFieldQtd.setText(String.valueOf(objeto.getQtdUnidade()));
         jTextFieldSaldoEstoque.setText(String.valueOf(objeto.getSaldoEstoque()));
         jComboBoxUnidadeMedida.setSelectedItem(objeto.getUnidadeMedida());
@@ -371,7 +346,7 @@ public class CadastroProduto extends javax.swing.JFrame {
     }
 
     public void limparCampos() {
-        jTextFieldDataFabri.setText("");
+//        jTextFieldDataFabri.setText("");
     }
 
 }

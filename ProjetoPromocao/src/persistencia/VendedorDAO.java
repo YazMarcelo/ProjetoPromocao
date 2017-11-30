@@ -18,7 +18,6 @@ private final Connection cnn = util.Conexao.getConexao();
 
         String sql = "insert into vendedor (vend_nome,vend_cpf,vend_telefone,vend_celular,vend_email,vend_cep,vend_logradouro,vend_numero,vend_complemento,vend_bairro,vend_muni_id) VALUES (?,?,?,?,?,?,?,?,?,?,?);";
 
-
         PreparedStatement prd = cnn.prepareStatement(sql);
 
         prd.setString(1, obj.getNome());
@@ -35,7 +34,7 @@ private final Connection cnn = util.Conexao.getConexao();
 
         prd.execute();
 
-        String sql2 = "select currval('vendedor_vend_id_seq') as vend_id";
+        String sql2 = "select currval('pessoa_pess_id_seq') as vend_id";
 
         Statement stm = cnn.createStatement();
 
