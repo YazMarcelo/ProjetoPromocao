@@ -27,9 +27,35 @@ public class CadastroPromocao extends javax.swing.JFrame {
     public CadastroPromocao(TelaConsultaPromocao frmPai) {
         initComponents();
         this.frmPai = frmPai;
-        setLocationRelativeTo(null);
-        atualizarCampos(TipoPromocao.DESCONTO);
         promocao = new Promocao();
+        atualizarCampos(TipoPromocao.DESCONTO);
+    }
+
+    public CadastroPromocao(Promocao promocao, TelaConsultaPromocao frmPai) {
+        this(frmPai);
+        jLabelAcao.setText("Alterar Promoção");
+        this.promocao = promocao;
+        atualizarCampos(promocao.getTipo());
+        jTextFieldDescricao.setText(promocao.getDescricao());
+        jComboBoxTipo.setSelectedItem(promocao.getTipo());
+        jDatePickerInicio.getFormattedTextField().setText(Utilitarios.dateToString(promocao.getDataInicio()));
+        jDatePickerFim.getFormattedTextField().setText(Utilitarios.dateToString(promocao.getDataFim()));
+        switch (promocao.getTipo()) {
+            case DESCONTO:
+                jTextFieldDesconto.setText(promocao.getDesconto().toString());
+                jTextFieldProdPaga.setText(promocao.getProdPaga().getDescricao());
+                jTextFieldQtdPaga.setText(promocao.getQtdPaga().toString());
+                break;
+            case QUANTIDADE:
+                jTextFieldProdPaga.setText(promocao.getProdPaga().getDescricao());
+                jTextFieldQtdPaga.setText(promocao.getQtdPaga().toString());
+                jTextFieldProdLeva.setText(promocao.getProdLeva().getDescricao());
+                jTextFieldQtdLeva.setText(promocao.getQtdLeva().toString());
+                break;
+            default:
+                jTextFieldDesconto.setText(promocao.getDesconto().toString());
+                jTextFieldValorMinimo.setText(promocao.getValorMinimo().toString());
+        }
     }
 
     private boolean validarCamposObrigatorios(JTextField... campos) {
@@ -481,33 +507,20 @@ public class CadastroPromocao extends javax.swing.JFrame {
 
     public void alteracao(String acao, Promocao promocao) throws Exception {
         this.promocao = promocao;
-        jLabelAcao.setText(acao);
 
-        jTextFieldDescricao.setText(promocao.getDescricao());
-        jComboBoxTipo.setSelectedItem(promocao.getTipo());
-        jDatePickerInicio.getFormattedTextField().setText(Utilitarios.dateToString(promocao.getDataInicio()));
-        jDatePickerFim.getFormattedTextField().setText(Utilitarios.dateToString(promocao.getDataFim()));
-        switch (promocao.getTipo()) {
-            case DESCONTO:
-                jTextFieldDesconto.setText(promocao.getDesconto().toString());
-                jTextFieldProdPaga.setText(promocao.getProdPaga().getDescricao());
-                jTextFieldQtdPaga.setText(promocao.getQtdPaga().toString());
-                break;
-            case QUANTIDADE:
-                jTextFieldProdPaga.setText(promocao.getProdPaga().getDescricao());
-                jTextFieldQtdPaga.setText(promocao.getQtdPaga().toString());
-                jTextFieldProdLeva.setText(promocao.getProdLeva().getDescricao());
-                jTextFieldQtdLeva.setText(promocao.getQtdLeva().toString());
-                break;
-            default:
-                jTextFieldDesconto.setText(promocao.getDesconto().toString());
-                jTextFieldValorMinimo.setText(promocao.getValorMinimo().toString());
-        }
     }
 
     public void limparCampos() {
         jTextFieldDescricao.setText("");
-
+        jComboBoxTipo.setSelectedIndex(0);
+        jDatePickerInicio.getFormattedTextField().setText("");
+        jDatePickerFim.getFormattedTextField().setText("");
+        jTextFieldDesconto.setText("");
+        jTextFieldProdPaga.setText("");
+        jTextFieldProdLeva.setText("");
+        jTextFieldQtdPaga.setText("");
+        jTextFieldQtdLeva.setText("");
+        jTextFieldValorMinimo.setText("");
     }
 
     private void atualizarCampos(TipoPromocao tipoPromocao) {
@@ -600,6 +613,12 @@ public class CadastroPromocao extends javax.swing.JFrame {
                 jFrameConsultarProduto.dispose();
                 CadastroPromocao.this.setVisible(true);
             }
+
+            @Override
+            public void windowIconified(WindowEvent e) {
+                jFrameConsultarProduto.setVisible(true);
+            }
+
         });
         jFrameConsultarProduto.add(panel);
         panel.setVisible(true);

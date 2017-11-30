@@ -239,8 +239,7 @@ public class TelaConsultaPromocao extends javax.swing.JInternalFrame {
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
         if (jTablePromocao.getSelectedRow() >= 0) {
             try {
-                telaCadastroPromocao = new CadastroPromocao(this);
-                telaCadastroPromocao.alteracao("Alterar Promoção", nPromocao.consultar(Integer.valueOf(jTablePromocao.getValueAt(jTablePromocao.getSelectedRow(), 0).toString())));
+                telaCadastroPromocao = new CadastroPromocao(nPromocao.consultar(Integer.valueOf(jTablePromocao.getValueAt(jTablePromocao.getSelectedRow(), 0).toString())), this);
                 telaCadastroPromocao.setVisible(true);
             } catch (Exception ex) {
                 Logger.getLogger(TelaConsultaPromocao.class.getName()).log(Level.SEVERE, null, ex);
@@ -314,7 +313,11 @@ public class TelaConsultaPromocao extends javax.swing.JInternalFrame {
                 linha.add(promocao.getValorMinimo() == 0 ? "" : promocao.getValorMinimo());
                 detalhes.add(linha);
             }
-            jTablePromocao.setModel(new DefaultTableModel(detalhes, colunas));
+            jTablePromocao.setModel(new DefaultTableModel(detalhes, colunas) {
+                public boolean isCellEditable(int i, int j) {
+                    return false;
+                }
+            });
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
