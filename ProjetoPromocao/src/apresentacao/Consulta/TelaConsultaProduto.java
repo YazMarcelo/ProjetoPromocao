@@ -110,7 +110,7 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
 
             },
             new String [] {
-                "Código", "Nome", "Valor", "Fabricação", "Vencimento", "Por produto", "Em estoque"
+                "Código", "Nome", "Valor", "Fabricação", "Vencimento", "Conteúdo", "Em estoque"
             }
         ) {
             boolean[] canEdit = new boolean [] {

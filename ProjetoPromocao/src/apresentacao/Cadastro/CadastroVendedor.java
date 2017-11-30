@@ -64,8 +64,6 @@ public class CadastroVendedor extends javax.swing.JFrame {
         jTextFieldBairro = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
         jFormattedTextFieldCEP = new javax.swing.JFormattedTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jComboBoxMuni = new javax.swing.JComboBox<>();
         jLabel14 = new javax.swing.JLabel();
         jTextFieldEmail = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
@@ -168,8 +166,6 @@ public class CadastroVendedor extends javax.swing.JFrame {
             ex.printStackTrace();
         }
 
-        jLabel1.setText("Município");
-
         jLabel14.setText("E-mail");
 
         jLabel15.setText("Celular");
@@ -237,16 +233,14 @@ public class CadastroVendedor extends javax.swing.JFrame {
                             .addComponent(jLabel9)
                             .addComponent(jLabel11)
                             .addComponent(jLabel12)
-                            .addComponent(jLabel13)
-                            .addComponent(jLabel1))
+                            .addComponent(jLabel13))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextFieldBairro)
-                            .addComponent(jTextFieldNumero)
-                            .addComponent(jTextFieldComp)
-                            .addComponent(jTextFieldLogradouro)
-                            .addComponent(jFormattedTextFieldCEP)
-                            .addComponent(jComboBoxMuni, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jFormattedTextFieldCEP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 176, Short.MAX_VALUE)
+                            .addComponent(jTextFieldBairro, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldComp, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldNumero, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jTextFieldLogradouro))))
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         jPanelFundoLayout.setVerticalGroup(
@@ -299,11 +293,7 @@ public class CadastroVendedor extends javax.swing.JFrame {
                 .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jFormattedTextFieldCEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel13))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jComboBoxMuni, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(19, 19, 19)
+                .addGap(50, 50, 50)
                 .addComponent(jButtonSalvar)
                 .addGap(19, 19, 19))
         );
@@ -396,12 +386,10 @@ public class CadastroVendedor extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSalvar;
-    private javax.swing.JComboBox<String> jComboBoxMuni;
     private javax.swing.JFormattedTextField jFormattedTextFieldCEP;
     private javax.swing.JFormattedTextField jFormattedTextFieldCPF;
     private javax.swing.JFormattedTextField jFormattedTextFieldCell;
     private javax.swing.JFormattedTextField jFormattedTextFieldTef1;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

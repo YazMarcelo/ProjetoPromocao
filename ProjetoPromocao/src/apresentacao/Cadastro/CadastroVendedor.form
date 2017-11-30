@@ -97,16 +97,14 @@
                               <Component id="jLabel11" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel12" alignment="1" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel13" alignment="1" min="-2" max="-2" attributes="0"/>
-                              <Component id="jLabel1" alignment="1" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                              <Component id="jFormattedTextFieldCEP" alignment="0" pref="176" max="32767" attributes="0"/>
                               <Component id="jTextFieldBairro" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jTextFieldNumero" alignment="0" max="32767" attributes="0"/>
                               <Component id="jTextFieldComp" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jTextFieldLogradouro" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jFormattedTextFieldCEP" alignment="0" max="32767" attributes="0"/>
-                              <Component id="jComboBoxMuni" alignment="0" min="-2" pref="228" max="-2" attributes="0"/>
+                              <Component id="jTextFieldNumero" alignment="0" max="32767" attributes="0"/>
+                              <Component id="jTextFieldLogradouro" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -174,12 +172,7 @@
                       <Component id="jFormattedTextFieldCEP" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jComboBoxMuni" alignment="3" min="-2" max="-2" attributes="0"/>
-                  </Group>
-                  <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="50" max="-2" attributes="0"/>
                   <Component id="jButtonSalvar" min="-2" max="-2" attributes="0"/>
                   <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
               </Group>
@@ -341,21 +334,6 @@
               <Format format="#####-###" subtype="-1" type="5"/>
             </Property>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JLabel" name="jLabel1">
-          <Properties>
-            <Property name="text" type="java.lang.String" value="Munic&#xed;pio"/>
-          </Properties>
-        </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBoxMuni">
-          <Properties>
-            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="0"/>
-            </Property>
-          </Properties>
-          <AuxValues>
-            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
-          </AuxValues>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel14">
           <Properties>
