@@ -23,7 +23,6 @@ public class CadastroVendedor extends javax.swing.JFrame {
     String descricao;
     TelaConsultaVendedor aux;
     Vendedor vendedor = null;
-    
 
     /**
      * Creates new form CadastroMarca
@@ -70,7 +69,7 @@ public class CadastroVendedor extends javax.swing.JFrame {
         jLabel14 = new javax.swing.JLabel();
         jTextFieldEmail = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        jFormattedTextFieldTef2 = new javax.swing.JFormattedTextField();
+        jFormattedTextFieldCell = new javax.swing.JFormattedTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -176,21 +175,21 @@ public class CadastroVendedor extends javax.swing.JFrame {
         jLabel15.setText("Celular");
 
         try {
-            jFormattedTextFieldTef2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
+            jFormattedTextFieldCell.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("(##) #####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
-        jFormattedTextFieldTef2.addMouseListener(new java.awt.event.MouseAdapter() {
+        jFormattedTextFieldCell.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jFormattedTextFieldTef2MouseClicked(evt);
+                jFormattedTextFieldCellMouseClicked(evt);
             }
         });
-        jFormattedTextFieldTef2.addKeyListener(new java.awt.event.KeyAdapter() {
+        jFormattedTextFieldCell.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyPressed(java.awt.event.KeyEvent evt) {
-                jFormattedTextFieldTef2KeyPressed(evt);
+                jFormattedTextFieldCellKeyPressed(evt);
             }
             public void keyTyped(java.awt.event.KeyEvent evt) {
-                jFormattedTextFieldTef2KeyTyped(evt);
+                jFormattedTextFieldCellKeyTyped(evt);
             }
         });
 
@@ -220,7 +219,7 @@ public class CadastroVendedor extends javax.swing.JFrame {
                             .addComponent(jTextFieldEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                 .addComponent(jFormattedTextFieldCPF, javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(jFormattedTextFieldTef2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))))
+                                .addComponent(jFormattedTextFieldCell, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 128, Short.MAX_VALUE))))
                     .addGroup(jPanelFundoLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,7 +263,7 @@ public class CadastroVendedor extends javax.swing.JFrame {
                     .addComponent(jLabel5))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jFormattedTextFieldTef2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFormattedTextFieldCell, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel15))
                 .addGap(11, 11, 11)
                 .addGroup(jPanelFundoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -330,15 +329,25 @@ public class CadastroVendedor extends javax.swing.JFrame {
             NVendedor neg = new NVendedor();
 
             esp.setId(idAlteracao);
+            esp.setNome(jTextFieldNome.getText());
+            esp.setCpf(jFormattedTextFieldCPF.getText());
+            esp.setCelular(jFormattedTextFieldCell.getText());
+            esp.setTelefone(jFormattedTextFieldTef1.getText());
+            esp.setEmail(jTextFieldEmail.getText());
+            esp.setLogradouro(jTextFieldLogradouro.getText());
+            esp.setComplemento(jTextFieldComp.getText());
+            esp.setNumero(jTextFieldNumero.getText());
+            esp.setBairro(jTextFieldBairro.getText());
+            esp.setCep(jFormattedTextFieldCEP.getText());
 
-                neg.salvar(esp);
+            neg.salvar(esp);
 
-                if (idAlteracao > 0) {
-                    aux.atualizar();
-                    this.dispose();
-                } else {
-                    limparCampos();
-                }
+            if (idAlteracao > 0) {
+                aux.atualizar();
+                this.dispose();
+            } else {
+                limparCampos();
+            }
 
         } catch (Exception ex) {
             Logger.getLogger(CadastroVendedor.class.getName()).log(Level.SEVERE, null, ex);
@@ -371,25 +380,25 @@ public class CadastroVendedor extends javax.swing.JFrame {
         Utilitarios.someteNumeros(evt);
     }//GEN-LAST:event_jFormattedTextFieldTef1KeyTyped
 
-    private void jFormattedTextFieldTef2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFormattedTextFieldTef2MouseClicked
+    private void jFormattedTextFieldCellMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jFormattedTextFieldCellMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextFieldTef2MouseClicked
+    }//GEN-LAST:event_jFormattedTextFieldCellMouseClicked
 
-    private void jFormattedTextFieldTef2KeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldTef2KeyPressed
+    private void jFormattedTextFieldCellKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldCellKeyPressed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextFieldTef2KeyPressed
+    }//GEN-LAST:event_jFormattedTextFieldCellKeyPressed
 
-    private void jFormattedTextFieldTef2KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldTef2KeyTyped
+    private void jFormattedTextFieldCellKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jFormattedTextFieldCellKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_jFormattedTextFieldTef2KeyTyped
+    }//GEN-LAST:event_jFormattedTextFieldCellKeyTyped
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonSalvar;
     private javax.swing.JComboBox<String> jComboBoxMuni;
     private javax.swing.JFormattedTextField jFormattedTextFieldCEP;
     private javax.swing.JFormattedTextField jFormattedTextFieldCPF;
+    private javax.swing.JFormattedTextField jFormattedTextFieldCell;
     private javax.swing.JFormattedTextField jFormattedTextFieldTef1;
-    private javax.swing.JFormattedTextField jFormattedTextFieldTef2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -415,7 +424,7 @@ public class CadastroVendedor extends javax.swing.JFrame {
     private javax.swing.JTextField jTextFieldNumero;
     // End of variables declaration//GEN-END:variables
     private javafx.scene.layout.Pane pane;
-    
+
     public void atualizarAposSalvar(TelaConsultaVendedor aux) {
         this.aux = aux;
     }
@@ -423,14 +432,32 @@ public class CadastroVendedor extends javax.swing.JFrame {
     public void alteracao(String acao, int id) throws Exception {
         NVendedor neg = new NVendedor();
         Vendedor objeto = (Vendedor) neg.consultar(id);
+        jTextFieldBairro.setText(objeto.getBairro());
+        jTextFieldComp.setText(objeto.getComplemento());
+        jTextFieldEmail.setText(objeto.getEmail());
+        jTextFieldLogradouro.setText(objeto.getLogradouro());
+        jTextFieldNome.setText(objeto.getNome());
+        jFormattedTextFieldCEP.setText(objeto.getCep());
+        jFormattedTextFieldCPF.setText(objeto.getCpf());
+        jFormattedTextFieldTef1.setText(objeto.getTelefone());
+        jFormattedTextFieldCell.setText(objeto.getCelular());
+        jTextFieldNumero.setText(objeto.getNumero());
 
         jLabelAcao.setText(acao);
         this.idAlteracao = objeto.getId();
     }
 
     public void limparCampos() {
-//        jTextFieldDescricao.setText("");
+        jTextFieldBairro.setText("");
+        jTextFieldComp.setText("");
+        jTextFieldEmail.setText("");
+        jTextFieldLogradouro.setText("");
+        jTextFieldNome.setText("");
+        jTextFieldNumero.setText("");
+        jFormattedTextFieldCEP.setText("");
+        jFormattedTextFieldCPF.setText("");
+        jFormattedTextFieldTef1.setText("");
+        jFormattedTextFieldCell.setText("");
     }
-
 
 }
