@@ -4,8 +4,6 @@ import apresentacao.Cadastro.CadastroFormaPagamento;
 import entidade.FormaPagamento;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;

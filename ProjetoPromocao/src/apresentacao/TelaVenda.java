@@ -1,27 +1,9 @@
 package apresentacao;
 
-import apresentacao.Cadastro.CadastroFormaPagamento;
-import entidade.FormaPagamento;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableRowSorter;
-import negocio.NFormaPagamento;
-import util.Mensagem;
-
 public class TelaVenda extends javax.swing.JInternalFrame {
-
-    DefaultTableModel model = null;
-    TableRowSorter trs;
-    int esc;
-    CadastroFormaPagamento tcfp;
-    Mensagem msg = new Mensagem();
 
     public TelaVenda() {
         initComponents();
-        atualizar();
     }
 
     @SuppressWarnings("unchecked")
@@ -131,32 +113,6 @@ public class TelaVenda extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTableItens;
     // End of variables declaration//GEN-END:variables
 
-    public void atualizar() {
-        try {
-            ArrayList<FormaPagamento> listaDeEspecialidades;
-            NFormaPagamento neg = new NFormaPagamento();
-            listaDeEspecialidades = neg.listar();
-            model = (DefaultTableModel) jTableItens.getModel();
 
-            model.setNumRows(0);
-            for (int pos = 0; pos < listaDeEspecialidades.size(); pos++) {
-                String[] saida = new String[2];
-                FormaPagamento aux = (FormaPagamento) listaDeEspecialidades.get(pos);
-                saida[0] = String.valueOf(aux.getId());
-                saida[1] = aux.getDescricao();
-                model.addRow(saida);
-            }
-        } catch (Exception erro) {
-            JOptionPane.showMessageDialog(this, erro.getMessage());
-        }
-    }
-
-    public void atualizaAposFechar() {
-        tcfp.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent evt) {
-                atualizar();
-            }
-        });
-    }
 
 }

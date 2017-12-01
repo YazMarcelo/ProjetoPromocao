@@ -3,7 +3,6 @@ package apresentacao;
 import apresentacao.Consulta.TelaConsultaFormaPagamento;
 import apresentacao.Consulta.TelaConsultaProduto;
 import apresentacao.Consulta.TelaConsultaPromocao;
-import apresentacao.Consulta.TelaConsultaTipo;
 import apresentacao.Consulta.TelaConsultaUnidadeMedida;
 import apresentacao.Consulta.TelaConsultaVendedor;
 import javax.swing.JInternalFrame;
@@ -151,7 +150,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jButtonPromocao1.setBackground(new java.awt.Color(51, 51, 51));
         jButtonPromocao1.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jButtonPromocao1.setForeground(new java.awt.Color(255, 255, 255));
-        jButtonPromocao1.setText("Vendedores");
+        jButtonPromocao1.setText("Vendedor");
         jButtonPromocao1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButtonPromocao1ActionPerformed(evt);
