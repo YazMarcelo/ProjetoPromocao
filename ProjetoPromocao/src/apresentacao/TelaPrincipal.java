@@ -8,36 +8,42 @@ import apresentacao.Consulta.TelaConsultaVendedor;
 import javax.swing.JInternalFrame;
 
 public class TelaPrincipal extends javax.swing.JFrame {
+    TelaVenda telaVenda = new TelaVenda();
+    TelaConsultaFormaPagamento telaCadastroFormaPagamento = new TelaConsultaFormaPagamento();
+    TelaConsultaUnidadeMedida telaCadastroUnidadeMedida = new TelaConsultaUnidadeMedida();
+    TelaConsultaProduto telaCadastroProduto = new TelaConsultaProduto();
+    TelaConsultaPromocao telaCadastroPromocao = new TelaConsultaPromocao();
+    TelaConsultaVendedor telaCadastroVendedor = new TelaConsultaVendedor();
+    JInternalFrame telas[] = {
+        telaVenda,
+        telaCadastroFormaPagamento, 
+        telaCadastroUnidadeMedida,
+        telaCadastroProduto,
+        telaCadastroPromocao,
+        telaCadastroVendedor};
 
-	TelaConsultaFormaPagamento tcfp = new TelaConsultaFormaPagamento();
-	TelaConsultaUnidadeMedida tcum = new TelaConsultaUnidadeMedida();
-	TelaConsultaProduto tcprod = new TelaConsultaProduto();
-	TelaConsultaPromocao tcprom = new TelaConsultaPromocao();
-	TelaConsultaVendedor tcv = new TelaConsultaVendedor();
-	JInternalFrame telas[] = {tcfp, tcum, tcprod, tcprom, tcv};
+    public TelaPrincipal() {
+        initComponents();
+        setExtendedState(MAXIMIZED_BOTH);
+    }
 
-	public TelaPrincipal() {
-		initComponents();
-		setExtendedState(MAXIMIZED_BOTH);
-	}
+    private void abrirTela(JInternalFrame tela) {
+        tela.setLocation(182, 36);
+        add(tela);
+        tela.show();
+        fecharTelas(tela);
+        jLabelBemVindo.setText("");
+    }
 
-	private void abrirTela(JInternalFrame tela) {
-		tela.setLocation(182, 36);
-		add(tela);
-		tela.show();
-		fecharTelas(tela);
-		jLabelBemVindo.setText("");
-	}
+    private void fecharTelas(JInternalFrame telaIgnorada) {
+        for (JInternalFrame tela : telas) {
+            if (!tela.equals(telaIgnorada)) {
+                tela.dispose();
+            }
+        }
+    }
 
-	private void fecharTelas(JInternalFrame telaIgnorada) {
-		for (JInternalFrame tela : telas) {
-			if (!tela.equals(telaIgnorada)) {
-				tela.dispose();
-			}
-		}
-	}
-
-	@SuppressWarnings("unchecked")
+    @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
@@ -276,70 +282,70 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabelSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSairMouseClicked
-		this.dispose();
+        this.dispose();
     }//GEN-LAST:event_jLabelSairMouseClicked
 
     private void jButtonFormaPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFormaPagamentoActionPerformed
-		abrirTela(tcfp);
+        abrirTela(telaCadastroFormaPagamento);
     }//GEN-LAST:event_jButtonFormaPagamentoActionPerformed
 
     private void jButtonUnidadeMedidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonUnidadeMedidaActionPerformed
-		abrirTela(tcum);
+        abrirTela(telaCadastroUnidadeMedida);
     }//GEN-LAST:event_jButtonUnidadeMedidaActionPerformed
 
     private void jButtonProdutoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonProdutoActionPerformed
-		abrirTela(tcprod);
+        abrirTela(telaCadastroProduto);
     }//GEN-LAST:event_jButtonProdutoActionPerformed
 
     private void jButtonPromocaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPromocaoActionPerformed
-		abrirTela(tcprom);
+        abrirTela(telaCadastroPromocao);
     }//GEN-LAST:event_jButtonPromocaoActionPerformed
 
     private void jButtonVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVendedorActionPerformed
-        abrirTela(tcv);
+        abrirTela(telaCadastroVendedor);
     }//GEN-LAST:event_jButtonVendedorActionPerformed
 
     private void jButtonVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVendaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jButtonVendaActionPerformed
 
-	/**
-	 * @param args the command line arguments
-	 */
-	public static void main(String args[]) {
-		/* Set the Nimbus look and feel */
-		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String args[]) {
+        /* Set the Nimbus look and feel */
+        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-		 */
-		try {
-			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-				if ("Nimbus".equals(info.getName())) {
-					javax.swing.UIManager.setLookAndFeel(info.getClassName());
-					break;
-				}
-			}
-		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-		}
-		//</editor-fold>
-		//</editor-fold>
-		//</editor-fold>
-		//</editor-fold>
+         */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (ClassNotFoundException ex) {
+            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+            java.util.logging.Logger.getLogger(TelaPrincipal.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
-		/* Create and display the form */
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new TelaPrincipal().setVisible(true);
-			}
-		});
-	}
+        /* Create and display the form */
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new TelaPrincipal().setVisible(true);
+            }
+        });
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.Box.Filler filler1;
