@@ -175,6 +175,9 @@
               </Border>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="ancestorRemoved" listener="javax.swing.event.AncestorListener" parameters="javax.swing.event.AncestorEvent" handler="jPanelSuperiorAncestorRemoved"/>
+          </Events>
 
           <Layout>
             <DimensionLayout dim="0">

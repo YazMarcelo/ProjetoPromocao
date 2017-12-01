@@ -21,8 +21,8 @@ public class TelaConsultaFormaPagamento extends javax.swing.JInternalFrame {
     DefaultTableModel model = null;
     TableRowSorter trs;
     int esc;
-    CadastroFormaPagamento tcfp;
-    Mensagem msg = new Mensagem();
+    CadastroFormaPagamento telaCadastroFormaPagamento;
+    NFormaPagamento nFormaPagamento = new NFormaPagamento();
 
     public TelaConsultaFormaPagamento() {
         initComponents();
@@ -225,9 +225,8 @@ public class TelaConsultaFormaPagamento extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        tcfp = new CadastroFormaPagamento();
-        tcfp.setVisible(true);
-        atualizaAposFechar();
+        telaCadastroFormaPagamento = new CadastroFormaPagamento(this);
+        telaCadastroFormaPagamento.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
@@ -237,42 +236,39 @@ public class TelaConsultaFormaPagamento extends javax.swing.JInternalFrame {
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
 
         if (jTableFormaPagamento.getSelectedRow() >= 0) {
-            int resposta = msg.msg03(this);
+            int resposta = Mensagem.msg03(this);
             if (resposta == JOptionPane.YES_OPTION) {
                 try {
 
                     int id = Integer.valueOf(jTableFormaPagamento.getValueAt(jTableFormaPagamento.getSelectedRow(), 0).toString());
 
-                    NFormaPagamento neg = new NFormaPagamento();
-                    neg.excluir(id);
+                    
+                    nFormaPagamento.excluir(id);
 
                     model.removeRow(jTableFormaPagamento.getSelectedRow());
                     jTableFormaPagamento.setModel(model);
 
-                    msg.msg05(this);
+                    Mensagem.msg05(this);
                 } catch (Exception ex) {
                     Logger.getLogger(TelaConsultaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
         } else {
-            msg.msg12(this);
+            Mensagem.msg12(this);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (jTableFormaPagamento.getSelectedRow() >= 0) {
             try {
-                tcfp = new CadastroFormaPagamento();
-                tcfp.atualizarAposSalvar(this);
-                tcfp.alteracao("Alterar Forma de Pagamento", Integer.valueOf(jTableFormaPagamento.getValueAt(jTableFormaPagamento.getSelectedRow(), 0).toString()));
-                tcfp.setVisible(true);
+                telaCadastroFormaPagamento = new CadastroFormaPagamento(nFormaPagamento.consultar(Integer.valueOf(jTableFormaPagamento.getValueAt(jTableFormaPagamento.getSelectedRow(), 0).toString())), this);
+                telaCadastroFormaPagamento.setVisible(true);
             } catch (Exception ex) {
                 Logger.getLogger(TelaConsultaFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            msg.msg12(this);
+            Mensagem.msg12(this);
         }
-        atualizaAposFechar();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jTextFieldPesquisarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextFieldPesquisarMouseClicked
@@ -341,13 +337,4 @@ public class TelaConsultaFormaPagamento extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, erro.getMessage());
         }
     }
-
-    public void atualizaAposFechar() {
-        tcfp.addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent evt) {
-                atualizar();
-            }
-        });
-    }
-
 }

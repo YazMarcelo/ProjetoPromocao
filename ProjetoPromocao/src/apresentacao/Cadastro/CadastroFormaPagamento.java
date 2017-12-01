@@ -4,17 +4,29 @@ import apresentacao.Consulta.TelaConsultaFormaPagamento;
 import entidade.FormaPagamento;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import negocio.NFormaPagamento;
+import util.Mensagem;
 
 public class CadastroFormaPagamento extends javax.swing.JFrame {
 
-    int idAlteracao = 0;
     String descricao;
-    TelaConsultaFormaPagamento aux;
+    TelaConsultaFormaPagamento frmPai;
+    FormaPagamento formaPagamento;
 
-    public CadastroFormaPagamento() {
+    public CadastroFormaPagamento(TelaConsultaFormaPagamento frmPai) {
         initComponents();
-        setLocationRelativeTo(null);
+        this.frmPai = frmPai;
+        formaPagamento = new FormaPagamento();
+        setLocationRelativeTo(frmPai);
+    }
+
+    public CadastroFormaPagamento(FormaPagamento formaPagamento, TelaConsultaFormaPagamento frmPai) {
+        this(frmPai);
+        jLabelAcao.setText("Alterar Forma de Pagamento");
+        this.formaPagamento = formaPagamento;
+        jTextFieldDescricao.setText(formaPagamento.getDescricao());
     }
 
     @SuppressWarnings("unchecked")
@@ -30,6 +42,11 @@ public class CadastroFormaPagamento extends javax.swing.JFrame {
         jButtonSalvar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jPanelFundo.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -120,29 +137,41 @@ public class CadastroFormaPagamento extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private boolean validarCamposObrigatorios(JTextField... campos) {
+        for (JTextField campo : campos) {
+            if (campo.getText().isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         try {
+            if (!validarCamposObrigatorios(jTextFieldDescricao)) {
+                Mensagem.msg10(this);
+                return;
+            }
+            formaPagamento.setDescricao(jTextFieldDescricao.getText());
 
-            FormaPagamento esp = new FormaPagamento();
-            NFormaPagamento neg = new NFormaPagamento();
-
-            esp.setId(idAlteracao);
-            esp.setDescricao(jTextFieldDescricao.getText());
-
-            neg.salvar(esp);
-
-            if (idAlteracao > 0) {
-                aux.atualizar();
+            new NFormaPagamento().salvar(formaPagamento);
+            frmPai.atualizar();
+            if (formaPagamento.getId() > 0) {
                 this.dispose();
             } else {
                 limparCampos();
             }
-
+            Mensagem.msg01(this);
         } catch (Exception ex) {
-            Logger.getLogger(CadastroFormaPagamento.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex);
         }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+        try {
+            frmPai.atualizar();
+        } catch (Exception e) {
+        }
+    }//GEN-LAST:event_formWindowClosing
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -154,20 +183,6 @@ public class CadastroFormaPagamento extends javax.swing.JFrame {
     private javax.swing.JPanel jPanelSuperior;
     private javax.swing.JTextField jTextFieldDescricao;
     // End of variables declaration//GEN-END:variables
-    private javafx.scene.layout.Pane pane;
-
-    public void atualizarAposSalvar(TelaConsultaFormaPagamento aux) {
-        this.aux = aux;
-    }
-
-    public void alteracao(String acao, int id) throws Exception {
-        NFormaPagamento neg = new NFormaPagamento();
-        FormaPagamento objeto = (FormaPagamento) neg.consultar(id);
-
-        jLabelAcao.setText(acao);
-        this.idAlteracao = objeto.getId();
-        jTextFieldDescricao.setText(objeto.getDescricao());
-    }
 
     public void limparCampos() {
         jTextFieldDescricao.setText("");

@@ -32,7 +32,8 @@ public class TelaVenda extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableFormaPagamento = new javax.swing.JTable();
+        jTableItens = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
 
         setClosable(true);
         setAlignmentX(100.0F);
@@ -62,7 +63,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                 .addContainerGap(21, Short.MAX_VALUE))
         );
 
-        jTableFormaPagamento.setModel(new javax.swing.table.DefaultTableModel(
+        jTableItens.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -70,13 +71,15 @@ public class TelaVenda extends javax.swing.JInternalFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTableFormaPagamento);
-        if (jTableFormaPagamento.getColumnModel().getColumnCount() > 0) {
-            jTableFormaPagamento.getColumnModel().getColumn(0).setResizable(false);
-            jTableFormaPagamento.getColumnModel().getColumn(0).setPreferredWidth(15);
-            jTableFormaPagamento.getColumnModel().getColumn(1).setResizable(false);
-            jTableFormaPagamento.getColumnModel().getColumn(1).setPreferredWidth(430);
+        jScrollPane1.setViewportView(jTableItens);
+        if (jTableItens.getColumnModel().getColumnCount() > 0) {
+            jTableItens.getColumnModel().getColumn(0).setResizable(false);
+            jTableItens.getColumnModel().getColumn(0).setPreferredWidth(15);
+            jTableItens.getColumnModel().getColumn(1).setResizable(false);
+            jTableItens.getColumnModel().getColumn(1).setPreferredWidth(430);
         }
+
+        jLabel2.setText("Valor Total:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -86,6 +89,8 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 846, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel2)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -93,8 +98,13 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 481, Short.MAX_VALUE)
-                .addGap(41, 41, 41))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 485, Short.MAX_VALUE)
+                        .addGap(41, 41, 41))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -114,10 +124,11 @@ public class TelaVenda extends javax.swing.JInternalFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableFormaPagamento;
+    private javax.swing.JTable jTableItens;
     // End of variables declaration//GEN-END:variables
 
     public void atualizar() {
@@ -125,7 +136,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             ArrayList<FormaPagamento> listaDeEspecialidades;
             NFormaPagamento neg = new NFormaPagamento();
             listaDeEspecialidades = neg.listar();
-            model = (DefaultTableModel) jTableFormaPagamento.getModel();
+            model = (DefaultTableModel) jTableItens.getModel();
 
             model.setNumRows(0);
             for (int pos = 0; pos < listaDeEspecialidades.size(); pos++) {

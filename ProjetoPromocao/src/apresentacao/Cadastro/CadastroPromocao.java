@@ -118,6 +118,15 @@ public class CadastroPromocao extends javax.swing.JFrame {
         jPanelFundo.setBackground(new java.awt.Color(255, 255, 255));
 
         jPanelSuperior.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        jPanelSuperior.addAncestorListener(new javax.swing.event.AncestorListener() {
+            public void ancestorMoved(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorAdded(javax.swing.event.AncestorEvent evt) {
+            }
+            public void ancestorRemoved(javax.swing.event.AncestorEvent evt) {
+                jPanelSuperiorAncestorRemoved(evt);
+            }
+        });
 
         jLabelAcao.setFont(new java.awt.Font("Tahoma", 0, 24)); // NOI18N
         jLabelAcao.setText("Nova Promoção");
@@ -473,6 +482,10 @@ public class CadastroPromocao extends javax.swing.JFrame {
     private void jButtonPesquisarProdLevaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonPesquisarProdLevaActionPerformed
         consultarProduto(2);
     }//GEN-LAST:event_jButtonPesquisarProdLevaActionPerformed
+
+    private void jPanelSuperiorAncestorRemoved(javax.swing.event.AncestorEvent evt) {//GEN-FIRST:event_jPanelSuperiorAncestorRemoved
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jPanelSuperiorAncestorRemoved
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
