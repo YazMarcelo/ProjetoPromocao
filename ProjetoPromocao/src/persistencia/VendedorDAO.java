@@ -1,7 +1,6 @@
 package persistencia;
 
 import entidade.*;
-import negocio.*;
 import interfaces.CRUD;
 import java.sql.*;
 import java.util.ArrayList;
@@ -11,7 +10,9 @@ import java.util.ArrayList;
  * @author Marcelo
  */
 public class VendedorDAO implements CRUD {
-private final Connection cnn = util.Conexao.getConexao();
+
+    private final Connection cnn = util.Conexao.getConexao();
+
     @Override
     public void incluir(Object objeto) throws Exception {
         Vendedor obj = (Vendedor) (objeto);
@@ -52,7 +53,6 @@ private final Connection cnn = util.Conexao.getConexao();
     public void excluir(int id) throws Exception {
         String sql = "UPDATE public.vendedor set excluido = true WHERE vend_id = ?;";
 
-
         PreparedStatement prd = cnn.prepareStatement(sql);
 
         prd.setInt(1, id);
@@ -80,7 +80,6 @@ private final Connection cnn = util.Conexao.getConexao();
                 + "vend_bairro = ?,"
                 + "vend_muni_id = ?"
                 + " where vend_id = ?;";
-
 
         PreparedStatement prd = cnn.prepareStatement(sql);
 
@@ -138,39 +137,63 @@ private final Connection cnn = util.Conexao.getConexao();
 
     @Override
     public Object consultar(int id) throws Exception {
-        String sql = "select * from public.vendedor where vend_id = ? and excluido = false;";
-
-        Connection cnn = util.Conexao.getConexao();
-
-        PreparedStatement prd = cnn.prepareStatement(sql);
-
-        //Seta os valores para o procedimento
-        prd.setInt(1, id);
-
-        ResultSet rs = prd.executeQuery();
-
-        Vendedor objeto = new Vendedor();
-
-        if (rs.next()) {
-            objeto.setId(rs.getInt("vend_id"));
-            objeto.setNome(rs.getString("vend_nome"));
-            objeto.setCpf(rs.getString("vend_cpf"));
-            objeto.setTelefone(rs.getString("vend_telefone"));
-            objeto.setCelular(rs.getString("vend_celular"));
-            objeto.setEmail(rs.getString("vend_email"));
-            objeto.setCep(rs.getString("vend_cep"));
-            objeto.setLogradouro(rs.getString("vend_logradouro"));
-            objeto.setNumero(rs.getString("vend_numero"));
-            objeto.setComplemento(rs.getString("vend_complemento"));
-            objeto.setBairro(rs.getString("vend_bairro"));
-            objeto.setMuniId(rs.getInt("vend_muni_id"));
+        Vendedor vendedor = null;
+        try {
+            String sql = "SELECT * FROM VENDEDOR WHERE VEND_ID = ? AND EXCLUIDO = FALSE;";
+            PreparedStatement prd = cnn.prepareStatement(sql);
+            prd.setInt(1, id);
+            ResultSet rs = prd.executeQuery();
+            prd.close();
+            if (rs.next()) {
+                vendedor = new Vendedor();
+                vendedor.setId(rs.getInt("VEND_ID"));
+                vendedor.setNome(rs.getString("VEND_NOME"));
+                vendedor.setCpf(rs.getString("VEND_CPF"));
+                vendedor.setTelefone(rs.getString("VEND_TELEFONE"));
+                vendedor.setCelular(rs.getString("VEND_celular"));
+                vendedor.setEmail(rs.getString("VEND_EMAIL"));
+                vendedor.setCep(rs.getString("VEND_CEP"));
+                vendedor.setLogradouro(rs.getString("VEND_LOGRADOURO"));
+                vendedor.setNumero(rs.getString("VEND_NUMERO"));
+                vendedor.setComplemento(rs.getString("VEND_COMPLEMENTO"));
+                vendedor.setBairro(rs.getString("VEND_BAIRRO"));
+                vendedor.setMuniId(rs.getInt("VEND_MUNI_ID"));
+            }
+            rs.close();
+        } catch (Exception e) {
+            throw e;
         }
+        return vendedor;
+    }
 
-        prd.execute();
-
-        prd.close();
-
-        return objeto;
+    public Object consultarByCPF(String cpf) throws Exception {
+        Vendedor vendedor = null;
+        try {
+            String sql = "SELECT * FROM VENDEDOR WHERE VEND_CPF = ? AND EXCLUIDO = FALSE;";
+            PreparedStatement prd = cnn.prepareStatement(sql);
+            prd.setString(1, cpf);
+            ResultSet rs = prd.executeQuery();
+            prd.close();
+            if (rs.next()) {
+                vendedor = new Vendedor();
+                vendedor.setId(rs.getInt("VEND_ID"));
+                vendedor.setNome(rs.getString("VEND_NOME"));
+                vendedor.setCpf(rs.getString("VEND_CPF"));
+                vendedor.setTelefone(rs.getString("VEND_TELEFONE"));
+                vendedor.setCelular(rs.getString("VEND_celular"));
+                vendedor.setEmail(rs.getString("VEND_EMAIL"));
+                vendedor.setCep(rs.getString("VEND_CEP"));
+                vendedor.setLogradouro(rs.getString("VEND_LOGRADOURO"));
+                vendedor.setNumero(rs.getString("VEND_NUMERO"));
+                vendedor.setComplemento(rs.getString("VEND_COMPLEMENTO"));
+                vendedor.setBairro(rs.getString("VEND_BAIRRO"));
+                vendedor.setMuniId(rs.getInt("VEND_MUNI_ID"));
+            }
+            rs.close();
+        } catch (Exception e) {
+            throw e;
+        }
+        return vendedor;
     }
 
 }

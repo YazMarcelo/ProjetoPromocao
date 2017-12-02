@@ -425,6 +425,9 @@ public class CadastroPromocao extends javax.swing.JFrame {
             }
             Mensagem.msg01(this);
         } catch (Exception ex) {
+            if (ex.toString().contains("promocao_tipo_prod_paga_unique")) {
+                ex = new Exception("O Produto " + promocao.getProdPaga().getDescricao() + " já possui uma Promoção de Tipo " + promocao.getTipo() + ".");
+            }
             JOptionPane.showMessageDialog(this, ex);
         }
     }//GEN-LAST:event_jButtonSalvarActionPerformed

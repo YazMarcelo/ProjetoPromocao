@@ -32,6 +32,10 @@ public class NVendedor {
     public Vendedor consultar(int codigo) throws SQLException, Exception {
         return (Vendedor) dao.consultar(codigo);
     }
+    
+    public Vendedor consultarByCPF(String cpf) throws SQLException, Exception {
+        return (Vendedor) dao.consultarByCPF(cpf);
+    }
 
     public ArrayList<Vendedor> listar() throws SQLException, Exception {
         return dao.listar();

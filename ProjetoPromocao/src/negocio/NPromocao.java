@@ -33,8 +33,12 @@ public class NPromocao {
     public Iterator<Promocao> listarIterator() throws SQLException, Exception {
         return dao.listarIterator();
     }
-    
+
     public List<Promocao> listar() throws SQLException, Exception {
         return dao.listar();
+    }
+
+    public List<Promocao> listarByProduto(int codigoProduto) throws SQLException, Exception {
+        return dao.listarByProduto(codigoProduto);
     }
 }

@@ -5,9 +5,9 @@ public class ItemPedido {
     private Pedido pedido;
     private Produto produto;
     private Promocao promocao;
-    private int qtd;
+    private int qtd = 0;
     private double valorUnitario;
-    private float desconto;
+    private float desconto = 0;
 
     public int getId() {
         return id;
@@ -64,4 +64,13 @@ public class ItemPedido {
     public void setDesconto(float desconto) {
         this.desconto = desconto;
     }
+
+    public void addQtd(int qtd) {
+        this.qtd += qtd;
+    }
+    
+    public void addDesconto(float desconto) {
+        this.desconto += desconto;
+    }
+    
 }

@@ -1,19 +1,22 @@
 package entidade;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Pedido {
 
     private int id;
     private Double valorTotal;
-    private Vendedor vendedor;
+    private Vendedor vendedor = null;
     private FormaPagamento formaPagamento;
     private List<ItemPedido> itens;
 
     public Pedido() {
+        itens = new ArrayList();
     }
 
     public Pedido(int id) {
+        this();
         this.id = id;
     }
 
@@ -57,6 +60,7 @@ public class Pedido {
         this.itens = itens;
     }
 
-    
-
+    public void addValorTotal(double valor) {
+        this.valorTotal += valor;
+    }
 }

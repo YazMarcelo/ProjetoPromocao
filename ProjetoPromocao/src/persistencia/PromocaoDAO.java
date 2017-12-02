@@ -184,7 +184,41 @@ public class PromocaoDAO implements CRUD {
         }
         return listaPromocao;
     }
-	
+    
+    public ArrayList<Promocao> listarByProduto(int codigoProduto) throws Exception {
+        ArrayList<Promocao> listaPromocao = new ArrayList<>();
+        NProduto nProduto = null;
+        try {
+            String sql = "SELECT * FROM PROMOCAO WHERE EXCLUIDO = FALSE AND PROM_PAGA_PROD_ID = ? AND PROM_DATA_INICIO <= NOW() AND PROM_DATA_FIM > NOW() ORDER BY PROM_ID;";
+            PreparedStatement prd = cnn.prepareStatement(sql);
+            prd.setInt(1, codigoProduto);
+            ResultSet rs = prd.executeQuery();
+            prd.close();
+            while (rs.next()) {
+                if (nProduto == null) nProduto = new NProduto();
+                Promocao objeto = new Promocao();
+                objeto.setId(rs.getInt("PROM_ID"));
+                objeto.setDescricao(rs.getString("PROM_DESCRICAO"));
+                objeto.setTipo(TipoPromocao.valueOf(rs.getInt("PROM_TIPO")));
+                objeto.setDesconto(rs.getFloat("PROM_DESCONTO"));
+                objeto.setQtdPaga(rs.getInt("PROM_QTD_PAGA"));
+                objeto.setQtdLeva(rs.getInt("PROM_QTD_LEVA"));
+                objeto.setDataInicio(rs.getTimestamp("PROM_DATA_INICIO"));
+                objeto.setDataFim(rs.getTimestamp("PROM_DATA_FIM"));
+                int prodPaga = rs.getInt("PROM_PAGA_PROD_ID");
+                objeto.setProdPaga(prodPaga == 0 ? null : nProduto.consultar(prodPaga));
+                int prodLeva = rs.getInt("PROM_LEVA_PROD_ID");
+                objeto.setProdLeva(prodLeva == 0 ? null : nProduto.consultar(prodLeva));
+                objeto.setValorMinimo(rs.getDouble("PROM_VALOR_MINIMO"));
+                listaPromocao.add(objeto);
+            }
+            rs.close();
+        } catch (SQLException e) {
+            throw e;
+        }
+        return listaPromocao;
+    }
+
     public Iterator<Promocao> listarIterator() throws Exception {
         return listar().iterator();
     }
