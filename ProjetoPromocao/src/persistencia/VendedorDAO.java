@@ -143,7 +143,7 @@ public class VendedorDAO implements CRUD {
             PreparedStatement prd = cnn.prepareStatement(sql);
             prd.setInt(1, id);
             ResultSet rs = prd.executeQuery();
-            prd.close();
+
             if (rs.next()) {
                 vendedor = new Vendedor();
                 vendedor.setId(rs.getInt("VEND_ID"));
@@ -159,6 +159,7 @@ public class VendedorDAO implements CRUD {
                 vendedor.setBairro(rs.getString("VEND_BAIRRO"));
                 vendedor.setMuniId(rs.getInt("VEND_MUNI_ID"));
             }
+            prd.close();
             rs.close();
         } catch (Exception e) {
             throw e;
@@ -173,7 +174,7 @@ public class VendedorDAO implements CRUD {
             PreparedStatement prd = cnn.prepareStatement(sql);
             prd.setString(1, cpf);
             ResultSet rs = prd.executeQuery();
-            prd.close();
+
             if (rs.next()) {
                 vendedor = new Vendedor();
                 vendedor.setId(rs.getInt("VEND_ID"));
@@ -189,6 +190,7 @@ public class VendedorDAO implements CRUD {
                 vendedor.setBairro(rs.getString("VEND_BAIRRO"));
                 vendedor.setMuniId(rs.getInt("VEND_MUNI_ID"));
             }
+            prd.close();
             rs.close();
         } catch (Exception e) {
             throw e;

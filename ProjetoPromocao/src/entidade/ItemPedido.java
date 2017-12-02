@@ -1,6 +1,7 @@
 package entidade;
 
 public class ItemPedido {
+
     private int id;
     private Pedido pedido;
     private Produto produto;
@@ -69,8 +70,12 @@ public class ItemPedido {
         this.qtd += qtd;
     }
     
-    public void addDesconto(float desconto) {
-        this.desconto += desconto;
+    public void recalcularDesconto() {
+        double valorTotal = qtd * valorUnitario;
+        double valorDesconto = promocao.getTipo() == TipoPromocao.QUANTIDADE ? 
+                promocao.getQtdLeva() * valorUnitario : 
+                valorUnitario * (promocao.getDesconto() * ((qtd+1) - promocao.getQtdPaga())/100);
+        this.desconto = (float) (valorDesconto / valorTotal * 100);
     }
-    
+
 }

@@ -137,9 +137,10 @@ public class ProdutoDAO implements CRUD {
 
         ResultSet rs = prd.executeQuery();
 
-        Produto objeto = new Produto();
+        Produto objeto = null;
 
         if (rs.next()) {
+            objeto = new Produto();
             objeto.setId(rs.getInt("prod_id"));
             objeto.setDescricao(rs.getString("prod_descricao"));
             objeto.setValor(rs.getDouble("prod_valor"));

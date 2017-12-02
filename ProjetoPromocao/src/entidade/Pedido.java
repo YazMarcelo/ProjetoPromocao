@@ -6,7 +6,7 @@ import java.util.List;
 public class Pedido {
 
     private int id;
-    private Double valorTotal;
+    private Double valorTotal = 0.0;
     private Vendedor vendedor = null;
     private FormaPagamento formaPagamento;
     private List<ItemPedido> itens;
@@ -62,5 +62,14 @@ public class Pedido {
 
     public void addValorTotal(double valor) {
         this.valorTotal += valor;
+    }
+
+    public Double recalcularValorTotal() {
+        double valor = 0.0;
+        for (ItemPedido item : itens) {
+            valor += item.getQtd() * item.getValorUnitario();
+            valor -= valor * (item.getDesconto() / 100);
+        }
+        return valor;
     }
 }

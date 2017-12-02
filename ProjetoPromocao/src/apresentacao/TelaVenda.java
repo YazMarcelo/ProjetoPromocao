@@ -6,13 +6,17 @@ import entidade.Produto;
 import entidade.Promocao;
 import entidade.TipoPromocao;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Vector;
 import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 import negocio.NProduto;
 import negocio.NPromocao;
 import negocio.NVendedor;
 import util.BarcodeReader;
 import util.BarcodeReader.BarcodeListener;
+import util.Utilitarios;
 
 public class TelaVenda extends javax.swing.JInternalFrame {
 
@@ -37,14 +41,18 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             @Override
             public void onBarcodeRead(String barcode) {
                 int op = Integer.parseInt(barcode.substring(0, 1));
-                String codigo = barcode.substring(1, 12);
+                barcode = barcode.substring(1, barcode.length() - 1);
                 switch (op) {
                     case 1: //Produto
-                        if (pedido.getVendedor() == null) {
-                            return;
-                        }
+                        int codigo = Integer.parseInt(barcode);
+//                        if (pedido.getVendedor() == null) {
+//                            return;
+//                        }
                         try {
-                            Produto produto = nProduto.consultar(Integer.parseInt(codigo));
+                            Produto produto = nProduto.consultar(codigo);
+                            if (produto == null) {
+                                return;
+                            }
                             List<Promocao> promocoesDoProduto;
                             ItemPedido item = getItem(produto);
                             if (item == null) {
@@ -55,28 +63,51 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                                 item = itemNovo;
                                 pedido.getItens().add(itemNovo);
                                 promocoesDoProduto = nPromocao.listarByProduto(produto.getId());
+                                promocoes.addAll(promocoesDoProduto);
                             } else {
                                 promocoesDoProduto = getPromocoesDoProduto(produto);
                             }
                             item.addQtd(1);
                             if (promocoesDoProduto.isEmpty()) { //nenhuma promoção cadastrada para o produto
                                 pedido.addValorTotal(produto.getValor());
-                            } else if (promocoesDoProduto.size() == 1) { //uma promoção cadastrada para o produto
-                                Promocao promocao = promocoesDoProduto.get(0);
+                            } else { //há promoções cadastradas para o produto
+                                Promocao promocao;
+                                if (promocoesDoProduto.size() == 1) {
+                                    promocao = promocoesDoProduto.get(0);
+                                } else {
+                                    Promocao promocaoQuantidade = promocoesDoProduto.get(0).getTipo() == TipoPromocao.QUANTIDADE ? promocoesDoProduto.get(0) : promocoesDoProduto.get(1);
+                                    Promocao promocaoDesconto = promocoesDoProduto.get(0).getTipo() == TipoPromocao.DESCONTO ? promocoesDoProduto.get(0) : promocoesDoProduto.get(1);
+                                    if (item.getQtd() >= promocaoQuantidade.getQtdPaga()) {
+                                        promocao = promocaoQuantidade;
+                                        item.setPromocao(promocaoQuantidade);
+                                        if (item.getQtd() == promocaoQuantidade.getQtdPaga()) {
+                                            item.setDesconto(0);
+                                            pedido.setValorTotal(pedido.recalcularValorTotal());
+                                        }
+                                    } else if (item.getQtd() >= promocaoDesconto.getQtdPaga()) {
+                                        promocao = promocaoDesconto;
+                                        item.setPromocao(promocaoDesconto);
+                                    } else {
+                                        pedido.addValorTotal(produto.getValor());
+                                        jLabelValorTotal.setText(String.format("R$ %.2f", pedido.getValorTotal()));
+                                        preencherTabela();
+                                        return;
+                                    }
+                                }
                                 switch (promocao.getTipo()) {
                                     case DESCONTO:
                                         double valorDesconto = 0;
                                         if (item.getQtd() >= promocao.getQtdPaga()) {
-                                            item.addDesconto(promocao.getDesconto());
-                                            valorDesconto = produto.getValor() * promocao.getDesconto();
+                                            item.recalcularDesconto();
+                                            valorDesconto = produto.getValor() * (promocao.getDesconto() / 100);
                                         }
                                         pedido.addValorTotal(produto.getValor() - valorDesconto);
                                         break;
                                     case QUANTIDADE:
-                                        if (item.getQtd() >= promocao.getQtdPaga()) {
+                                        if ((item.getQtd() - (item.getQtd() / promocao.getQtdPaga())) % promocao.getQtdPaga() == 0) {
                                             if (promocao.getProdPaga().equals(promocao.getProdLeva())) {
                                                 item.addQtd(promocao.getQtdLeva());
-                                                item.addDesconto(100 * promocao.getQtdLeva());
+                                                item.recalcularDesconto();
                                             } else { //o produto leva não é o mesmo que o produto paga
                                                 ItemPedido itemBrinde = getItem(promocao.getProdLeva());
                                                 if (itemBrinde == null) { //o produto não estava antes na lista de itens do pedido
@@ -87,16 +118,16 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                                                     pedido.getItens().add(itemBrinde);
                                                 }
                                                 itemBrinde.addQtd(promocao.getQtdLeva());
-                                                itemBrinde.addDesconto(100 * promocao.getQtdLeva());     
+                                                itemBrinde.recalcularDesconto();
                                             }
                                         }
                                         pedido.addValorTotal(produto.getValor());
                                         break;
                                 }
-                            } else if (promocoesDoProduto.size() == 2) { //duas promoções cadastradas para o produto
 
                             }
-
+                            jLabelValorTotal.setText(String.format("R$ %.2f", pedido.getValorTotal()));
+                            preencherTabela();
                         } catch (Exception ex) {
                             JOptionPane.showMessageDialog(TelaVenda.this, ex);
                         }
@@ -106,7 +137,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                             return;
                         }
                         try {
-                            pedido.setVendedor(nVendedor.consultarByCPF(codigo));
+                            pedido.setVendedor(nVendedor.consultarByCPF(barcode));
                             jLabelVendedor.setText(pedido.getVendedor().getNome());
                         } catch (Exception ex) {
                             pedido.setVendedor(null);
@@ -121,7 +152,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
 
     private ItemPedido getItem(Produto produto) {
         for (ItemPedido item : pedido.getItens()) {
-            if (item.getProduto().equals(produto)) {
+            if (item.getProduto().getId() == produto.getId()) {
                 return item;
             }
         }
@@ -131,29 +162,39 @@ public class TelaVenda extends javax.swing.JInternalFrame {
     private List<Promocao> getPromocoesDoProduto(Produto produto) {
         List<Promocao> lista = new ArrayList();
         for (Promocao promocao : promocoes) {
-            if (promocao.getProdPaga().equals(produto)) {
+            if (promocao.getProdPaga().getId() == produto.getId()) {
                 lista.add(promocao);
             }
         }
         return lista;
     }
 
-    private Promocao comparaPromocoes(int qtd, Promocao promocao1, Promocao promocao2) {
-        if (qtd >= promocao1.getQtdPaga() && qtd >= promocao2.getQtdPaga()) {
-            
-        } else if (qtd < promocao1.getQtdPaga() && qtd >= promocao2.getQtdPaga()) {
-            
+    private void preencherTabela() {
+        try {
+            Iterator<ItemPedido> itens = pedido.getItens().iterator();
+            Vector colunas = new Vector();
+            colunas.add("Produto");
+            colunas.add("Quantidade");
+            colunas.add("Valor Unitário");
+            colunas.add("Desconto");
+            Vector detalhes = new Vector();
+            while (itens.hasNext()) {
+                ItemPedido item = itens.next();
+                Vector linha = new Vector();
+                linha.add(item.getProduto().getDescricao());
+                linha.add(item.getQtd());
+                linha.add(item.getValorUnitario());
+                linha.add(item.getDesconto() + "%");
+                detalhes.add(linha);
+            }
+            jTableItens.setModel(new DefaultTableModel(detalhes, colunas) {
+                public boolean isCellEditable(int i, int j) {
+                    return false;
+                }
+            });
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
         }
-        
-        Promocao promocaoDesconto = promocao1.getTipo() == TipoPromocao.DESCONTO ? promocao1 : promocao2;
-        Promocao promocaoQuantidade = promocao1.getTipo() == TipoPromocao.QUANTIDADE ? promocao1 : promocao2;
-        double descontoPromoDesconto = 0;
-        double descontoPromoQuantidade = 0;
-        
-        
-        
-
-        return descontoPromoDesconto > descontoPromoQuantidade ? promocaoDesconto : promocaoQuantidade;
     }
 
     @SuppressWarnings("unchecked")
@@ -190,7 +231,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(881, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,23 +286,21 @@ public class TelaVenda extends javax.swing.JInternalFrame {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 846, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabelVendedor)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 893, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jButtonLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addComponent(jButtonLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, 93, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jButtonFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabelValorTotal)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(3, 3, 3)
+                        .addComponent(jLabelValorTotal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabelVendedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -271,19 +310,18 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 491, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabelVendedor, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel2)
                             .addComponent(jLabelValorTotal))
-                        .addGap(463, 463, 463)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButtonFinalizar, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE)
-                            .addComponent(jButtonLimpar, javax.swing.GroupLayout.DEFAULT_SIZE, 39, Short.MAX_VALUE))))
+                            .addComponent(jLabel3)
+                            .addComponent(jLabelVendedor))
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonFinalizar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jButtonLimpar, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 523, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
