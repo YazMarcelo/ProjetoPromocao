@@ -26,9 +26,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         initComponents();
         setExtendedState(MAXIMIZED_BOTH);
     }
-
+    
     private void abrirTela(JInternalFrame tela) {
         tela.setLocation(182, 36);
+        tela.setSize((this.getWidth()-jPanel1.getWidth())-16, (this.getHeight()-jPanel2.getHeight())-38);
         add(tela);
         tela.show();
         fecharTelas(tela);
@@ -306,7 +307,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_jButtonVendedorActionPerformed
 
     private void jButtonVendaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonVendaActionPerformed
-        // TODO add your handling code here:
+        abrirTela(telaVenda);
     }//GEN-LAST:event_jButtonVendaActionPerformed
 
     /**
