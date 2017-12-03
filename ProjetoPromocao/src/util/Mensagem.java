@@ -66,10 +66,18 @@ public class Mensagem {
     }
 
     public static void msg12(Component parent) {
-        JOptionPane.showMessageDialog(parent, "Pedido Faturado com Sucesso!", "Mensagem do Sistema", 1);
+        JOptionPane.showMessageDialog(parent, "Venda Faturada com Sucesso!", "Mensagem do Sistema", 1);
     }
 
     public static void msg13(Component parent) {
-        JOptionPane.showMessageDialog(parent, "Pedido Cancelado com Sucesso!", "Mensagem do Sistema", 1);
+        JOptionPane.showMessageDialog(parent, "Venda Cancelada com Sucesso!", "Mensagem do Sistema", 1);
+    }
+    
+    public static int msg14(Component parent) {
+        return JOptionPane.showConfirmDialog(parent, "Confirmar Cancelamento?", "Mensagem do Sistema", 0, 3);
+    }
+    
+    public static int msg15(Component parent) {
+        return JOptionPane.showConfirmDialog(parent, "Confirmar Venda?", "Mensagem do Sistema", 0, 3);
     }
 }

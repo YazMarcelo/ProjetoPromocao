@@ -69,13 +69,25 @@ public class ItemPedido {
     public void addQtd(int qtd) {
         this.qtd += qtd;
     }
-    
+
     public void recalcularDesconto() {
         double valorTotal = qtd * valorUnitario;
-        double valorDesconto = promocao.getTipo() == TipoPromocao.QUANTIDADE ? 
-                promocao.getQtdLeva() * valorUnitario : 
-                valorUnitario * (promocao.getDesconto() * ((qtd+1) - promocao.getQtdPaga())/100);
-        this.desconto = (float) (valorDesconto / valorTotal * 100);
+        double valorSubtraido = promocao.getTipo() == TipoPromocao.QUANTIDADE
+                ? getQtdBrinde() * valorUnitario
+                : valorUnitario * (promocao.getDesconto() * ((qtd+1) - promocao.getQtdPaga())/100);
+        desconto = (float) (valorSubtraido / valorTotal * 100);
     }
 
+    public int getQtdBrinde() {
+        int i = 0;
+        int qtdBrinde = 0;
+        while (i < qtd) {
+            if (i > qtdBrinde && (i - qtdBrinde) % promocao.getQtdPaga() == 0) {
+                qtdBrinde += promocao.getQtdLeva();
+                i += qtdBrinde;
+            }
+            i++;
+        }
+        return qtdBrinde;
+    }
 }

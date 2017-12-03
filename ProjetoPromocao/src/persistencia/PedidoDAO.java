@@ -3,6 +3,7 @@ package persistencia;
 import entidade.FormaPagamento;
 import entidade.ItemPedido;
 import entidade.Pedido;
+import entidade.Produto;
 import entidade.Vendedor;
 import interfaces.CRUD;
 import java.sql.Connection;
@@ -10,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import negocio.NProduto;
 
 public class PedidoDAO implements CRUD {
 
@@ -20,22 +22,24 @@ public class PedidoDAO implements CRUD {
         try {
             cnn.setAutoCommit(false);
             Pedido pedido = (Pedido) (objeto);
-            String sql = "INSERT INTO PEDIDO(PEDI_VALOR_TOTAL, PEDI_FOPA_ID, PEDI_VENDEDOR_VEND_ID) VALUES (?, ?, ?);";
+            String sql = "INSERT INTO PEDIDO(PEDI_VALOR_TOTAL, PEDI_FOPA_ID, PEDI_VEND_ID) VALUES (?, ?, ?);";
             PreparedStatement prd = cnn.prepareStatement(sql);
             prd.setDouble(1, pedido.getValorTotal());
             prd.setInt(2, pedido.getFormaPagamento().getId());
             prd.setInt(3, pedido.getVendedor().getId());
             prd.execute();
-            for (ItemPedido itemPedido : pedido.getItens()) {
-                ItemPedidoDAO.incluir(itemPedido, cnn);
-            }
             prd.close();
-            String sql2 = "SELECT CURRVAL('PEDIDO_PEDI_ID_SEQ') AS FOPA_ID;";
+            String sql2 = "SELECT CURRVAL('PEDIDO_PEDI_ID_SEQ') AS PEDI_ID;";
             ResultSet rs = cnn.createStatement().executeQuery(sql2);
             if (rs.next()) {
                 pedido.setId(rs.getInt("PEDI_ID"));
             }
-            rs.close();
+            rs.close();            
+            for (ItemPedido itemPedido : pedido.getItens()) {
+                ItemPedidoDAO.incluir(itemPedido, cnn);
+                itemPedido.getProduto().setSaldoEstoque(itemPedido.getProduto().getSaldoEstoque() - itemPedido.getQtd());
+                ProdutoDAO.atualizarSaldoEstoque(itemPedido.getProduto(), cnn);
+            }
             cnn.commit();
         } catch (SQLException e) {
             cnn.rollback();
@@ -69,7 +73,7 @@ public class PedidoDAO implements CRUD {
         try {
             cnn.setAutoCommit(false);
             Pedido pedido = (Pedido) (objeto);
-            String sql = "UPDATE PEDIDO SET PEDI_VALOR_TOTAL = ?, PEDI_FOPA_ID = ?, PEDI_VENDEDOR_VEND_ID = ? WHERE PEDI_ID = ?;";
+            String sql = "UPDATE PEDIDO SET PEDI_VALOR_TOTAL = ?, PEDI_FOPA_ID = ?, PEDI_VEND_ID = ? WHERE PEDI_ID = ?;";
             PreparedStatement prd = cnn.prepareStatement(sql);
             prd.setDouble(1, pedido.getValorTotal());
             prd.setInt(2, pedido.getFormaPagamento().getId());
@@ -104,7 +108,7 @@ public class PedidoDAO implements CRUD {
                 Pedido pedido = new Pedido();
                 pedido.setId(rs.getInt("PEDI_ID"));
                 pedido.setFormaPagamento((FormaPagamento) formaPagamentoDAO.consultar(rs.getInt("PEDI_FOPA_ID")));
-                pedido.setVendedor((Vendedor) vendedorDAO.consultar(rs.getInt("PEDI_VENDEDOR_VEND_ID")));
+                pedido.setVendedor((Vendedor) vendedorDAO.consultar(rs.getInt("PEDI_VEND_ID")));
                 pedido.setValorTotal(rs.getDouble("PEDI_VALOR_TOTAL"));
                 pedido.setItens(ItemPedidoDAO.listarByPedido(pedido.getId(), cnn));
                 lista.add(pedido);
@@ -130,7 +134,7 @@ public class PedidoDAO implements CRUD {
                 pedido = new Pedido();
                 pedido.setId(rs.getInt("PEDI_ID"));
                 pedido.setFormaPagamento((FormaPagamento) formaPagamentoDAO.consultar(rs.getInt("PEDI_FOPA_ID")));
-                pedido.setVendedor((Vendedor) vendedorDAO.consultar(rs.getInt("PEDI_VENDEDOR_VEND_ID")));
+                pedido.setVendedor((Vendedor) vendedorDAO.consultar(rs.getInt("PEDI_VEND_ID")));
                 pedido.setValorTotal(rs.getDouble("PEDI_VALOR_TOTAL"));
                 pedido.setItens(ItemPedidoDAO.listarByPedido(pedido.getId(), cnn));
             }

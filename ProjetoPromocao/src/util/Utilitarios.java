@@ -14,6 +14,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
 import java.util.Date;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -133,5 +134,10 @@ public class Utilitarios {
         }
         return true;
     }
-
+    
+    public static String mascararCpf(String valor) throws ParseException {
+        MaskFormatter maskFormatter = new MaskFormatter("###.###.###-##");
+        maskFormatter.setValueContainsLiteralCharacters(false);
+        return maskFormatter.valueToString(valor);
+    }
 }

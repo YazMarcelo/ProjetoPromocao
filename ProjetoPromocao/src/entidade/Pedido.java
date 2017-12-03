@@ -60,16 +60,12 @@ public class Pedido {
         this.itens = itens;
     }
 
-    public void addValorTotal(double valor) {
-        this.valorTotal += valor;
-    }
-
-    public Double recalcularValorTotal() {
+    public void recalcularValorTotal() {
         double valor = 0.0;
         for (ItemPedido item : itens) {
             valor += item.getQtd() * item.getValorUnitario();
             valor -= valor * (item.getDesconto() / 100);
         }
-        return valor;
+        this.valorTotal = valor;
     }
 }

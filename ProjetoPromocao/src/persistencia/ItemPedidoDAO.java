@@ -12,6 +12,14 @@ import java.util.ArrayList;
 public class ItemPedidoDAO {
 
     public static void incluir(ItemPedido itemPedido, Connection cnn) throws Exception {
+        if (itemPedido.getPromocao() != null) {
+            incluirComPromocao(itemPedido, cnn);
+        } else {
+            incluirSemPromocao(itemPedido, cnn);
+        }
+    }
+
+    private static void incluirComPromocao(ItemPedido itemPedido, Connection cnn) throws Exception {
         String sql = "INSERT INTO ITEM_PEDIDO(ITPE_PEDI_ID, ITPE_PROD_ID, ITPE_PROM_ID, ITPE_QTD, ITPE_VALOR_UNITARIO, ITPE_DESCONTO) VALUES (?, ?, ?, ?, ?, ?);";
         PreparedStatement prd = cnn.prepareStatement(sql);
         prd.setInt(1, itemPedido.getPedido().getId());
@@ -20,6 +28,24 @@ public class ItemPedidoDAO {
         prd.setInt(4, itemPedido.getQtd());
         prd.setDouble(5, itemPedido.getValorUnitario());
         prd.setFloat(6, itemPedido.getDesconto());
+        prd.execute();
+        prd.close();
+        String sql2 = "SELECT CURRVAL('ITEM_PEDIDO_ITPE_ID_SEQ') AS ITPE_ID;";
+        ResultSet rs = cnn.createStatement().executeQuery(sql2);
+        if (rs.next()) {
+            itemPedido.setId(rs.getInt("ITPE_ID"));
+        }
+        rs.close();
+    }
+    
+    private static void incluirSemPromocao(ItemPedido itemPedido, Connection cnn) throws Exception {
+        String sql = "INSERT INTO ITEM_PEDIDO(ITPE_PEDI_ID, ITPE_PROD_ID, ITPE_QTD, ITPE_VALOR_UNITARIO, ITPE_DESCONTO) VALUES (?, ?, ?, ?, ?);";
+        PreparedStatement prd = cnn.prepareStatement(sql);
+        prd.setInt(1, itemPedido.getPedido().getId());
+        prd.setInt(2, itemPedido.getProduto().getId());
+        prd.setInt(3, itemPedido.getQtd());
+        prd.setDouble(4, itemPedido.getValorUnitario());
+        prd.setFloat(5, itemPedido.getDesconto());
         prd.execute();
         prd.close();
         String sql2 = "SELECT CURRVAL('ITEM_PEDIDO_ITPE_ID_SEQ') AS ITPE_ID;";
