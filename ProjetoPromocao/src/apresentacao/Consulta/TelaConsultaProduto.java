@@ -287,7 +287,7 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
                 }
             }
         } else {
-            Mensagem.msg12(this);
+            Mensagem.msg16();
         }
     }//GEN-LAST:event_jButtonExcluirActionPerformed
 
@@ -301,7 +301,7 @@ public class TelaConsultaProduto extends javax.swing.JInternalFrame {
                 Logger.getLogger(TelaConsultaProduto.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            Mensagem.msg12(this);
+            Mensagem.msg16();
         }
         atualizaAposFechar();
     }//GEN-LAST:event_jButtonAlterarActionPerformed

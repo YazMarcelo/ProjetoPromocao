@@ -80,4 +80,8 @@ public class Mensagem {
     public static int msg15(Component parent) {
         return JOptionPane.showConfirmDialog(parent, "Confirmar Venda?", "Mensagem do Sistema", 0, 3);
     }
+    
+    public static void msg16(){
+        JOptionPane.showMessageDialog(null, "Selecione um Registro!", "Mensagem do Sistema", 1);
+    }
 }

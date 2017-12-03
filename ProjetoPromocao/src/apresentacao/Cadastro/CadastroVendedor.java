@@ -9,6 +9,8 @@ import apresentacao.Consulta.TelaConsultaVendedor;
 import entidade.Vendedor;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 import negocio.NVendedor;
 import util.Mensagem;
 import util.Utilitarios;
@@ -108,9 +110,9 @@ public class CadastroVendedor extends javax.swing.JFrame {
             }
         });
 
-        jLabel4.setText("Nome");
+        jLabel4.setText("Nome *");
 
-        jLabel5.setText("CPF");
+        jLabel5.setText("CPF *");
 
         try {
             jFormattedTextFieldCPF.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
@@ -313,9 +315,20 @@ public class CadastroVendedor extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private boolean validarCamposObrigatorios(JTextField... campos) {
+        for (JTextField campo : campos) {
+            if (campo.getText().isEmpty()) {
+                return false;
+            }
+        }
+        return true;
+    }
     private void jButtonSalvarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonSalvarActionPerformed
         try {
+            if (!validarCamposObrigatorios(jTextFieldNome) || Utilitarios.retirarMascara(jFormattedTextFieldCPF.getText()).equals("")) {
+                Mensagem.msg10(this);
+                return;
+            }
 
             Vendedor esp = new Vendedor();
             NVendedor neg = new NVendedor();
@@ -340,9 +353,9 @@ public class CadastroVendedor extends javax.swing.JFrame {
             } else {
                 limparCampos();
             }
-
+            Mensagem.msg01(this);
         } catch (Exception ex) {
-            Logger.getLogger(CadastroVendedor.class.getName()).log(Level.SEVERE, null, ex);
+            JOptionPane.showMessageDialog(this, ex);
         }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 
