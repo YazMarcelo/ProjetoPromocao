@@ -6,6 +6,7 @@ import apresentacao.Consulta.TelaConsultaPromocao;
 import apresentacao.Consulta.TelaConsultaUnidadeMedida;
 import apresentacao.Consulta.TelaConsultaVendedor;
 import javax.swing.JInternalFrame;
+import util.Mensagem;
 
 public class TelaPrincipal extends javax.swing.JFrame {
     TelaVenda telaVenda = new TelaVenda();
@@ -283,7 +284,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabelSairMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabelSairMouseClicked
-        this.dispose();
+        if (Mensagem.msg18(this) == 0) System.exit(0);
     }//GEN-LAST:event_jLabelSairMouseClicked
 
     private void jButtonFormaPagamentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonFormaPagamentoActionPerformed

@@ -364,44 +364,49 @@ public class CadastroPromocao extends javax.swing.JFrame {
             promocao.setTipo(tipoPromocao);
             switch (tipoPromocao) {
                 case DESCONTO:
-                    if (!validarCamposObrigatorios(jTextFieldDesconto, jTextFieldProdPaga, jTextFieldQtdPaga)) {
-                        Mensagem.msg10(this);
-                        return;
-                    }
-                    if (!validarCamposNumericos(jTextFieldQtdPaga)) {
-                        Mensagem.msg06(this);
-                        return;
-                    }
                     try {
-                        promocao.setDesconto(Float.parseFloat(jTextFieldDesconto.getText()));
+                        if (!validarCamposObrigatorios(jTextFieldDesconto, jTextFieldProdPaga, jTextFieldQtdPaga)) {
+                            Mensagem.msg10(this);
+                            return;
+                        }
+                        if (!validarCamposNumericos(jTextFieldQtdPaga)) {
+                            throw null;
+                        }
+                        try {
+                            promocao.setDesconto(Float.parseFloat(jTextFieldDesconto.getText()));
+                        } catch (Exception e) {
+                            throw null;
+                        }
+                        int qtdPaga = Integer.parseInt(jTextFieldQtdPaga.getText());
+                        if (qtdPaga <= 0) {
+                            throw null;
+                        }
+                        promocao.setQtdPaga(qtdPaga);
                     } catch (Exception e) {
                         Mensagem.msg06(this);
                         return;
                     }
-                    int qtdPaga = Integer.valueOf(jTextFieldQtdPaga.getText());
-                    if (qtdPaga < 0) {
-                        Mensagem.msg06(this);
-                        return;
-                    }
-                    promocao.setQtdPaga(qtdPaga);
                     break;
                 case QUANTIDADE:
                     if (!validarCamposObrigatorios(jTextFieldProdPaga, jTextFieldQtdPaga, jTextFieldProdLeva, jTextFieldQtdLeva)) {
                         Mensagem.msg10(this);
                         return;
                     }
-                    if (!validarCamposNumericos(jTextFieldQtdPaga, jTextFieldQtdLeva)) {
+                    try {
+                        if (!validarCamposNumericos(jTextFieldQtdPaga, jTextFieldQtdLeva)) {
+                            throw null;
+                        }
+                        int qtdPaga = Integer.parseInt(jTextFieldQtdPaga.getText());
+                        int qtdLeva = Integer.parseInt(jTextFieldQtdLeva.getText());
+                        if (qtdPaga <= 0 || qtdLeva <= 0) {
+                            throw null;
+                        }
+                        promocao.setQtdPaga(qtdPaga);
+                        promocao.setQtdLeva(qtdLeva);
+                    } catch (Exception e) {
                         Mensagem.msg06(this);
                         return;
                     }
-                    qtdPaga = Integer.valueOf(jTextFieldQtdPaga.getText());
-                    int qtdLeva = Integer.valueOf(jTextFieldQtdLeva.getText());
-                    if (qtdPaga < 0 || qtdLeva < 0) {
-                        Mensagem.msg06(this);
-                        return;
-                    }
-                    promocao.setQtdPaga(qtdPaga);
-                    promocao.setQtdLeva(qtdLeva);
                     break;
                 default:
                     if (!validarCamposObrigatorios(jTextFieldDesconto, jTextFieldValorMinimo)) {
@@ -409,8 +414,13 @@ public class CadastroPromocao extends javax.swing.JFrame {
                         return;
                     }
                     try {
-                        promocao.setDesconto(Float.parseFloat(jTextFieldDesconto.getText()));
-                        promocao.setValorMinimo(Double.valueOf(jTextFieldValorMinimo.getText()));
+                        float desconto = Float.parseFloat(jTextFieldDesconto.getText());
+                        double valorMinimo = Double.parseDouble(jTextFieldValorMinimo.getText());
+                        if (desconto <= 0 || valorMinimo <= 0) {
+                            throw null;
+                        }
+                        promocao.setDesconto(desconto);
+                        promocao.setValorMinimo(valorMinimo);
                     } catch (Exception e) {
                         Mensagem.msg06(this);
                         return;
@@ -426,9 +436,10 @@ public class CadastroPromocao extends javax.swing.JFrame {
             Mensagem.msg01(this);
         } catch (Exception ex) {
             if (ex.toString().contains("promocao_tipo_prod_paga_unique")) {
-                ex = new Exception("O Produto " + promocao.getProdPaga().getDescricao() + " já possui uma Promoção de Tipo " + promocao.getTipo() + ".");
+                Mensagem.msg20(this);
+            } else {
+                JOptionPane.showMessageDialog(this, ex);
             }
-            JOptionPane.showMessageDialog(this, ex);
         }
     }//GEN-LAST:event_jButtonSalvarActionPerformed
 

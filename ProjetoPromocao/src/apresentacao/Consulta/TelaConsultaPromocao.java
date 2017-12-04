@@ -2,6 +2,7 @@ package apresentacao.Consulta;
 
 import apresentacao.Cadastro.CadastroPromocao;
 import entidade.Promocao;
+import entidade.TipoPromocao;
 import java.util.Iterator;
 import java.util.Vector;
 import java.util.logging.Level;
@@ -305,12 +306,12 @@ public class TelaConsultaPromocao extends javax.swing.JInternalFrame {
                 linha.add(promocao.getTipo().toString());
                 linha.add(Utilitarios.dateToString(promocao.getDataInicio()));
                 linha.add(Utilitarios.dateToString(promocao.getDataFim()));
-                linha.add(promocao.getDesconto());
+                linha.add(promocao.getTipo() != TipoPromocao.QUANTIDADE ? String.format("%.2f", promocao.getDesconto()) + "%" : "");
                 linha.add(promocao.getQtdPaga() == 0 ? "" : promocao.getQtdPaga());
-                linha.add(promocao.getQtdLeva() == 0 ? "" : promocao.getQtdLeva());
-                linha.add(promocao.getProdPaga() == null ? "" : promocao.getProdPaga().getDescricao());
-                linha.add(promocao.getProdLeva() == null ? "" : promocao.getProdLeva().getDescricao());
-                linha.add(promocao.getValorMinimo() == 0 ? "" : promocao.getValorMinimo());
+                linha.add(promocao.getTipo() == TipoPromocao.QUANTIDADE ? promocao.getQtdLeva() : "");
+                linha.add(promocao.getTipo() != TipoPromocao.GERAL ? promocao.getProdPaga().getDescricao() : "");
+                linha.add(promocao.getTipo() == TipoPromocao.QUANTIDADE ? promocao.getProdLeva().getDescricao() : "");
+                linha.add(promocao.getTipo() == TipoPromocao.GERAL ? String.format("R$ %.2f", promocao.getValorMinimo()) : "");
                 detalhes.add(linha);
             }
             jTablePromocao.setModel(new DefaultTableModel(detalhes, colunas) {

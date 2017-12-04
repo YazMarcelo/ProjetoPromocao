@@ -62,10 +62,25 @@ public class Pedido {
 
     public void recalcularValorTotal() {
         double valor = 0.0;
+        float descontoGeral = 0;
         for (ItemPedido item : itens) {
-            valor += item.getQtd() * item.getValorUnitario();
-            valor -= valor * (item.getDesconto() / 100);
+            if (item.getPromocao() != null && item.getPromocao().getTipo() == TipoPromocao.GERAL) {
+                descontoGeral = item.getPromocao().getDesconto();
+            } else {
+//                valor += item.getQtd() * item.getValorUnitario();
+//                valor -= valor * (item.getDesconto() / 100);
+                  valor += item.getValorTotal();
+            }
         }
-        this.valorTotal = valor;
+        this.valorTotal = valor - valor * (descontoGeral / 100);
+    }
+    
+    public Float getDescontoGeral() {
+        for (ItemPedido item : itens) {
+            if (item.getPromocao() != null && item.getPromocao().getTipo() == TipoPromocao.GERAL) {
+                return item.getPromocao().getDesconto();
+            }
+        }
+        return 0f;
     }
 }

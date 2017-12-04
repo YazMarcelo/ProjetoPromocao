@@ -196,7 +196,6 @@ public class PromocaoDAO implements CRUD {
 
     public ArrayList<Promocao> listarByProduto(int codigoProduto) throws Exception {
         ArrayList<Promocao> listaPromocao = new ArrayList<>();
-
         try {
             String sql = "SELECT * FROM PROMOCAO WHERE EXCLUIDO = FALSE AND PROM_PAGA_PROD_ID = ? AND PROM_DATA_INICIO <= NOW() AND PROM_DATA_FIM > NOW() ORDER BY PROM_ID;";
             PreparedStatement prd = cnn.prepareStatement(sql);
@@ -220,6 +219,37 @@ public class PromocaoDAO implements CRUD {
                 objeto.setProdPaga(prodPaga == 0 ? null : nProduto.consultar(prodPaga));
                 int prodLeva = rs.getInt("PROM_LEVA_PROD_ID");
                 objeto.setProdLeva(prodLeva == 0 ? null : nProduto.consultar(prodLeva));
+                objeto.setValorMinimo(rs.getDouble("PROM_VALOR_MINIMO"));
+                listaPromocao.add(objeto);
+            }
+            prd.close();
+            rs.close();
+        } catch (SQLException e) {
+            throw e;
+        }
+        return listaPromocao;
+    }
+
+    
+    public ArrayList<Promocao> listarByValorMinimo(double valorMinimo) throws Exception {
+        ArrayList<Promocao> listaPromocao = new ArrayList<>();
+        try {
+            String sql = "SELECT * FROM PROMOCAO WHERE EXCLUIDO = FALSE AND PROM_TIPO = 3 AND PROM_VALOR_MINIMO <= ? AND PROM_DATA_INICIO <= NOW() AND PROM_DATA_FIM > NOW() ORDER BY PROM_DESCONTO;";
+            PreparedStatement prd = cnn.prepareStatement(sql);
+            prd.setDouble(1, valorMinimo);
+            ResultSet rs = prd.executeQuery();
+            NProduto nProduto = null;
+            while (rs.next()) {
+                if (nProduto == null) {
+                    nProduto = new NProduto();
+                }
+                Promocao objeto = new Promocao();
+                objeto.setId(rs.getInt("PROM_ID"));
+                objeto.setDescricao(rs.getString("PROM_DESCRICAO"));
+                objeto.setTipo(TipoPromocao.GERAL);
+                objeto.setDesconto(rs.getFloat("PROM_DESCONTO"));
+                objeto.setDataInicio(rs.getTimestamp("PROM_DATA_INICIO"));
+                objeto.setDataFim(rs.getTimestamp("PROM_DATA_FIM"));
                 objeto.setValorMinimo(rs.getDouble("PROM_VALOR_MINIMO"));
                 listaPromocao.add(objeto);
             }

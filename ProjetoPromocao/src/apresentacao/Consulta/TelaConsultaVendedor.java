@@ -259,7 +259,7 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
                 }
             }
         } else {
-            Mensagem.msg12(this);
+            Mensagem.msg23(this);
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
@@ -274,7 +274,7 @@ public class TelaConsultaVendedor extends javax.swing.JInternalFrame {
                 Logger.getLogger(TelaConsultaVendedor.class.getName()).log(Level.SEVERE, null, ex);
             }
         } else {
-            Mensagem.msg12(this);
+            Mensagem.msg23(this);
         }
         atualizaAposFechar();
     }//GEN-LAST:event_jButton2ActionPerformed

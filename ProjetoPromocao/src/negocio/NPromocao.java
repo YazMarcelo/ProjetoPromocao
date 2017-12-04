@@ -41,4 +41,8 @@ public class NPromocao {
     public List<Promocao> listarByProduto(int codigoProduto) throws SQLException, Exception {
         return dao.listarByProduto(codigoProduto);
     }
+    
+    public List<Promocao> listarByValorMinimo(double valorMinimo) throws SQLException, Exception {
+        return dao.listarByValorMinimo(valorMinimo);
+    }
 }

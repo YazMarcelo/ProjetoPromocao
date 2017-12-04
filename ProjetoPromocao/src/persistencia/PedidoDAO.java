@@ -3,7 +3,7 @@ package persistencia;
 import entidade.FormaPagamento;
 import entidade.ItemPedido;
 import entidade.Pedido;
-import entidade.Produto;
+import entidade.TipoPromocao;
 import entidade.Vendedor;
 import interfaces.CRUD;
 import java.sql.Connection;
@@ -11,7 +11,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import negocio.NProduto;
 
 public class PedidoDAO implements CRUD {
 
@@ -34,11 +33,13 @@ public class PedidoDAO implements CRUD {
             if (rs.next()) {
                 pedido.setId(rs.getInt("PEDI_ID"));
             }
-            rs.close();            
+            rs.close();
             for (ItemPedido itemPedido : pedido.getItens()) {
                 ItemPedidoDAO.incluir(itemPedido, cnn);
-                itemPedido.getProduto().setSaldoEstoque(itemPedido.getProduto().getSaldoEstoque() - itemPedido.getQtd());
-                ProdutoDAO.atualizarSaldoEstoque(itemPedido.getProduto(), cnn);
+                if (itemPedido.getPromocao() != null && itemPedido.getPromocao().getTipo() != TipoPromocao.GERAL) {
+                    itemPedido.getProduto().setSaldoEstoque(itemPedido.getProduto().getSaldoEstoque() - itemPedido.getQtd());
+                    ProdutoDAO.atualizarSaldoEstoque(itemPedido.getProduto(), cnn);
+                }
             }
             cnn.commit();
         } catch (SQLException e) {
