@@ -128,7 +128,7 @@ public class TelaVenda extends javax.swing.JInternalFrame {
                                                 }
                                                 break;
                                             case QUANTIDADE:
-                                                if ((item.getQtd() - item.getQtdBrinde()) % promocao.getQtdPaga() == 0) {
+                                                if (item.getQtd() % promocao.getQtdPaga() == 0) {
                                                     if (promocao.getProdPaga().getId() == promocao.getProdLeva().getId()) {
                                                         item.addQtdBrinde(promocao.getQtdLeva());
                                                         item.recalcularDesconto();
