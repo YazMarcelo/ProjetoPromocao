@@ -201,15 +201,15 @@ public class VendedorDAO implements CRUD {
     public ArrayList<String> todosCpf() throws Exception {
         ArrayList<String> cpfs;
         try {
-            String sql = "SELECT vend_cpf FROM VENDEDOR WHERE EXCLUIDO = FALSE;";
-            PreparedStatement prd = cnn.prepareStatement(sql);
-            ResultSet rs = prd.executeQuery();
+        String sql = "SELECT vend_cpf FROM VENDEDOR WHERE EXCLUIDO = FALSE;";
+
+        Statement stm = cnn.createStatement();
+        ResultSet rs = stm.executeQuery(sql);
 
             cpfs = new ArrayList<>();
-            if (rs.next()) {
-                cpfs.add(rs.getString("VEND_CEP"));
+            while (rs.next()) {
+                cpfs.add(rs.getString("VEND_CPF"));
             }
-            prd.close();
             rs.close();
         } catch (Exception e) {
             throw e;

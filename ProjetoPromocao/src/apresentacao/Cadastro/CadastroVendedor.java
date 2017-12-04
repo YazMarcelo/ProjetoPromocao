@@ -329,6 +329,10 @@ public class CadastroVendedor extends javax.swing.JFrame {
                 Mensagem.msg10(this);
                 return;
             }
+            if(Utilitarios.compararCpf(jFormattedTextFieldCPF.getText())){
+                Mensagem.msg09(this);
+                return;
+            }
 
             Vendedor esp = new Vendedor();
             NVendedor neg = new NVendedor();
