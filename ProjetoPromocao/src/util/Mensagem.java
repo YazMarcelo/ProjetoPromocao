@@ -72,12 +72,40 @@ public class Mensagem {
     public static void msg13(Component parent) {
         JOptionPane.showMessageDialog(parent, "Venda Cancelada com Sucesso!", "Mensagem do Sistema", 1);
     }
-    
+
     public static int msg14(Component parent) {
         return JOptionPane.showConfirmDialog(parent, "Confirmar Cancelamento?", "Mensagem do Sistema", 0, 3);
     }
-    
+
     public static int msg15(Component parent) {
         return JOptionPane.showConfirmDialog(parent, "Confirmar Venda?", "Mensagem do Sistema", 0, 3);
+    }
+
+    public static void msg16(Component parent) {
+        JOptionPane.showMessageDialog(parent, "Uma Promoção foi encontrada! O Valor Total da Venda será atualizado.", "Mensagem do Sistema", 1);
+    }
+
+    public static int msg17(Component parent) {
+        return JOptionPane.showConfirmDialog(parent, "Confirmar Exclusão do(s) Item(ns)?", "Mensagem do Sistema", 0, 3);
+    }
+
+    public static int msg18(Component parent) {
+        return JOptionPane.showConfirmDialog(parent, "Certeza que deseja sair?", "Mensagem do Sistema", 0, 3);
+    }
+    
+    public static void msg19(Component parent) {
+        JOptionPane.showMessageDialog(parent, "Não há saldo em estoque para o Produto.", "Mensagem do Sistema", 2);
+    }
+    
+    public static void msg20(Component parent) {
+        JOptionPane.showMessageDialog(parent, "O Produto selecionado já possui uma Promoção para este Tipo de Promoção.", "Mensagem do Sistema", 2);
+    }
+    
+    public static void msg21(Component parent) {
+        JOptionPane.showMessageDialog(parent, "Finalize ou cancele a Venda antes de Sair.", "Mensagem do Sistema", 2);
+    }
+    
+    public static int msg22(Component parent) {
+        return JOptionPane.showConfirmDialog(parent, "Se continuar irá perder o(s) brinde(s), deseja mesmo?", "Mensagem do Sistema", 0, 3);
     }
 }
