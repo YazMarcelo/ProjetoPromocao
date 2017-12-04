@@ -92,20 +92,24 @@ public class Mensagem {
     public static int msg18(Component parent) {
         return JOptionPane.showConfirmDialog(parent, "Certeza que deseja sair?", "Mensagem do Sistema", 0, 3);
     }
-    
+
     public static void msg19(Component parent) {
         JOptionPane.showMessageDialog(parent, "Não há saldo em estoque para o Produto.", "Mensagem do Sistema", 2);
     }
-    
+
     public static void msg20(Component parent) {
         JOptionPane.showMessageDialog(parent, "O Produto selecionado já possui uma Promoção para este Tipo de Promoção.", "Mensagem do Sistema", 2);
     }
-    
+
     public static void msg21(Component parent) {
         JOptionPane.showMessageDialog(parent, "Finalize ou cancele a Venda antes de Sair.", "Mensagem do Sistema", 2);
     }
-    
+
     public static int msg22(Component parent) {
         return JOptionPane.showConfirmDialog(parent, "Se continuar irá perder o(s) brinde(s), deseja mesmo?", "Mensagem do Sistema", 0, 3);
+    }
+
+    public static void msg23(Component parent) {
+        JOptionPane.showMessageDialog(null, "Selecione um Registro!", "Mensagem do Sistema", 1);
     }
 }
