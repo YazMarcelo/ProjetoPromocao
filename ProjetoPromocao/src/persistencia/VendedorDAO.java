@@ -197,5 +197,24 @@ public class VendedorDAO implements CRUD {
         }
         return vendedor;
     }
+    
+    public ArrayList<String> todosCpf() throws Exception {
+        ArrayList<String> cpfs;
+        try {
+            String sql = "SELECT vend_cpf FROM VENDEDOR WHERE EXCLUIDO = FALSE;";
+            PreparedStatement prd = cnn.prepareStatement(sql);
+            ResultSet rs = prd.executeQuery();
+
+            cpfs = new ArrayList<>();
+            if (rs.next()) {
+                cpfs.add(rs.getString("VEND_CEP"));
+            }
+            prd.close();
+            rs.close();
+        } catch (Exception e) {
+            throw e;
+        }
+        return cpfs;
+    }
 
 }

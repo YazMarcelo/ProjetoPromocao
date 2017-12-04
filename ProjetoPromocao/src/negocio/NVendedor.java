@@ -40,4 +40,13 @@ public class NVendedor {
     public ArrayList<Vendedor> listar() throws SQLException, Exception {
         return dao.listar();
     }
+    
+    public ArrayList<String> compararCpf() {
+        ArrayList<String> cpfs = new ArrayList<>();
+        try {
+        cpfs = dao.todosCpf();
+        } catch (Exception e) {
+        }
+        return cpfs;
+    }
 }

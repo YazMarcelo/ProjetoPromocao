@@ -5,6 +5,8 @@
  */
 package util;
 
+import Adapter.Adapter;
+import Adapter.Comparar;
 import java.awt.event.KeyEvent;
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -13,8 +15,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
+import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.text.MaskFormatter;
+import negocio.NVendedor;
 
 /**
  *
@@ -65,6 +69,21 @@ public class Utilitarios {
         return nDigVerific.equals(nDigResult);
     }
 
+    public static boolean compararCpf(String str){
+        //Comparar comp = new Comparando();
+        Comparar comp = new Adapter();
+        
+        NVendedor neg = new NVendedor();
+        ArrayList<String> cpfs = new ArrayList<>();
+        cpfs = neg.compararCpf();
+        for (int i = 0; i < cpfs.size(); i++) {
+            if(comp.eIgual(str, cpfs.get(i)) == 0 ){
+                return true;
+            }
+        }
+        return false;
+    }
+    
     public static String dateBRFormat(String data) throws ParseException {
 
         if (!(data.equals("null")) && !(data.equals(""))) {
